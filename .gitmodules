@@ -1,0 +1,3 @@
+[submodule "Mint/vendor/spdlog"]
+	path = Mint/vendor/spdlog
+	url = https://github.com/gabime/spdlog
