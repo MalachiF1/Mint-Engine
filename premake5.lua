@@ -11,6 +11,12 @@ workspace "Mint"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directories relative to root folder (solution directory)
+IncludeDir = {}
+IncludeDir["GLFW"] = "Mint/vendor/GLFW/include"
+
+include	"Mint/vendor/GLFW"
+
 project	"Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
@@ -79,7 +85,14 @@ project "Mint"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -99,7 +112,11 @@ project "Mint"
 		}
 
 	filter "configurations:Debug"
-		defines "MINT_DEBUG"
+		defines
+		{
+			"MINT_DEBUG",
+			"MINT_ENABLE_ASSERT"
+		}
 		symbols "On"
 
 	filter "configurations:Release"

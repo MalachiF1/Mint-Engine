@@ -1,8 +1,6 @@
 #pragma once
 #include "mtpch.h"
 
-#include "Mint/core.h"
-
 namespace mint
 {
     // Events are currently blocking.

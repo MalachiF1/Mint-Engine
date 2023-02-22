@@ -5,29 +5,27 @@
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/Event.h"
 
+#include <GLFW/glfw3.h>
+
 namespace mint
 {
 
-    Application::Application() {}
+    Application::Application()
+    {
+        m_window = std::unique_ptr<Window>(Window::create());
+    }
 
     Application::~Application() {}
 
 
     void Application::run()
     {
-        WindowResizeEvent e(1280, 720);
-        if (e.isInCategory(EventCategoryApplication))
+        while (m_running)
         {
-            MINT_INFO("Yes");
+            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            m_window->onUpdate();
         }
-        else
-        {
-            MINT_INFO("No");
-        }
-
-        // MINT_TRACE(e);
-
-        while (true) {};
     }
 
 } // namespace mint
