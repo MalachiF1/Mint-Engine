@@ -9,3 +9,5 @@
 #else
     #error Mint only supports windows at the moment.
 #endif // MT_PLATFORM_WINDOWS
+
+#define BIT(x) (1 << x)

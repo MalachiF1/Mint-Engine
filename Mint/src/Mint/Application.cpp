@@ -1,6 +1,8 @@
 #include "Application.h"
 
-#include <iostream>
+#include "Log.h"
+#include "Mint/Event/ApplicationEvent.h"
+#include "Mint/Event/Event.h"
 
 namespace mint
 {
@@ -12,6 +14,18 @@ namespace mint
 
     void Application::run()
     {
+        WindowResizeEvent e(1280, 720);
+        if (e.isInCategory(EventCategoryApplication))
+        {
+            MINT_INFO("Yes");
+        }
+        else
+        {
+            MINT_INFO("No");
+        }
+
+        // MINT_TRACE(e);
+
         while (true) {};
     }
 

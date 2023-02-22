@@ -2,7 +2,13 @@
 
 #include "Core.h"
 
+/* clang-format off */
+
+// spdlog.h must come before ostr.h
 #include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
+
+/* clang-format on */
 
 #include <memory>
 
@@ -23,7 +29,7 @@ namespace mint
 
 } // namespace mint
 
-#ifndef NDEBUG
+#ifdef MINT_DEBUG
 
     // Core log macros
     #define MINT_CORE_TRACE(...) ::mint::Log::getCoreLogger()->trace(__VA_ARGS__)
