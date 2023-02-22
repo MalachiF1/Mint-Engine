@@ -67,10 +67,13 @@ project "Mint"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "mtpch.h"
+	pchsource "Mint/src/mtpch.cpp" -- required for MSVC
+
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cp}",
+		"%{prj.name}/src/**.cpp",
 	}
 
 	includedirs

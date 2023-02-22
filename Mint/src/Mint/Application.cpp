@@ -1,6 +1,7 @@
+#include "mtpch.h"
+
 #include "Application.h"
 
-#include "Log.h"
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/Event.h"
 

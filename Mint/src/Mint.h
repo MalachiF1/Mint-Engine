@@ -9,11 +9,6 @@
 
 #include "Mint/Application.h"
 #include "Mint/Log.h"
-#include "Mint/Event/Event.h"
-#include "Mint/Event/MouseEvent.h"
-#include "Mint/Event/KeyEvent.h"
-#include "Mint/Event/ApplicationEvent.h"
-
 
 // ---- Entry Point -----------------------------------------------------------
 #include "Mint/EntryPoint.h"

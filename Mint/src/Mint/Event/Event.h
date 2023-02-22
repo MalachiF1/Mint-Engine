@@ -1,9 +1,7 @@
 #pragma once
+#include "mtpch.h"
 
 #include "Mint/core.h"
-
-#include <functional>
-#include <string>
 
 namespace mint
 {
@@ -37,11 +35,11 @@ namespace mint
 
     enum EventCategory
     {
-        None = 0,
+        None                     = 0,
         EventCategoryApplication = BIT(0),
-        EventCategoryInput = BIT(1),
-        EventCategoryKeyboard = BIT(2),
-        EventCategoryMouse = BIT(3),
+        EventCategoryInput       = BIT(1),
+        EventCategoryKeyboard    = BIT(2),
+        EventCategoryMouse       = BIT(3),
         EventCategoryMouseButton = BIT(4),
     };
 
@@ -72,8 +70,8 @@ namespace mint
 
       public:
         virtual EventType getEventType() const = 0;
-        virtual const char* getName() const = 0;
-        virtual int getCategoryFlags() const = 0;
+        virtual const char* getName() const    = 0;
+        virtual int getCategoryFlags() const   = 0;
         virtual std::string toString() const { return getName(); }
 
         inline bool isInCategory(EventCategory category) { return getCategoryFlags() & category; }
@@ -106,7 +104,7 @@ namespace mint
         Event& m_event;
     };
 
-    
+
     inline std::ostream& operator<<(std::ostream& os, const Event& e)
     {
         return os << e.toString();
