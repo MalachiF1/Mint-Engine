@@ -31,7 +31,7 @@ namespace mint
         std::string toString() const override
         {
             std::stringstream ss;
-            ss << "KeyPressedEvent: " << m_keyCode << "(" << m_repeatCount << " repeates)";
+            ss << "KeyPressedEvent: " << m_keyCode << " (" << m_repeatCount << " repeates)";
             return ss.str();
         }
 

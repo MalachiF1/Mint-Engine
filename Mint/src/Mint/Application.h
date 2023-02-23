@@ -2,6 +2,8 @@
 
 #include "Core.h"
 #include "Window.h"
+#include "Event/Event.h"
+#include "Event/ApplicationEvent.h"
 
 namespace mint
 {
@@ -13,6 +15,10 @@ namespace mint
         virtual ~Application();
 
         void run();
+
+        void onEvent(Event& e);
+
+        bool onWindowClose(WindowCloseEvent& e);
 
       private:
         std::unique_ptr<Window> m_window;

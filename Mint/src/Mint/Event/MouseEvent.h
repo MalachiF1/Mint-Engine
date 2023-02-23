@@ -8,10 +8,10 @@ namespace mint
 
     // Parent of key-press and key-release events.
     // The keycode is the same for both. KeyReleaseEvent doesn't need a repeat count.
-    class MINT_API MouseMoveEvent : public Event
+    class MINT_API MouseMovedEvent : public Event
     {
       public:
-        MouseMoveEvent(float x, float y) : m_mouseX(x), m_mouseY(y) {}
+        MouseMovedEvent(float x, float y) : m_mouseX(x), m_mouseY(y) {}
 
         inline float getX() const { return m_mouseX; }
         inline float getY() const { return m_mouseY; }
@@ -30,10 +30,10 @@ namespace mint
         float m_mouseX, m_mouseY;
     };
 
-    class MINT_API MouseScrollEvent : public Event
+    class MINT_API MouseScrolledEvent : public Event
     {
       public:
-        MouseScrollEvent(float xOffset, float yOffset) : m_xOffset(xOffset), m_yOffset(yOffset) {}
+        MouseScrolledEvent(float xOffset, float yOffset) : m_xOffset(xOffset), m_yOffset(yOffset) {}
 
         inline float getXOffset() const { return m_xOffset; }
         inline float getYOffset() const { return m_yOffset; }
@@ -41,7 +41,7 @@ namespace mint
         std::string toString() const override
         {
             std::stringstream ss;
-            ss << "MouseScrollEvent: " << m_xOffset << ", " << m_yOffset;
+            ss << "MouseScrolledEvent: " << m_xOffset << ", " << m_yOffset;
             return ss.str();
         }
 
@@ -88,7 +88,7 @@ namespace mint
         std::string toString() const override
         {
             std::stringstream ss;
-            ss << "MouseButtonPressedEvent: " << getMouseButton();
+            ss << "MouseButtonReleasedEvent: " << getMouseButton();
             return ss.str();
         }
 

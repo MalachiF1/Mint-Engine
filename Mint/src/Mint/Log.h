@@ -59,4 +59,4 @@ namespace mint
     #define MINT_ERROR(...)
     #define MINT_FATAL(...)
 
-#endif // !NDEBUG
+#endif // MINT_DEBUG
