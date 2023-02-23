@@ -72,7 +72,8 @@ namespace mint
         virtual int getCategoryFlags() const   = 0;
         virtual std::string toString() const { return getName(); }
 
-        inline bool isInCategory(EventCategory category) { return getCategoryFlags() & category; }
+        inline bool isInCategory(EventCategory category) const { return getCategoryFlags() & category; }
+        inline bool handled() const { return m_handled; }
 
       protected:
         bool m_handled = false;
