@@ -54,14 +54,17 @@ project	"Sandbox"
 
 	filter "configurations:Debug"
 		defines "MINT_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "MINT_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "MINT_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 
@@ -117,14 +120,17 @@ project "Mint"
 			"MINT_DEBUG",
 			"MINT_ENABLE_ASSERT"
 		}
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "MINT_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "MINT_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 
