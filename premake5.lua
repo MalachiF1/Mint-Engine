@@ -15,9 +15,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Mint/vendor/GLFW/include"
 IncludeDir["Glad"] = "Mint/vendor/Glad/include"
+IncludeDir["ImGui"] = "Mint/vendor/ImGui"
 
 include "Mint/vendor/GLFW"
 include "Mint/vendor/Glad"
+include "Mint/vendor/Imgui"
 
 project "Sandbox"
 	location "Sandbox"
@@ -91,7 +93,8 @@ project "Mint"
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 
 	links
@@ -99,6 +102,7 @@ project "Mint"
 		"GLFW",
 		"opengl32.lib",
 		"Glad",
+		"ImGui"
 	}
 
 	filter "system:windows"
@@ -110,7 +114,8 @@ project "Mint"
 		{
 			"MT_PLATFORM_WINDOWS",
 			"MINT_BUILD_DLL",
-			"GLFW_INCLUDE_NONE" -- for Glad
+			"GLFW_INCLUDE_NONE", -- use Glad with GLFW
+			"MGUI_IMPL_OPENGL_LOADER_CUSTOM" -- use Glad with ImGui
 		}
 
 	postbuildcommands

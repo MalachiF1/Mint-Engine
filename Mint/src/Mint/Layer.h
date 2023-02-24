@@ -9,7 +9,7 @@ namespace mint
     class MINT_API Layer
     {
       public:
-        Layer(const std::string& name = "Layer") : m_debugName(m_debugName){};
+        Layer(const std::string& name = "Layer") : m_debugName(name){};
         virtual ~Layer(){};
 
         virtual void onAttach()        = 0;

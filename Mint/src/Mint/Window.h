@@ -31,6 +31,7 @@ namespace mint
 
         virtual unsigned int getWidth() const  = 0;
         virtual unsigned int getHeight() const = 0;
+        virtual std::pair<float, float> getSize() const = 0;
 
         // Window attributes
         virtual void setEventCallback(const EventCallbackFn& callback) = 0;

@@ -17,6 +17,7 @@ namespace mint
 
         inline unsigned int getWidth() const override { return m_data.width; }
         inline unsigned int getHeight() const override { return m_data.width; }
+        inline std::pair<float, float> getSize() const override { return std::pair<float, float>(m_data.width, m_data.height); }
 
         // Window attributes
         inline void setEventCallback(const EventCallbackFn& callback) override { m_data.eventCallback = callback; }

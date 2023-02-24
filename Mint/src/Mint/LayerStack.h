@@ -10,10 +10,12 @@ namespace mint
 
     class LayerStack
     {
+        friend class Application;
+
         using Layers = std::vector<Layer*>;
 
       public:
-        LayerStack(){};
+        LayerStack() = default;
 
         // TODO: find a better implementation that either doesn't take ownership of the layers, or keeps a unique_ptr to
         // each layer. As it stands, if you pop a layer and don't push it back, it won't get deleted in the constructor
@@ -29,6 +31,7 @@ namespace mint
         inline Layers::const_iterator end() { return m_layers.begin(); }
         inline Layers::const_reverse_iterator rbegin() { return m_layers.rbegin(); }
         inline Layers::const_reverse_iterator rend() { return m_layers.rend(); }
+
 
       private:
         Layers m_layers;

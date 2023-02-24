@@ -8,6 +8,7 @@
 
 
 #include "Mint/Application.h"
+#include "Mint/ImGui/ImGuiLayer.h"
 #include "Mint/Layer.h"
 #include "Mint/Log.h"
 
