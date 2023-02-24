@@ -9,8 +9,13 @@ namespace mint
 
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
+    Application* Application::s_instance = nullptr;
+
     Application::Application()
     {
+        MINT_CORE_ASSERT(!s_instance, "There can only be one Application instance!");
+        s_instance = this;
+
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(BIND_EVENT_FN(Application::onEvent));
     }
@@ -62,7 +67,7 @@ namespace mint
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            for (Layer* layer : m_layerStack) layer->onUpdate();
+            for (Layer* layer : m_layerStack.m_layers) { layer->onUpdate(); }
             m_window->onUpdate();
         }
     }

@@ -26,10 +26,16 @@ namespace mint
         void pushOverLay(Layer* overlay);
         void popOverLay(Layer* overlay);
 
+        inline static Application& get() { return *s_instance; }
+        inline Window& getWindow() const { return *m_window; }
+
       private:
         std::unique_ptr<Window> m_window;
         bool m_running = true;
         LayerStack m_layerStack;
+
+      private:
+        static Application* s_instance;
     };
 
     // To be defined in client
