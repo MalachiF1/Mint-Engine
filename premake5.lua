@@ -17,14 +17,17 @@ IncludeDir["GLFW"] = "Mint/vendor/GLFW/include"
 IncludeDir["Glad"] = "Mint/vendor/Glad/include"
 IncludeDir["ImGui"] = "Mint/vendor/ImGui"
 
-include "Mint/vendor/GLFW"
-include "Mint/vendor/Glad"
-include "Mint/vendor/Imgui"
+group "Dependencies"
+	include "Mint/vendor/GLFW"
+	include "Mint/vendor/Glad"
+	include "Mint/vendor/Imgui"
+group ""
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -48,7 +51,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -58,23 +60,24 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "MINT_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "MINT_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "MINT_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 project "Mint"
 	location "Mint" 
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -107,7 +110,6 @@ project "Mint"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On" 
 		systemversion "latest"
 
 		defines
@@ -120,24 +122,21 @@ project "Mint"
 
 	postbuildcommands
 	{
-		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+		("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 	}
 
 	filter "configurations:Debug"
-		defines
-		{
-			"MINT_DEBUG",
-			"MINT_ENABLE_ASSERT"
-		}
-		buildoptions "/MDd"
+		defines "MINT_DEBUG"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "MINT_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
+		symbols "On"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "MINT_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"

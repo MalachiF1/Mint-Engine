@@ -12,6 +12,10 @@
     #error Mint only supports windows at the moment.
 #endif // MT_PLATFORM_WINDOWS
 
+#ifdef MINT_DEBUG
+    #define MINT_ENABLE_ASSERT
+#endif
+
 #ifdef MINT_ENABLE_ASSERT
     #define MINT_ASSERT(x, ...)                                                                                        \
         {                                                                                                              \
