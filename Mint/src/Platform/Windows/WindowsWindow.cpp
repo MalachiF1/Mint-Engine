@@ -103,6 +103,13 @@ namespace mint
             }
         });
 
+        glfwSetCharCallback(m_window, [](GLFWwindow* window, unsigned int key) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            KeyTypedEvent event(key);
+            data.eventCallback(event);
+        });
+
         glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int modes) {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             switch (action)

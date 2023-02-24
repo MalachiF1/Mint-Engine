@@ -56,4 +56,19 @@ namespace mint
         EVENT_CLASS_TYPE(KeyReleased)
     };
 
+    class MINT_API KeyTypedEvent : public KeyEvent
+    {
+      public:
+        KeyTypedEvent(int keycode) : KeyEvent(keycode) {}
+
+        std::string toString() const override
+        {
+            std::stringstream ss;
+            ss << "KeyTypedEvent: " << m_keyCode;
+            return ss.str();
+        }
+
+        EVENT_CLASS_TYPE(KeyTyped)
+    };
+
 } // namespace mint

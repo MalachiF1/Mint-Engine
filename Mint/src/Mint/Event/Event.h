@@ -21,6 +21,7 @@ namespace mint
         AppRender,
 
         // Keyboard events
+        KeyTyped,
         KeyPressed,
         KeyReleased,
 

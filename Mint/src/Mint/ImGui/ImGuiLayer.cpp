@@ -5,11 +5,12 @@
 #include "Mint/Application.h"
 #include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
 
+// Temporary
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace mint
 {
-
     ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
 
     ImGuiLayer::~ImGuiLayer() {}
@@ -156,6 +157,107 @@ namespace mint
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void ImGuiLayer::onEvent(Event& e) {}
+    void ImGuiLayer::onEvent(Event& e)
+    {
+        EventDispatcher dispatcher(e);
+        dispatcher.dispatch<MouseButtonPressedEvent>(MINT_BIND_EVENT_FN(ImGuiLayer::onMouseButtonPressedEvent));
+        dispatcher.dispatch<MouseButtonReleasedEvent>(MINT_BIND_EVENT_FN(ImGuiLayer::onMouseButtonReleasedEvent));
+        dispatcher.dispatch<MouseMovedEvent>(MINT_BIND_EVENT_FN(ImGuiLayer::onMouseMovedEvent));
+        dispatcher.dispatch<MouseScrolledEvent>(MINT_BIND_EVENT_FN(ImGuiLayer::onMouseScrolledEvent));
+        dispatcher.dispatch<KeyTypedEvent>(MINT_BIND_EVENT_FN(ImGuiLayer::onKeyTypedEvent));
+        dispatcher.dispatch<KeyReleasedEvent>(MINT_BIND_EVENT_FN(ImGuiLayer::onKeyReleasedEvent));
+        dispatcher.dispatch<KeyPressedEvent>(MINT_BIND_EVENT_FN(ImGuiLayer::onKeyPressedEvent));
+        dispatcher.dispatch<WindowResizeEvent>(MINT_BIND_EVENT_FN(ImGuiLayer::onWindowResizedEvent));
+    }
+
+    bool ImGuiLayer::onMouseButtonPressedEvent(MouseButtonPressedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.MouseDown[e.getMouseButton()] = true;
+
+        // We don't want this function to consume the event
+        return false;
+    }
+
+    bool ImGuiLayer::onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.MouseDown[e.getMouseButton()] = false;
+
+        // We don't want this function to consume the event
+        return false;
+    }
+
+    bool ImGuiLayer::onMouseMovedEvent(MouseMovedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.MousePos = ImVec2(e.getX(), e.getY());
+
+        // We don't want this function to consume the event
+        return false;
+    }
+
+    bool ImGuiLayer::onMouseScrolledEvent(MouseScrolledEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.MouseWheel += e.getYOffset();
+        io.MouseWheelH += e.getXOffset();
+
+        // We don't want this function to consume the event
+        return false;
+    }
+
+    bool ImGuiLayer::onKeyTypedEvent(KeyTypedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        int keycode = e.getKeyCode();
+        if (keycode > 0 && keycode < 0x10000)
+            io.AddInputCharacter((unsigned short)keycode);
+
+        // We don't want this function to consume the event
+        return false;
+    }
+
+    bool ImGuiLayer::onKeyReleasedEvent(KeyReleasedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.KeysDown[e.getKeyCode()] = false;
+
+        // We don't want this function to consume the event
+        return false;
+    }
+
+    bool ImGuiLayer::onKeyPressedEvent(KeyPressedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.KeysDown[e.getKeyCode()] = true;
+        
+        io.KeyCtrl  = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+        io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+        io.KeyAlt   = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+        io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+        
+        // We don't want this function to consume the event
+        return false;
+    }
+
+    bool ImGuiLayer::onWindowResizedEvent(WindowResizeEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.DisplaySize             = ImVec2(e.getWidth(), e.getHeight());
+        io.DisplayFramebufferScale = ImVec2(1, 1);
+        // Temporary -
+        glViewport(0, 0, e.getWidth(), e.getHeight());
+
+        // We don't want this function to consume the event
+        return false;
+    }
 
 } // namespace mint
