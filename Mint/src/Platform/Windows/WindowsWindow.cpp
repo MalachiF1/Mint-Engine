@@ -7,6 +7,8 @@
 #include "Mint/Event/KeyEvent.h"
 #include "Mint/Event/MouseEvent.h"
 
+#include <glad/glad.h>
+
 namespace mint
 {
 
@@ -53,6 +55,11 @@ namespace mint
 
         m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_window);
+
+        // Initialize Glad
+        int status = gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress));
+        MINT_CORE_ASSERT(status, "Failed to initialize glad");
+
         glfwSetWindowUserPointer(m_window, &m_data);
         setVSync(true);
 

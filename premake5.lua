@@ -14,10 +14,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "Mint/vendor/GLFW/include"
+IncludeDir["Glad"] = "Mint/vendor/Glad/include"
 
-include	"Mint/vendor/GLFW"
+include "Mint/vendor/GLFW"
+include "Mint/vendor/Glad"
 
-project	"Sandbox"
+project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
@@ -67,9 +69,8 @@ project	"Sandbox"
 		buildoptions "/MD"
 		optimize "On"
 
-
 project "Mint"
-	location "Mint"
+	location "Mint" 
 	kind "SharedLib"
 	language "C++"
 
@@ -89,30 +90,33 @@ project "Mint"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links
 	{
 		"GLFW",
-		"opengl32.lib"
+		"opengl32.lib",
+		"Glad",
 	}
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
+		staticruntime "On" 
 		systemversion "latest"
 
 		defines
 		{
 			"MT_PLATFORM_WINDOWS",
-			"MINT_BUILD_DLL"
+			"MINT_BUILD_DLL",
+			"GLFW_INCLUDE_NONE" -- for Glad
 		}
 
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-		}
+	postbuildcommands
+	{
+		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+	}
 
 	filter "configurations:Debug"
 		defines
@@ -132,5 +136,3 @@ project "Mint"
 		defines "MINT_DIST"
 		buildoptions "/MD"
 		optimize "On"
-
-
