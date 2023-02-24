@@ -12,10 +12,10 @@ namespace mint
         Layer(const std::string& name = "Layer") : m_debugName(m_debugName){};
         virtual ~Layer(){};
 
-        virtual void onAttach() {}
-        virtual void onDetach() {}
-        virtual void onUpdate() {}
-        virtual void onEvent(Event& e) {}
+        virtual void onAttach()        = 0;
+        virtual void onDetach()        = 0;
+        virtual void onUpdate()        = 0;
+        virtual void onEvent(Event& e) = 0;
 
         inline const std::string& getName() const { return m_debugName; }
 
