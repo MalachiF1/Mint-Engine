@@ -1,7 +1,7 @@
 #pragma once
 #include "mtpch.h"
 
-#include "Mint/Core.h"
+#include "Mint/Core/Base.h"
 #include "Mint/Event/Event.h"
 
 namespace mint
@@ -20,7 +20,7 @@ namespace mint
 
     // This window class is an interface for the desktop platform-dependant window class (e.g WindowsWindow).
     // We will call this window class in the window api, but the implementation will be per platform.
-    class MINT_API Window
+    class Window
     {
       public:
         using EventCallbackFn = std::function<void(Event&)>;
@@ -29,9 +29,9 @@ namespace mint
 
         virtual void onUpdate() = 0;
 
-        virtual unsigned int getWidth() const           = 0;
-        virtual unsigned int getHeight() const          = 0;
-        virtual std::pair<float, float> getSize() const = 0;
+        virtual unsigned int getWidth() const                         = 0;
+        virtual unsigned int getHeight() const                        = 0;
+        virtual std::pair<unsigned int, unsigned int> getSize() const = 0;
 
         // Window attributes
         virtual void setEventCallback(const EventCallbackFn& callback) = 0;

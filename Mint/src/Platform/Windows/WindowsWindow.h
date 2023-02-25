@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mint/Window.h"
+#include "Mint/Core/Window.h"
 
 #include <GLFW/glfw3.h>
 
@@ -17,9 +17,9 @@ namespace mint
 
         inline virtual unsigned int getWidth() const override { return m_data.width; }
         inline virtual unsigned int getHeight() const override { return m_data.width; }
-        inline virtual std::pair<float, float> getSize() const override
+        inline virtual std::pair<unsigned int, unsigned int> getSize() const override
         {
-            return std::pair<float, float>(m_data.width, m_data.height);
+            return std::pair<unsigned int, unsigned int>(m_data.width, m_data.height);
         }
 
         // Window attributes

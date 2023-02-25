@@ -7,17 +7,17 @@
 // ----------------------------------------------------------------------------
 
 
-#include "Mint/Application.h"
+#include "Mint/Core/Application.h"
+#include "Mint/Core/Layer.h"
+#include "Mint/Core/Log.h"
 #include "Mint/ImGui/ImGuiLayer.h"
-#include "Mint/Layer.h"
-#include "Mint/Log.h"
 
 // ---- Input -----------------------------------------------------------------
-#include "Mint/Input.h"
-#include "Mint/KeyCodes.h"
-#include "Mint/MouseButtonCodes.h"
+#include "Mint/Core/Input.h"
+#include "Mint/Core/KeyCodes.h"
+#include "Mint/Core/MouseButtonCodes.h"
 // ----------------------------------------------------------------------------
 
 // ---- Entry Point -----------------------------------------------------------
-#include "Mint/EntryPoint.h"
+#include "Mint/Core/EntryPoint.h"
 // ----------------------------------------------------------------------------

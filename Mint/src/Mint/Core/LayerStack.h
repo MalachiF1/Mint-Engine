@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Layer.h"
-#include "Mint/Core.h"
+#include "Mint/Core/Base.h"
+#include "Mint/Core/Layer.h"
 
 #include <vector>
 

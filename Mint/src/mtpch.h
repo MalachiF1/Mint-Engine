@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mint/Log.h"
+#include "Mint/Core/Log.h"
 
 #include <algorithm>
 #include <functional>
@@ -13,6 +13,6 @@
 #include <utility>
 #include <vector>
 
-#ifdef MT_PLATFORM_WINDOWS
+#ifdef MINT_PLATFORM_WINDOWS
     #include <Windows.h>
 #endif

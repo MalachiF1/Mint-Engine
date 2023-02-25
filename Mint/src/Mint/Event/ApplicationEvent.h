@@ -5,7 +5,7 @@
 
 namespace mint
 {
-    class MINT_API WindowResizeEvent : public Event
+    class WindowResizeEvent : public Event
     {
       public:
         WindowResizeEvent(unsigned int width, unsigned int height) : m_width(width), m_height(height) {}
@@ -27,7 +27,7 @@ namespace mint
         unsigned int m_width, m_height;
     };
 
-    class MINT_API WindowCloseEvent : public Event
+    class WindowCloseEvent : public Event
     {
       public:
         WindowCloseEvent() {}
@@ -43,7 +43,7 @@ namespace mint
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-    class MINT_API WindowMovedEvent : public Event
+    class WindowMovedEvent : public Event
     {
       public:
         WindowMovedEvent(int x, int y) : m_windowX(x), m_windowY(y) {}
@@ -65,7 +65,7 @@ namespace mint
         int m_windowX, m_windowY;
     };
 
-    class MINT_API WindowFocusEvent : public Event
+    class WindowFocusEvent : public Event
     {
       public:
         WindowFocusEvent() {}
@@ -74,7 +74,7 @@ namespace mint
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-    class MINT_API WindowLostFocusEvent : public Event
+    class WindowLostFocusEvent : public Event
     {
       public:
         WindowLostFocusEvent() {}
@@ -83,7 +83,7 @@ namespace mint
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-    class MINT_API AppTickEvent : public Event
+    class AppTickEvent : public Event
     {
       public:
         AppTickEvent() {}
@@ -92,7 +92,7 @@ namespace mint
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-    class MINT_API AppUpdateEvent : public Event
+    class AppUpdateEvent : public Event
     {
       public:
         AppUpdateEvent() {}
@@ -101,7 +101,7 @@ namespace mint
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-    class MINT_API AppRenderEvent : public Event
+    class AppRenderEvent : public Event
     {
       public:
         AppRenderEvent() {}

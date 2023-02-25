@@ -2,8 +2,8 @@
 
 #include "Application.h"
 
-#include "KeyCodes.h"
-#include "Mint/Input.h"
+#include "Mint/Core/Input.h"
+#include "Mint/Core/KeyCodes.h"
 
 #include <glad/glad.h>
 

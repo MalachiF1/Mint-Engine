@@ -2,7 +2,7 @@
 
 #include "WindowsInput.h"
 
-#include "Mint/Application.h"
+#include "Mint/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 

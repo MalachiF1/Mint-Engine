@@ -2,12 +2,12 @@
 
 #include "ImGuiLayer.h"
 
-#include "Mint/Application.h"
-#include "Mint/KeyCodes.h"
+#include "Mint/Core/Application.h"
+#include "Mint/Core/KeyCodes.h"
 
-#include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+#include <imgui.h>
 
 // Temporary
 #include <GLFW/glfw3.h>

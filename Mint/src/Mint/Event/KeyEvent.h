@@ -8,7 +8,7 @@ namespace mint
 
     // Parent of key-press and key-release events.
     // The keycode is the same for both. KeyReleaseEvent doesn't need a repeat count.
-    class MINT_API KeyEvent : public Event
+    class KeyEvent : public Event
     {
       public:
         inline int getKeyCode() const { return m_keyCode; }
@@ -21,7 +21,7 @@ namespace mint
         int m_keyCode;
     };
 
-    class MINT_API KeyPressedEvent : public KeyEvent
+    class KeyPressedEvent : public KeyEvent
     {
       public:
         KeyPressedEvent(int keycode, int repeateCount) : KeyEvent(keycode), m_repeatCount(repeateCount) {}
@@ -41,7 +41,7 @@ namespace mint
         int m_repeatCount;
     };
 
-    class MINT_API KeyReleasedEvent : public KeyEvent
+    class KeyReleasedEvent : public KeyEvent
     {
       public:
         KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
@@ -56,7 +56,7 @@ namespace mint
         EVENT_CLASS_TYPE(KeyReleased)
     };
 
-    class MINT_API KeyTypedEvent : public KeyEvent
+    class KeyTypedEvent : public KeyEvent
     {
       public:
         KeyTypedEvent(int keycode) : KeyEvent(keycode) {}

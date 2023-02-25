@@ -8,7 +8,7 @@ namespace mint
 
     // Parent of key-press and key-release events.
     // The keycode is the same for both. KeyReleaseEvent doesn't need a repeat count.
-    class MINT_API MouseMovedEvent : public Event
+    class MouseMovedEvent : public Event
     {
       public:
         MouseMovedEvent(float x, float y) : m_mouseX(x), m_mouseY(y) {}
@@ -30,7 +30,7 @@ namespace mint
         float m_mouseX, m_mouseY;
     };
 
-    class MINT_API MouseScrolledEvent : public Event
+    class MouseScrolledEvent : public Event
     {
       public:
         MouseScrolledEvent(float xOffset, float yOffset) : m_xOffset(xOffset), m_yOffset(yOffset) {}
@@ -53,7 +53,7 @@ namespace mint
     };
 
     // Parent of MouseButtonPressed and MouseButtonReleased
-    class MINT_API MouseButtonEvent : public Event
+    class MouseButtonEvent : public Event
     {
       public:
         inline int getMouseButton() const { return m_button; }
@@ -65,7 +65,7 @@ namespace mint
         int m_button;
     };
 
-    class MINT_API MouseButtonPressedEvent : public MouseButtonEvent
+    class MouseButtonPressedEvent : public MouseButtonEvent
     {
       public:
         MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
@@ -80,7 +80,7 @@ namespace mint
         EVENT_CLASS_TYPE(MouseButtonPressed)
     };
 
-    class MINT_API MouseButtonReleasedEvent : public MouseButtonEvent
+    class MouseButtonReleasedEvent : public MouseButtonEvent
     {
       public:
         MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}

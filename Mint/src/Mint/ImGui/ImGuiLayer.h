@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Mint/Core.h"
+#include "Mint/Core/Base.h"
+#include "Mint/Core/Layer.h"
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/KeyEvent.h"
 #include "Mint/Event/MouseEvent.h"
-#include "Mint/Layer.h"
 
 namespace mint
 {
 
-    class MINT_API ImGuiLayer : public Layer
+    class ImGuiLayer : public Layer
     {
 
       public:

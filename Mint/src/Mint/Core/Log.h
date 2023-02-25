@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include "Mint/Core/Base.h"
 
 /* clang-format off */
 
@@ -15,7 +15,7 @@
 namespace mint
 {
 
-    class MINT_API Log
+    class Log
     {
       public:
         static void init();

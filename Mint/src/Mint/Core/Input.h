@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Mint/Core.h"
+#include "Mint/Core/Base.h"
 
 namespace mint
 {
 
-    class MINT_API Input
+    class Input
     {
       public:
         inline static bool isKeyPressed(int keycode) { return s_instance->isKeyPressedImpl(keycode); }

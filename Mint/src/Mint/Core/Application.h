@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Core.h"
-#include "Event/ApplicationEvent.h"
-#include "Event/Event.h"
+#include "Mint/Core/Base.h"
+#include "Mint/Core/LayerStack.h"
+#include "Mint/Core/Window.h"
+#include "Mint/Event/ApplicationEvent.h"
+#include "Mint/Event/Event.h"
 #include "Mint/ImGui/ImGuiLayer.h"
-#include "Mint/LayerStack.h"
-#include "Window.h"
 
 namespace mint
 {
 
-    class MINT_API Application
+    class Application
     {
       public:
         Application();

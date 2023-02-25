@@ -2,7 +2,7 @@
 
 #include "WindowsWindow.h"
 
-#include "Mint/Core.h"
+#include "Mint/Core/Base.h"
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/KeyEvent.h"
 #include "Mint/Event/MouseEvent.h"

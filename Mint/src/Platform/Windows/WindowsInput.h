@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mint/Input.h"
+#include "Mint/Core/Input.h"
 
 namespace mint
 {

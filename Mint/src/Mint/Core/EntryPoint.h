@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Mint/Core/Application.h"
+#include "Mint/Core/Base.h"
 
-#ifdef MT_PLATFORM_WINDOWS
+#ifdef MINT_PLATFORM_WINDOWS
 
 extern mint::Application* mint::createApplication();
 
@@ -18,4 +20,4 @@ int main(int argc, char** argv)
 
 #else
     #error Mint only supports windows at the moment.
-#endif // MT_PLATFORM_WINDOWS
+#endif // MINT_PLATFORM_WINDOWS

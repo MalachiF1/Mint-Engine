@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Mint/Core.h"
+#include "Mint/Core/Base.h"
 #include "Mint/Event/Event.h"
 
 namespace mint
 {
 
-    class MINT_API Layer
+    class Layer
     {
       public:
         Layer(const std::string& name = "Layer") : m_debugName(name){};
