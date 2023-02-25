@@ -16,6 +16,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Mint/vendor/GLFW/include"
 IncludeDir["Glad"] = "Mint/vendor/Glad/include"
 IncludeDir["ImGui"] = "Mint/vendor/ImGui"
+IncludeDir["glm"] = "Mint/vendor/glm"
 
 group "Dependencies"
 	include "Mint/vendor/GLFW"
@@ -41,7 +42,9 @@ project "Sandbox"
 	includedirs
 	{
 		"Mint/vendor/spdlog/include",
-		"Mint/src"
+		"Mint/src",
+		"Mint/vendor",
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -97,7 +100,8 @@ project "Mint"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 
 	links

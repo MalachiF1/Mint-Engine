@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "Event/ApplicationEvent.h"
 #include "Event/Event.h"
+#include "Mint/ImGui/ImGuiLayer.h"
 #include "Mint/LayerStack.h"
 #include "Window.h"
 
@@ -23,15 +24,16 @@ namespace mint
 
         void pushLayer(Layer* layer);
         void popLayer(Layer* layer);
-        void pushOverLay(Layer* overlay);
-        void popOverLay(Layer* overlay);
+        void pushOverlay(Layer* overlay);
+        void popOverlay(Layer* overlay);
 
         inline static Application& get() { return *s_instance; }
         inline Window& getWindow() const { return *m_window; }
 
       private:
-        std::unique_ptr<Window> m_window;
         bool m_running = true;
+        std::unique_ptr<Window> m_window;
+        ImGuiLayer* m_ImGuiLayer;
         LayerStack m_layerStack;
 
       private:

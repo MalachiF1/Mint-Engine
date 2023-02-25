@@ -18,21 +18,10 @@ namespace mint
 
         virtual void onAttach();
         virtual void onDetach();
+        virtual void onImGuiRender();
 
-        virtual void onUpdate() override;
-        virtual void onEvent(Event& e) override;
-
-      private:
-        bool onMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-        bool onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
-        bool onMouseMovedEvent(MouseMovedEvent& e);
-        bool onMouseScrolledEvent(MouseScrolledEvent& e);
-
-        bool onKeyTypedEvent(KeyTypedEvent& e);
-        bool onKeyReleasedEvent(KeyReleasedEvent& e);
-        bool onKeyPressedEvent(KeyPressedEvent& e);
-
-        bool onWindowResizedEvent(WindowResizeEvent& e);
+        void begin();
+        void end();
 
       private:
         float m_time = 0.0f;

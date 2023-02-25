@@ -1,4 +1,5 @@
 #include <Mint.h>
+#include <imgui/imgui.h>
 
 class ExampleLayer : public mint::Layer
 {
@@ -25,18 +26,18 @@ class ExampleLayer : public mint::Layer
         }
     }
 
-    virtual void onAttach() override {}
-    virtual void onDetach() override {}
+    virtual void onImGuiRender() override
+    {
+        ImGui::Begin("Test");
+        ImGui::Text("Hello world");
+        ImGui::End();
+    }
 };
 
 class Sandbox : public mint::Application
 {
   public:
-    Sandbox()
-    {
-        pushLayer(new ExampleLayer);
-        pushOverLay(new mint::ImGuiLayer);
-    }
+    Sandbox() { pushLayer(new ExampleLayer); }
 
     virtual ~Sandbox() final {}
 };

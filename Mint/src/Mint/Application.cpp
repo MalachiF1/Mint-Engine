@@ -1,8 +1,9 @@
 #include "mtpch.h"
 
 #include "Application.h"
-#include "Mint/Input.h" 
+
 #include "KeyCodes.h"
+#include "Mint/Input.h"
 
 #include <glad/glad.h>
 
@@ -18,6 +19,9 @@ namespace mint
 
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(MINT_BIND_EVENT_FN(Application::onEvent));
+
+        m_ImGuiLayer = new ImGuiLayer();
+        pushOverlay(m_ImGuiLayer);
     }
 
     Application::~Application() {}
@@ -33,12 +37,12 @@ namespace mint
         m_layerStack.popLayer(layer);
     }
 
-    void Application::pushOverLay(Layer* overlay)
+    void Application::pushOverlay(Layer* overlay)
     {
         m_layerStack.pushOverlay(overlay);
     }
 
-    void Application::popOverLay(Layer* overlay)
+    void Application::popOverlay(Layer* overlay)
     {
         m_layerStack.popOverlay(overlay);
     }
@@ -68,6 +72,11 @@ namespace mint
             glClear(GL_COLOR_BUFFER_BIT);
 
             for (Layer* layer : m_layerStack.m_layers) { layer->onUpdate(); }
+
+            m_ImGuiLayer->begin();
+            for (Layer* layer : m_layerStack.m_layers) { layer->onImGuiRender(); }
+            m_ImGuiLayer->end();
+
             m_window->onUpdate();
         }
     }
