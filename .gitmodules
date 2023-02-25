@@ -7,3 +7,6 @@
 [submodule "Mint/vendor/imgui"]
 	path = Mint/vendor/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "Mint/Vendor/glm"]
+	path = Mint/Vendor/glm
+	url = https://github.com/g-truc/glm
