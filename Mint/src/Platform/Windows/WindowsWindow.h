@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mint/Core/Window.h"
+#include "Mint/Renderer/RenderingContext.h"
 
 #include <GLFW/glfw3.h>
 
@@ -38,6 +39,8 @@ namespace mint
 
       private:
         GLFWwindow* m_window;
+
+        RenderingContext* m_context;
 
         struct WindowData
         {

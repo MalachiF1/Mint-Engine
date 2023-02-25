@@ -6,8 +6,7 @@
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/KeyEvent.h"
 #include "Mint/Event/MouseEvent.h"
-
-#include <glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace mint
 {
@@ -54,11 +53,10 @@ namespace mint
         }
 
         m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_window);
 
-        // Initialize Glad
-        int status = gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress));
-        MINT_CORE_ASSERT(status, "Failed to initialize glad");
+        m_context = new OpenGLContext(m_window);
+        m_context->init();
+
 
         glfwSetWindowUserPointer(m_window, &m_data);
         setVSync(true);
@@ -150,7 +148,7 @@ namespace mint
     void WindowsWindow::onUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_window);
+        m_context->swapBuffers();
     }
 
     void WindowsWindow::setVSync(bool enabled)
