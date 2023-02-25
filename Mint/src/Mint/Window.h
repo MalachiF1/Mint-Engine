@@ -29,14 +29,17 @@ namespace mint
 
         virtual void onUpdate() = 0;
 
-        virtual unsigned int getWidth() const  = 0;
-        virtual unsigned int getHeight() const = 0;
+        virtual unsigned int getWidth() const           = 0;
+        virtual unsigned int getHeight() const          = 0;
         virtual std::pair<float, float> getSize() const = 0;
 
         // Window attributes
         virtual void setEventCallback(const EventCallbackFn& callback) = 0;
         virtual void setVSync(bool enabled)                            = 0;
         virtual bool isVSync() const                                   = 0;
+
+        // Will return a pointer to the window object per implementation (eg. GLFWwindow*)
+        virtual void* getNativeWindow() const = 0;
 
         // To be implemented per platform
         static Window* create(const WindowProps& props = WindowProps());
