@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "Mint/Input.h" 
+#include "KeyCodes.h"
 
 #include <glad/glad.h>
 
@@ -47,7 +48,7 @@ namespace mint
         EventDispatcher dispatcher(e);
         dispatcher.dispatch<WindowCloseEvent>(MINT_BIND_EVENT_FN(Application::onWindowClose));
 
-        MINT_CORE_TRACE("{0}", e);
+        // MINT_CORE_TRACE("{0}", e);
 
         // Top layer gets the event first. If the event wasn't handled, give the event to the next layer.
         for (auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); ++it)
@@ -65,9 +66,6 @@ namespace mint
         {
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
-
-            auto [x, y] = Input::getMousePos();
-            MINT_CORE_TRACE("{0}, {1}", x, y);
 
             for (Layer* layer : m_layerStack.m_layers) { layer->onUpdate(); }
             m_window->onUpdate();

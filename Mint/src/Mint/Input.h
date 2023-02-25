@@ -10,8 +10,8 @@ namespace mint
       public:
         inline static bool isKeyPressed(int keycode) { return s_instance->isKeyPressedImpl(keycode); }
         inline static bool isMouseButtonPressed(int button) { return s_instance->isMouseButtonPressedImpl(button); }
-        inline static int getMouseX() { return s_instance->getMouseXImpl(); }
-        inline static int getMouseY() { return s_instance->getMouseYImpl(); }
+        inline static float getMouseX() { return s_instance->getMouseXImpl(); }
+        inline static float getMouseY() { return s_instance->getMouseYImpl(); }
         inline static std::pair<float, float> getMousePos() { return s_instance->getMousePosImpl(); }
 
       protected:
