@@ -64,7 +64,7 @@ namespace mint
             }
         )";
 
-        m_shader.reset(new Shader(vertexSrc, fragmentSrc));
+        m_shader.reset(Shader::create(vertexSrc, fragmentSrc));
     }
 
     Application::~Application() {}
