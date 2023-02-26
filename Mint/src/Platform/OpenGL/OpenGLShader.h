@@ -13,8 +13,8 @@ namespace mint
         OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
         virtual ~OpenGLShader();
 
-        virtual void bind() const;
-        virtual void unbind() const;
+        virtual void bind() const override;
+        virtual void unbind() const override;
 
       private:
         uint32_t m_rendererID;
