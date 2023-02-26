@@ -82,22 +82,22 @@ namespace mint
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             switch (action)
             {
-            case GLFW_PRESS: {
-                KeyPressedEvent event(key, 1);
-                data.eventCallback(event);
-                break;
-            }
-            case GLFW_RELEASE: {
-                KeyReleasedEvent event(key);
-                data.eventCallback(event);
-                break;
-            }
-            case GLFW_REPEAT: {
-                // TODO: extract repeat count
-                KeyPressedEvent event(key, 1);
-                data.eventCallback(event);
-                break;
-            }
+                case GLFW_PRESS: {
+                    KeyPressedEvent event(key, 1);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE: {
+                    KeyReleasedEvent event(key);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_REPEAT: {
+                    // TODO: extract repeat count
+                    KeyPressedEvent event(key, 1);
+                    data.eventCallback(event);
+                    break;
+                }
             }
         });
 
@@ -112,16 +112,16 @@ namespace mint
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             switch (action)
             {
-            case GLFW_PRESS: {
-                MouseButtonPressedEvent event(button);
-                data.eventCallback(event);
-                break;
-            }
-            case GLFW_RELEASE: {
-                MouseButtonReleasedEvent event(button);
-                data.eventCallback(event);
-                break;
-            }
+                case GLFW_PRESS: {
+                    MouseButtonPressedEvent event(button);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE: {
+                    MouseButtonReleasedEvent event(button);
+                    data.eventCallback(event);
+                    break;
+                }
             }
         });
 

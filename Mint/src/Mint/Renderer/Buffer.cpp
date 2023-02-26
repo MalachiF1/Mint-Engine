@@ -14,12 +14,11 @@ namespace mint
     {
         switch (Renderer::getAPI())
         {
-        case RendererAPI::None:
-            MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-            return nullptr;
+            case RendererAPI::None:
+                MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+                return nullptr;
 
-        case RendererAPI::OpenGL:
-            return new OpenGLVertexBuffer(vertices, size);
+            case RendererAPI::OpenGL: return new OpenGLVertexBuffer(vertices, size);
         }
 
         MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -32,12 +31,11 @@ namespace mint
     {
         switch (Renderer::getAPI())
         {
-        case RendererAPI::None:
-            MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-            return nullptr;
+            case RendererAPI::None:
+                MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+                return nullptr;
 
-        case RendererAPI::OpenGL:
-            return new OpenGLIndexBuffer(indices, count);
+            case RendererAPI::OpenGL: return new OpenGLIndexBuffer(indices, count);
         }
 
         MINT_CORE_ASSERT(false, "Unknown RendererAPI!");

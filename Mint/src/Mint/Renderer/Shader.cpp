@@ -12,12 +12,11 @@ namespace mint
     {
         switch (Renderer::getAPI())
         {
-        case RendererAPI::None:
-            MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-            return nullptr;
+            case RendererAPI::None:
+                MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+                return nullptr;
 
-        case RendererAPI::OpenGL:
-            return new OpenGLShader(vertexSrc, fragmentSrc);
+            case RendererAPI::OpenGL: return new OpenGLShader(vertexSrc, fragmentSrc);
         }
 
         MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
