@@ -35,6 +35,7 @@ namespace mint
         std::unique_ptr<Window> m_window;
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_layerStack;
+        unsigned int m_vertexArrray, m_vertexBuffer, m_indexBuffer;
 
       private:
         static Application* s_instance;
