@@ -22,7 +22,7 @@ namespace mint
         Bool
     };
 
-    static size_t shaderDataTypeSize(ShaderDataType type)
+    static uint32_t shaderDataTypeSize(ShaderDataType type)
     {
         switch (type)
         {
@@ -144,9 +144,9 @@ namespace mint
         virtual void bind() const   = 0;
         virtual void unbind() const = 0;
 
-        virtual uint32_t getCount() const = 0;
+        virtual size_t getCount() const = 0;
 
-        static IndexBuffer* create(uint32_t* vertices, uint32_t count);
+        static IndexBuffer* create(uint32_t* vertices, size_t count);
     };
 
 } // namespace mint

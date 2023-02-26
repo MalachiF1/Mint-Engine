@@ -12,28 +12,6 @@ namespace mint
 
     Application* Application::s_instance = nullptr;
 
-    // Temporary
-    static GLenum shaderDataTypeToOpenGLDataType(ShaderDataType type)
-    {
-        switch (type)
-        {
-            case ShaderDataType::Float: return GL_FLOAT;
-            case ShaderDataType::Float2: return GL_FLOAT;
-            case ShaderDataType::Float3: return GL_FLOAT;
-            case ShaderDataType::Float4: return GL_FLOAT;
-            case ShaderDataType::Int: return GL_INT;
-            case ShaderDataType::Int2: return GL_INT;
-            case ShaderDataType::Int3: return GL_INT;
-            case ShaderDataType::Int4: return GL_INT;
-            case ShaderDataType::Mat3: return GL_FLOAT;
-            case ShaderDataType::Mat4: return GL_FLOAT;
-            case ShaderDataType::Bool: return GL_BOOL;
-        }
-
-        MINT_CORE_ASSERT(false, "Unknown ShaderDataType!");
-        return 0;
-    }
-
     Application::Application()
     {
         MINT_CORE_ASSERT(!s_instance, "There can only be one Application instance!");
@@ -46,42 +24,32 @@ namespace mint
         pushOverlay(m_ImGuiLayer);
 
 
-        glGenVertexArrays(1, &m_vertexArrray);
-        glBindVertexArray(m_vertexArrray);
+        m_vertexArrray.reset(VertexArray::create());
 
         float vertices[] = {
             // Positions        // Colors
-            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // vertex 1
-            0.5,   -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // vertex 2
-            0.0f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 1.0f  // vertex3
+            -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.3f, 1.0f, // vertex 1
+            0.5,   -0.5f, 0.0f, 0.3f, 0.8f, 0.2f, 1.0f, // vertex 2
+            0.5f,  0.5f,  0.0f, 0.2f, 0.3f, 0.8f, 1.0f, // vertex 3
+            -0.5f, 0.5f,  0.0f, 0.8f, 0.8f, 0.3f, 1.0f  // vertex 4
         };
 
-        m_vertexBuffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
+        std::shared_ptr<VertexBuffer> vertexBuffer =
+            std::shared_ptr<VertexBuffer>(VertexBuffer::create(vertices, sizeof(vertices)));
 
-        {
-            BufferLayout layout = { { ShaderDataType::Float3, "a_Pos" }, { ShaderDataType::Float4, "a_Color" } };
+        BufferLayout layout = { { ShaderDataType::Float3, "a_Pos" }, { ShaderDataType::Float4, "a_Color" } };
+        vertexBuffer->setLayout(layout);
+        m_vertexArrray->addVertexBuffer(vertexBuffer);
 
-            m_vertexBuffer->setLayout(layout);
-        }
+        uint32_t indices[] = {
+            0, 1, 2, // triangle 1
+            2, 3, 0  // triangle 2
+        };
 
-        uint32_t index     = 0;
-        const auto& layout = m_vertexBuffer->getLayout();
-        for (const auto& element : layout.getElements()) // layout.elements
-        {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(
-                index,
-                element.getComponentCount(),
-                shaderDataTypeToOpenGLDataType(element.type),
-                element.normalized ? GL_TRUE : GL_FALSE,
-                layout.getStride(),
-                (const void*)element.offset
-            );
-            ++index;
-        }
+        std::shared_ptr<IndexBuffer> indexBuffer =
+            std::shared_ptr<IndexBuffer>(IndexBuffer::create(indices, std::size(indices)));
 
-        uint32_t indices[] = { 0, 1, 2 };
-        m_indexBuffer.reset(IndexBuffer::create(indices, std::size(indices)));
+        m_vertexArrray->setIndexBuffer(indexBuffer);
 
 
         std::string vertexSrc = R"(
@@ -166,8 +134,8 @@ namespace mint
             glClear(GL_COLOR_BUFFER_BIT);
 
             m_shader->bind();
-            glBindVertexArray(m_vertexArrray);
-            glDrawElements(GL_TRIANGLES, m_indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
+            m_vertexArrray->bind();
+            glDrawElements(GL_TRIANGLES, m_vertexArrray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 
             for (auto layer : m_layerStack.getLayers()) { layer->onUpdate(); }
 

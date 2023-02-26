@@ -27,7 +27,7 @@ namespace mint
     // Index Buffer
     // ----------------------------------------------------------------------------
 
-    IndexBuffer* IndexBuffer::create(uint32_t* indices, uint32_t count)
+    IndexBuffer* IndexBuffer::create(uint32_t* indices, size_t count)
     {
         switch (Renderer::getAPI())
         {

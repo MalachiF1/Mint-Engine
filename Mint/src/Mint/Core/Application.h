@@ -8,6 +8,7 @@
 #include "Mint/ImGui/ImGuiLayer.h"
 #include "Mint/Renderer/Buffer.h"
 #include "Mint/Renderer/Shader.h"
+#include "Mint/Renderer/VertexArray.h"
 
 namespace mint
 {
@@ -37,10 +38,8 @@ namespace mint
         std::unique_ptr<Window> m_window;
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_layerStack;
-        unsigned int m_vertexArrray;
-        std::unique_ptr<Shader> m_shader;
-        std::unique_ptr<VertexBuffer> m_vertexBuffer;
-        std::unique_ptr<IndexBuffer> m_indexBuffer;
+        std::shared_ptr<Shader> m_shader;
+        std::shared_ptr<VertexArray> m_vertexArrray;
 
       private:
         static Application* s_instance;
