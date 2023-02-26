@@ -6,6 +6,7 @@
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/Event.h"
 #include "Mint/ImGui/ImGuiLayer.h"
+#include "Mint/Renderer/Shader.h"
 
 namespace mint
 {
@@ -36,6 +37,7 @@ namespace mint
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_layerStack;
         unsigned int m_vertexArrray, m_vertexBuffer, m_indexBuffer;
+        std::unique_ptr<Shader> m_shader;
 
       private:
         static Application* s_instance;

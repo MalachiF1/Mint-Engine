@@ -41,6 +41,36 @@ namespace mint
 
         unsigned int indices[] = { 0, 1, 2 };
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
+        std::string vertexSrc = R"(
+            #version 330 core
+
+            layout(location = 0) in vec3 a_Pos;
+
+            out vec3 v_Pos;
+            
+            void main()
+            {
+                v_Pos = a_Pos;
+                gl_Position = vec4(a_Pos, 1);
+            }
+        )";
+
+        std::string fragmentSrc = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec3 v_Pos;
+            
+            void main()
+            {
+                color = vec4(v_Pos * 0.5 + 0.5, 1.0);
+            }
+        )";
+
+        m_shader.reset(new Shader(vertexSrc, fragmentSrc));
     }
 
     Application::~Application() {}
@@ -90,6 +120,7 @@ namespace mint
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            m_shader->bind();
             glBindVertexArray(m_vertexArrray);
             glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
