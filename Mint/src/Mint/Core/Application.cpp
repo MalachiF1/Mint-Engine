@@ -23,24 +23,18 @@ namespace mint
         m_ImGuiLayer = new ImGuiLayer();
         pushOverlay(m_ImGuiLayer);
 
+
         glGenVertexArrays(1, &m_vertexArrray);
         glBindVertexArray(m_vertexArrray);
 
-        glGenBuffers(1, &m_vertexBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-
         float vertices[] = { -0.5f, -0.5f, 0.0f, 0.5, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f };
-
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        m_vertexBuffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-        glGenBuffers(1, &m_indexBuffer);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-
-        unsigned int indices[] = { 0, 1, 2 };
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        uint32_t indices[] = { 0, 1, 2 };
+        m_indexBuffer.reset(IndexBuffer::create(indices, std::size(indices)));
 
 
         std::string vertexSrc = R"(
@@ -122,7 +116,7 @@ namespace mint
 
             m_shader->bind();
             glBindVertexArray(m_vertexArrray);
-            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, m_indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
 
             for (Layer* layer : m_layerStack.m_layers) { layer->onUpdate(); }
 
