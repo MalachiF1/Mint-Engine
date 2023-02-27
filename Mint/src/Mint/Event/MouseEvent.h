@@ -16,7 +16,7 @@ namespace mint
         inline float getX() const { return m_mouseX; }
         inline float getY() const { return m_mouseY; }
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "MouseMovedEvent: " << m_mouseX << ", " << m_mouseY;
@@ -38,7 +38,7 @@ namespace mint
         inline float getXOffset() const { return m_xOffset; }
         inline float getYOffset() const { return m_yOffset; }
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "MouseScrolledEvent: " << m_xOffset << ", " << m_yOffset;
@@ -70,7 +70,7 @@ namespace mint
       public:
         MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "MouseButtonPressedEvent: " << getMouseButton();
@@ -85,7 +85,7 @@ namespace mint
       public:
         MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "MouseButtonReleasedEvent: " << getMouseButton();

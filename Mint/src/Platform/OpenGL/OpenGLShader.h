@@ -11,10 +11,10 @@ namespace mint
     {
       public:
         OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
-        virtual ~OpenGLShader();
+        virtual ~OpenGLShader() final;
 
-        virtual void bind() const override;
-        virtual void unbind() const override;
+        virtual void bind() const override final;
+        virtual void unbind() const override final;
 
       private:
         uint32_t m_rendererID;

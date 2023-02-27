@@ -6,13 +6,13 @@ class ExampleLayer : public mint::Layer
   public:
     ExampleLayer() : Layer("Example") {}
 
-    virtual void onUpdate() override
+    virtual void onUpdate() override final
     {
         if (mint::Input::isKeyPressed(MINT_KEY_TAB))
             MINT_TRACE("TAB key was pressed! (Poll)");
     }
 
-    virtual void onEvent(mint::Event& event) override
+    virtual void onEvent(mint::Event& event) override final
     {
         if (event.getEventType() == mint::EventType::KeyPressed)
         {
@@ -26,7 +26,7 @@ class ExampleLayer : public mint::Layer
         }
     }
 
-    virtual void onImGuiRender() override
+    virtual void onImGuiRender() override final
     {
         ImGui::Begin("Test");
         ImGui::Text("Hello world");

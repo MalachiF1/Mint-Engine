@@ -28,7 +28,7 @@ namespace mint
 
         inline int getRepeatCount() const { return m_repeatCount; }
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "KeyPressedEvent: " << m_keyCode << " (" << m_repeatCount << " repeates)";
@@ -46,7 +46,7 @@ namespace mint
       public:
         KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "KeyReleasedEvent: " << m_keyCode;
@@ -61,7 +61,7 @@ namespace mint
       public:
         KeyTypedEvent(int keycode) : KeyEvent(keycode) {}
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "KeyTypedEvent: " << m_keyCode;

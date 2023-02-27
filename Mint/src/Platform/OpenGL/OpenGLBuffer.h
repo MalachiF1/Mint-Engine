@@ -12,13 +12,13 @@ namespace mint
     {
       public:
         OpenGLVertexBuffer(float* vertices, size_t size);
-        virtual ~OpenGLVertexBuffer();
+        virtual ~OpenGLVertexBuffer() final;
 
-        virtual void bind() const override;
-        virtual void unbind() const override;
+        virtual void bind() const override final;
+        virtual void unbind() const override final;
 
-        inline virtual const BufferLayout& getLayout() const override { return m_layout; }
-        inline virtual void setLayout(const BufferLayout& layout) override { m_layout = layout; };
+        inline virtual const BufferLayout& getLayout() const override final { return m_layout; }
+        inline virtual void setLayout(const BufferLayout& layout) override final { m_layout = layout; };
 
       private:
         uint32_t m_rendererID;
@@ -32,12 +32,12 @@ namespace mint
     {
       public:
         OpenGLIndexBuffer(uint32_t* indices, size_t count);
-        virtual ~OpenGLIndexBuffer();
+        virtual ~OpenGLIndexBuffer() final;
 
-        virtual void bind() const override;
-        virtual void unbind() const override;
+        virtual void bind() const override final;
+        virtual void unbind() const override final;
 
-        inline virtual size_t getCount() const override { return m_count; }
+        inline virtual size_t getCount() const override final { return m_count; }
 
       private:
         uint32_t m_rendererID;

@@ -13,7 +13,7 @@ namespace mint
         inline unsigned int getWidth() const { return m_width; }
         inline unsigned int getHeight() const { return m_height; }
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "WindowResizeEvent: " << m_width << ", " << m_height;
@@ -32,7 +32,7 @@ namespace mint
       public:
         WindowCloseEvent() {}
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "WindowCloseEvent";
@@ -51,7 +51,7 @@ namespace mint
         inline unsigned int getX() const { return m_windowX; }
         inline unsigned int getY() const { return m_windowY; }
 
-        std::string toString() const override
+        std::string toString() const override final
         {
             std::stringstream ss;
             ss << "WindowMovedEvent: " << m_windowX << ", " << m_windowY;

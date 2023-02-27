@@ -9,19 +9,22 @@ namespace mint
     {
       public:
         OpenGLVertexArray();
-        virtual ~OpenGLVertexArray();
+        virtual ~OpenGLVertexArray() final;
 
-        virtual void bind() const override;
-        virtual void unbind() const override;
+        virtual void bind() const override final;
+        virtual void unbind() const override final;
 
-        inline virtual const std::vector<std::shared_ptr<VertexBuffer>> getVertexBuffers() const override
+        inline virtual const std::vector<std::shared_ptr<VertexBuffer>> getVertexBuffers() const override final
         {
             return m_vertexBuffers;
         }
-        inline virtual const std::shared_ptr<IndexBuffer> getIndexBuffer() const override { return m_indexBuffer; }
+        inline virtual const std::shared_ptr<IndexBuffer> getIndexBuffer() const override final
+        {
+            return m_indexBuffer;
+        }
 
-        virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) override;
-        virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) override;
+        virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) override final;
+        virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) override final;
 
       private:
         std::vector<std::shared_ptr<VertexBuffer>> m_vertexBuffers;

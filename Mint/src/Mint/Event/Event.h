@@ -47,17 +47,17 @@ namespace mint
     {                                                                                                                  \
         return EventType::##type;                                                                                      \
     }                                                                                                                  \
-    virtual EventType getEventType() const override                                                                    \
+    virtual EventType getEventType() const override final                                                              \
     {                                                                                                                  \
         return getStaticType();                                                                                        \
     }                                                                                                                  \
-    virtual const char* getName() const override                                                                       \
+    virtual const char* getName() const override final                                                                 \
     {                                                                                                                  \
         return #type;                                                                                                  \
     }
 
 #define EVENT_CLASS_CATEGORY(category)                                                                                 \
-    virtual int getCategoryFlags() const override                                                                      \
+    virtual int getCategoryFlags() const override final                                                                \
     {                                                                                                                  \
         return category;                                                                                               \
     }

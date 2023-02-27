@@ -12,8 +12,8 @@ namespace mint
       public:
         OpenGLContext(GLFWwindow* windowHandle);
 
-        virtual void init() override;
-        virtual void swapBuffers() override;
+        virtual void init() override final;
+        virtual void swapBuffers() override final;
 
       private:
         GLFWwindow* m_windowHandle;
