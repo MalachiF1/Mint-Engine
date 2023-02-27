@@ -1,21 +1,19 @@
 #pragma once
 
+#include "Mint/Renderer/RenderCommand.h"
+
 namespace mint
 {
-
-    enum class RendererAPI
-    {
-        None   = 0,
-        OpenGL = 1,
-    };
 
     class Renderer
     {
       public:
-        inline static RendererAPI getAPI() { return s_rendererAPI; }
+        static void beginScene();
+        static void endScene();
 
-      private:
-        static RendererAPI s_rendererAPI;
+        static void submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+        inline static RenderAPI::API getAPI() { return RenderAPI::getAPI(); }
     };
 
 } // namespace mint

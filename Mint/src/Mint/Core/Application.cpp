@@ -4,8 +4,7 @@
 
 #include "Mint/Core/Input.h"
 #include "Mint/Core/KeyCodes.h"
-
-#include <glad/glad.h>
+#include "Mint/Renderer/Renderer.h"
 
 namespace mint
 {
@@ -24,7 +23,7 @@ namespace mint
         pushOverlay(m_ImGuiLayer);
 
 
-        m_vertexArrray.reset(VertexArray::create());
+        m_vertexArray.reset(VertexArray::create());
 
         float vertices[] = {
             // Positions        // Colors
@@ -39,7 +38,7 @@ namespace mint
 
         BufferLayout layout = { { ShaderDataType::Float3, "a_Pos" }, { ShaderDataType::Float4, "a_Color" } };
         vertexBuffer->setLayout(layout);
-        m_vertexArrray->addVertexBuffer(vertexBuffer);
+        m_vertexArray->addVertexBuffer(vertexBuffer);
 
         uint32_t indices[] = {
             0, 1, 2, // triangle 1
@@ -49,7 +48,7 @@ namespace mint
         std::shared_ptr<IndexBuffer> indexBuffer =
             std::shared_ptr<IndexBuffer>(IndexBuffer::create(indices, std::size(indices)));
 
-        m_vertexArrray->setIndexBuffer(indexBuffer);
+        m_vertexArray->setIndexBuffer(indexBuffer);
 
 
         std::string vertexSrc = R"(
@@ -130,12 +129,13 @@ namespace mint
     {
         while (m_running)
         {
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            RenderCommand::setClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
+            RenderCommand::clear();
 
+            Renderer::beginScene();
             m_shader->bind();
-            m_vertexArrray->bind();
-            glDrawElements(GL_TRIANGLES, m_vertexArrray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+            Renderer::submit(m_vertexArray);
+            Renderer::endScene();
 
             for (auto layer : m_layerStack.getLayers()) { layer->onUpdate(); }
 
