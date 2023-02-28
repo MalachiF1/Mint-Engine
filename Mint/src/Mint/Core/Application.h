@@ -6,6 +6,7 @@
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/Event.h"
 #include "Mint/ImGui/ImGuiLayer.h"
+#include "Mint/Renderer/OrthographicCamera.h"
 #include "Mint/Renderer/Shader.h"
 #include "Mint/Renderer/VertexArray.h"
 
@@ -34,6 +35,7 @@ namespace mint
 
       private:
         bool m_running = true;
+        OrthographicCamera m_camera;
         std::unique_ptr<Window> m_window;
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_layerStack;

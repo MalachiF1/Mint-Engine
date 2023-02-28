@@ -11,7 +11,7 @@ namespace mint
 
     Application* Application::s_instance = nullptr;
 
-    Application::Application()
+    Application::Application() : m_camera(OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f))
     {
         MINT_CORE_ASSERT(!s_instance, "There can only be one Application instance!");
         s_instance = this;
@@ -57,6 +57,8 @@ namespace mint
             layout(location = 0) in vec3 a_Pos;
             layout(location = 1) in vec4 a_Color;
 
+            uniform mat4 u_ViewProjection;
+
             out vec3 v_Pos;
             out vec4 v_Color;
             
@@ -64,7 +66,7 @@ namespace mint
             {
                 v_Pos = a_Pos;
                 v_Color = a_Color;
-                gl_Position = vec4(a_Pos, 1);
+                gl_Position = u_ViewProjection * vec4(a_Pos, 1);
             }
         )";
 
@@ -132,9 +134,11 @@ namespace mint
             RenderCommand::setClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
             RenderCommand::clear();
 
-            Renderer::beginScene();
-            m_shader->bind();
-            Renderer::submit(m_vertexArray);
+            m_camera.setPosition({ 0.5f, 0.5f, 0.0f });
+            m_camera.setRotation(45.0f);
+
+            Renderer::beginScene(m_camera);
+            Renderer::submit(m_shader, m_vertexArray);
             Renderer::endScene();
 
             for (auto layer : m_layerStack.getLayers()) { layer->onUpdate(); }
