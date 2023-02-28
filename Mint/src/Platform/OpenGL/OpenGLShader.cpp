@@ -3,6 +3,7 @@
 #include "OpenGLShader.h"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace mint
 {
@@ -124,6 +125,79 @@ namespace mint
     void OpenGLShader::unbind() const
     {
         glUseProgram(0);
+    }
+
+    int OpenGLShader::getUniformLocation(const std::string& name)
+    {
+        if (m_uniformLocationCache.find(name) != m_uniformLocationCache.end())
+            return m_uniformLocationCache[name];
+
+        int location;
+        location = glGetUniformLocation(m_rendererID, name.c_str());
+        if (location == -1)
+        {
+            MINT_CORE_WARN("Warning: uniform {0} doesn't exist!", name);
+        }
+        m_uniformLocationCache[name] = location;
+        return location;
+    }
+
+
+    void OpenGLShader::setUniformBool(const std::string& name, bool value)
+    {
+        glUniform1i(getUniformLocation(name), (int)value);
+    }
+    void OpenGLShader::setUniformInt(const std::string& name, int value)
+    {
+        glUniform1i(getUniformLocation(name), value);
+    }
+    void OpenGLShader::setUniformUint(const std::string& name, unsigned int value)
+    {
+        glUniform1ui(getUniformLocation(name), value);
+    }
+    void OpenGLShader::setUniformFloat(const std::string& name, float value)
+    {
+        glUniform1f(getUniformLocation(name), value);
+    }
+
+    void OpenGLShader::setUniformVec2(const std::string& name, const glm::vec2& value)
+    {
+        glUniform2fv(getUniformLocation(name), 1, glm::value_ptr(value));
+    }
+    void OpenGLShader::setUniformVec2(const std::string& name, float x, float y)
+    {
+        glUniform2f(getUniformLocation(name), x, y);
+    }
+
+    void OpenGLShader::setUniformVec3(const std::string& name, const glm::vec3& value)
+    {
+        glUniform3fv(getUniformLocation(name), 1, glm::value_ptr(value));
+    }
+    void OpenGLShader::setUniformVec3(const std::string& name, float x, float y, float z)
+    {
+        glUniform3f(getUniformLocation(name), x, y, z);
+    }
+
+    void OpenGLShader::setUniformVec4(const std::string& name, const glm::vec4& value)
+    {
+        glUniform4fv(getUniformLocation(name), 1, glm::value_ptr(value));
+    }
+    void OpenGLShader::setUniformVec4(const std::string& name, float x, float y, float z, float w)
+    {
+        glUniform4f(getUniformLocation(name), x, y, z, w);
+    }
+
+    void OpenGLShader::setUniformMat2(const std::string& name, const glm::mat2& mat)
+    {
+        glUniformMatrix2fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
+    }
+    void OpenGLShader::setUniformMat3(const std::string& name, const glm::mat3& mat)
+    {
+        glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
+    }
+    void OpenGLShader::setUniformMat4(const std::string& name, const glm::mat4& mat)
+    {
+        glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
     }
 
 } // namespace mint
