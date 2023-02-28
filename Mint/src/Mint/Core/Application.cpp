@@ -2,16 +2,12 @@
 
 #include "Application.h"
 
-#include "Mint/Core/Input.h"
-#include "Mint/Core/KeyCodes.h"
-#include "Mint/Renderer/Renderer.h"
-
 namespace mint
 {
 
     Application* Application::s_instance = nullptr;
 
-    Application::Application() : m_camera(OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f))
+    Application::Application()
     {
         MINT_CORE_ASSERT(!s_instance, "There can only be one Application instance!");
         s_instance = this;
@@ -21,70 +17,6 @@ namespace mint
 
         m_ImGuiLayer = new ImGuiLayer();
         pushOverlay(m_ImGuiLayer);
-
-
-        m_vertexArray.reset(VertexArray::create());
-
-        float vertices[] = {
-            // Positions        // Colors
-            -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.3f, 1.0f, // vertex 1
-            0.5,   -0.5f, 0.0f, 0.3f, 0.8f, 0.2f, 1.0f, // vertex 2
-            0.5f,  0.5f,  0.0f, 0.2f, 0.3f, 0.8f, 1.0f, // vertex 3
-            -0.5f, 0.5f,  0.0f, 0.8f, 0.8f, 0.3f, 1.0f  // vertex 4
-        };
-
-        std::shared_ptr<VertexBuffer> vertexBuffer =
-            std::shared_ptr<VertexBuffer>(VertexBuffer::create(vertices, sizeof(vertices)));
-
-        BufferLayout layout = { { ShaderDataType::Float3, "a_Pos" }, { ShaderDataType::Float4, "a_Color" } };
-        vertexBuffer->setLayout(layout);
-        m_vertexArray->addVertexBuffer(vertexBuffer);
-
-        uint32_t indices[] = {
-            0, 1, 2, // triangle 1
-            2, 3, 0  // triangle 2
-        };
-
-        std::shared_ptr<IndexBuffer> indexBuffer =
-            std::shared_ptr<IndexBuffer>(IndexBuffer::create(indices, std::size(indices)));
-
-        m_vertexArray->setIndexBuffer(indexBuffer);
-
-
-        std::string vertexSrc = R"(
-            #version 330 core
-
-            layout(location = 0) in vec3 a_Pos;
-            layout(location = 1) in vec4 a_Color;
-
-            uniform mat4 u_ViewProjection;
-
-            out vec3 v_Pos;
-            out vec4 v_Color;
-            
-            void main()
-            {
-                v_Pos = a_Pos;
-                v_Color = a_Color;
-                gl_Position = u_ViewProjection * vec4(a_Pos, 1);
-            }
-        )";
-
-        std::string fragmentSrc = R"(
-            #version 330 core
-
-            layout(location = 0) out vec4 color;
-
-            in vec3 v_Pos;
-            in vec4 v_Color;
-            
-            void main()
-            {
-                color = v_Color;
-            }
-        )";
-
-        m_shader.reset(Shader::create(vertexSrc, fragmentSrc));
     }
 
     Application::~Application() {}
@@ -131,16 +63,6 @@ namespace mint
     {
         while (m_running)
         {
-            RenderCommand::setClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
-            RenderCommand::clear();
-
-            m_camera.setPosition({ 0.5f, 0.5f, 0.0f });
-            m_camera.setRotation(45.0f);
-
-            Renderer::beginScene(m_camera);
-            Renderer::submit(m_shader, m_vertexArray);
-            Renderer::endScene();
-
             for (auto layer : m_layerStack.getLayers()) { layer->onUpdate(); }
 
             m_ImGuiLayer->begin();

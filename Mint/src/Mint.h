@@ -12,6 +12,15 @@
 #include "Mint/Core/Log.h"
 #include "Mint/ImGui/ImGuiLayer.h"
 
+// ---- Rendering -------------------------------------------------------------
+#include "Mint/Renderer/Buffer.h"
+#include "Mint/Renderer/OrthographicCamera.h"
+#include "Mint/Renderer/RenderCommand.h"
+#include "Mint/Renderer/Renderer.h"
+#include "Mint/Renderer/Shader.h"
+#include "Mint/Renderer/VertexArray.h"
+// ----------------------------------------------------------------------------
+
 // ---- Input -----------------------------------------------------------------
 #include "Mint/Core/Input.h"
 #include "Mint/Core/KeyCodes.h"
