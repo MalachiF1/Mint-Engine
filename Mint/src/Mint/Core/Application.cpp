@@ -2,6 +2,10 @@
 
 #include "Application.h"
 
+#include "Mint/Core/Timestep.h"
+
+#include <GLFW/glfw3.h>
+
 namespace mint
 {
 
@@ -58,12 +62,15 @@ namespace mint
         }
     }
 
-
     void Application::run()
     {
         while (m_running)
         {
-            for (auto layer : m_layerStack.getLayers()) { layer->onUpdate(); }
+            float currentTime = (float)glfwGetTime(); // impelentation will move to Platform
+            Timestep timestep = currentTime - m_lastFrameTime;
+            m_lastFrameTime   = currentTime;
+
+            for (auto layer : m_layerStack.getLayers()) { layer->onUpdate(timestep); }
 
             m_ImGuiLayer->begin();
             for (auto layer : m_layerStack.getLayers()) { layer->onImGuiRender(); }
@@ -79,6 +86,5 @@ namespace mint
 
         return true;
     }
-
 
 } // namespace mint

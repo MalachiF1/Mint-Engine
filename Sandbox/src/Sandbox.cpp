@@ -70,7 +70,7 @@ class ExampleLayer : public mint::Layer
         m_shader.reset(mint::Shader::create(vertexSrc, fragmentSrc));
     }
 
-    virtual void onUpdate() override final
+    virtual void onUpdate(mint::Timestep ts) override final
     {
         mint::RenderCommand::setClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
         mint::RenderCommand::clear();
@@ -84,22 +84,22 @@ class ExampleLayer : public mint::Layer
 
         // Camera Movement
         if (mint::Input::isKeyPressed(MINT_KEY_W))
-            m_cameraPosition.y += m_cameraMoveSpeed;
+            m_cameraPosition.y += m_cameraMoveSpeed * ts;
 
         if (mint::Input::isKeyPressed(MINT_KEY_S))
-            m_cameraPosition.y -= m_cameraMoveSpeed;
+            m_cameraPosition.y -= m_cameraMoveSpeed * ts;
 
         if (mint::Input::isKeyPressed(MINT_KEY_D))
-            m_cameraPosition.x += m_cameraMoveSpeed;
+            m_cameraPosition.x += m_cameraMoveSpeed * ts;
 
         if (mint::Input::isKeyPressed(MINT_KEY_A))
-            m_cameraPosition.x -= m_cameraMoveSpeed;
+            m_cameraPosition.x -= m_cameraMoveSpeed * ts;
 
         if (mint::Input::isKeyPressed(MINT_KEY_E))
-            m_cameraRotation -= m_cameraRotationSpeed;
+            m_cameraRotation -= m_cameraRotationSpeed * ts;
 
         if (mint::Input::isKeyPressed(MINT_KEY_Q))
-            m_cameraRotation += m_cameraRotationSpeed;
+            m_cameraRotation += m_cameraRotationSpeed * ts;
     }
 
   private:
@@ -108,8 +108,8 @@ class ExampleLayer : public mint::Layer
     mint::OrthographicCamera m_camera;
     glm::vec3 m_cameraPosition  = glm::vec3(0.0f);
     float m_cameraRotation      = 0.0f;
-    float m_cameraMoveSpeed     = 0.1f;
-    float m_cameraRotationSpeed = 3.0f;
+    float m_cameraMoveSpeed     = 1.5f;
+    float m_cameraRotationSpeed = 50.0f;
 };
 
 class Sandbox : public mint::Application

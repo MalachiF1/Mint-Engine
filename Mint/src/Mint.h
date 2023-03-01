@@ -10,6 +10,7 @@
 #include "Mint/Core/Application.h"
 #include "Mint/Core/Layer.h"
 #include "Mint/Core/Log.h"
+#include "Mint/Core/Timestep.h"
 #include "Mint/ImGui/ImGuiLayer.h"
 
 // ---- Rendering -------------------------------------------------------------

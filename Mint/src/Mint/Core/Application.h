@@ -2,6 +2,7 @@
 
 #include "Mint/Core/Base.h"
 #include "Mint/Core/LayerStack.h"
+#include "Mint/Core/Timestep.h"
 #include "Mint/Core/Window.h"
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/Event.h"
@@ -18,10 +19,6 @@ namespace mint
 
         void run();
 
-        void onEvent(Event& e);
-
-        bool onWindowClose(WindowCloseEvent& e);
-
         void pushLayer(Layer* layer);
         void popLayer(Layer* layer);
         void pushOverlay(Layer* overlay);
@@ -31,10 +28,15 @@ namespace mint
         inline Window& getWindow() const { return *m_window; }
 
       private:
+        void onEvent(Event& e);
+        bool onWindowClose(WindowCloseEvent& e);
+
+      private:
         bool m_running = true;
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_layerStack;
         std::unique_ptr<Window> m_window;
+        float m_lastFrameTime = 0.0f;
 
       private:
         static Application* s_instance;

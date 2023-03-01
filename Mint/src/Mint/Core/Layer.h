@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mint/Core/Base.h"
+#include "Mint/Core/Timestep.h"
 #include "Mint/Event/Event.h"
 
 namespace mint
@@ -14,7 +15,7 @@ namespace mint
 
         virtual void onAttach() {}
         virtual void onDetach() {}
-        virtual void onUpdate() {}
+        virtual void onUpdate(Timestep timestep) {}
         virtual void onEvent(Event& e) {}
         virtual void onImGuiRender() {}
 
