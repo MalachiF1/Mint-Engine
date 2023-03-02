@@ -1,27 +1,32 @@
+#include <Platform/OpenGL/OpenGLShader.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <imgui/imgui.h>
 #include <mint.h>
 
 class ExampleLayer : public mint::Layer
 {
   public:
-    ExampleLayer() : Layer("Example"), m_camera(-1.6f, 1.6f, -0.9f, 0.9f)
+    ExampleLayer() :
+        Layer("Example"), m_camera(-1.6f, 1.6f, -0.9f, 0.9f), m_squareColor(glm::vec4(0.5f, 0.5f, 0.8f, 1.0f))
     {
         m_vertexArray.reset(mint::VertexArray::create());
 
         float vertices[] = {
-            // Positions        // Colors
-            -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.3f, 1.0f, // vertex 1
-            0.5,   -0.5f, 0.0f, 0.3f, 0.8f, 0.2f, 1.0f, // vertex 2
-            0.5f,  0.5f,  0.0f, 0.2f, 0.3f, 0.8f, 1.0f, // vertex 3
-            -0.5f, 0.5f,  0.0f, 0.8f, 0.8f, 0.3f, 1.0f  // vertex 4
+            // Positions
+            -0.5f, -0.5f, 0.0f, // vertex 1
+            0.5,   -0.5f, 0.0f, // vertex 2
+            0.5f,  0.5f,  0.0f, // vertex 3
+            -0.5f, 0.5f,  0.0f, // vertex 4
         };
 
         std::shared_ptr<mint::VertexBuffer> vertexBuffer =
             std::shared_ptr<mint::VertexBuffer>(mint::VertexBuffer::create(vertices, sizeof(vertices)));
 
-        mint::BufferLayout layout = { { mint::ShaderDataType::Float3, "a_Pos" },
-                                      { mint::ShaderDataType::Float4, "a_Color" } };
+        mint::BufferLayout layout = {
+            { mint::ShaderDataType::Float3, "a_Pos" },
+        };
         vertexBuffer->setLayout(layout);
         m_vertexArray->addVertexBuffer(vertexBuffer);
 
@@ -40,18 +45,15 @@ class ExampleLayer : public mint::Layer
             #version 330 core
 
             layout(location = 0) in vec3 a_Pos;
-            layout(location = 1) in vec4 a_Color;
 
             uniform mat4 u_ViewProjection;
             uniform mat4 u_Transform;
 
             out vec3 v_Pos;
-            out vec4 v_Color;
             
             void main()
             {
                 v_Pos = a_Pos;
-                v_Color = a_Color;
                 gl_Position = u_ViewProjection * u_Transform * vec4(a_Pos, 1);
             }
         )";
@@ -61,12 +63,14 @@ class ExampleLayer : public mint::Layer
 
             layout(location = 0) out vec4 color;
 
+            uniform vec4 u_Color;
+
             in vec3 v_Pos;
             in vec4 v_Color;
             
             void main()
             {
-                color = v_Color;
+                color = u_Color;
             }
         )";
 
@@ -82,6 +86,10 @@ class ExampleLayer : public mint::Layer
         m_camera.setRotation(m_cameraRotation);
 
         mint::Renderer::beginScene(m_camera);
+
+        std::dynamic_pointer_cast<mint::OpenGLShader>(m_shader)->bind();
+        std::dynamic_pointer_cast<mint::OpenGLShader>(m_shader)->setUniformFloat4("u_Color", m_squareColor);
+
         for (int i = 0; i < 20; ++i)
         {
             for (int j = 0; j < 20; ++j)
@@ -92,6 +100,7 @@ class ExampleLayer : public mint::Layer
                 mint::Renderer::submit(m_shader, m_vertexArray, transform);
             }
         }
+
         mint::Renderer::endScene();
 
         // Camera Movement
@@ -114,6 +123,13 @@ class ExampleLayer : public mint::Layer
             m_cameraRotation += m_cameraRotationSpeed * ts;
     }
 
+    virtual void onImGuiRender() override
+    {
+        ImGui::Begin("Settings");
+        ImGui::ColorEdit3("Square Color", glm::value_ptr(m_squareColor));
+        ImGui::End();
+    }
+
   private:
     std::shared_ptr<mint::Shader> m_shader;
     std::shared_ptr<mint::VertexArray> m_vertexArray;
@@ -122,6 +138,8 @@ class ExampleLayer : public mint::Layer
     float m_cameraRotation      = 0.0f;
     float m_cameraMoveSpeed     = 1.5f;
     float m_cameraRotationSpeed = 50.0f;
+
+    glm::vec4 m_squareColor;
 };
 
 class Sandbox : public mint::Application

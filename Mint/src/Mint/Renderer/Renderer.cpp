@@ -2,6 +2,8 @@
 
 #include "Renderer.h"
 
+#include "Platform/OpenGL/OpenGLShader.h"
+
 namespace mint
 {
 
@@ -22,8 +24,10 @@ namespace mint
     )
     {
         shader->bind();
-        shader->setUniformMat4("u_ViewProjection", m_sceneData->viewProjectionMatrix);
-        shader->setUniformMat4("u_Transform", transform);
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4(
+            "u_ViewProjection", m_sceneData->viewProjectionMatrix
+        );
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4("u_Transform", transform);
 
         vertexArray->bind();
         RenderCommand::drawIndexed(vertexArray);

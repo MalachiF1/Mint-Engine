@@ -160,29 +160,29 @@ namespace mint
         glUniform1f(getUniformLocation(name), value);
     }
 
-    void OpenGLShader::setUniformVec2(const std::string& name, const glm::vec2& value)
+    void OpenGLShader::setUniformFloat2(const std::string& name, const glm::vec2& value)
     {
         glUniform2fv(getUniformLocation(name), 1, glm::value_ptr(value));
     }
-    void OpenGLShader::setUniformVec2(const std::string& name, float x, float y)
+    void OpenGLShader::setUniformFloat2(const std::string& name, float x, float y)
     {
         glUniform2f(getUniformLocation(name), x, y);
     }
 
-    void OpenGLShader::setUniformVec3(const std::string& name, const glm::vec3& value)
+    void OpenGLShader::setUniformFloat3(const std::string& name, const glm::vec3& value)
     {
         glUniform3fv(getUniformLocation(name), 1, glm::value_ptr(value));
     }
-    void OpenGLShader::setUniformVec3(const std::string& name, float x, float y, float z)
+    void OpenGLShader::setUniformFloat3(const std::string& name, float x, float y, float z)
     {
         glUniform3f(getUniformLocation(name), x, y, z);
     }
 
-    void OpenGLShader::setUniformVec4(const std::string& name, const glm::vec4& value)
+    void OpenGLShader::setUniformFloat4(const std::string& name, const glm::vec4& value)
     {
         glUniform4fv(getUniformLocation(name), 1, glm::value_ptr(value));
     }
-    void OpenGLShader::setUniformVec4(const std::string& name, float x, float y, float z, float w)
+    void OpenGLShader::setUniformFloat4(const std::string& name, float x, float y, float z, float w)
     {
         glUniform4f(getUniformLocation(name), x, y, z, w);
     }

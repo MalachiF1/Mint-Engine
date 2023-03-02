@@ -2,8 +2,9 @@
 
 #include "Mint/Renderer/Shader.h"
 
-#include <string>
 #include <glm/glm.hpp>
+#include <string>
+#include <unordered_map>
 
 namespace mint
 {
@@ -18,23 +19,23 @@ namespace mint
         virtual void unbind() const override final;
 
         // Uniform setter functions
-        virtual void setUniformBool(const std::string& name, bool value) override final;
-        virtual void setUniformInt(const std::string& name, int value) override final;
-        virtual void setUniformUint(const std::string& name, unsigned int value) override final;
-        virtual void setUniformFloat(const std::string& name, float value) override final;
+        void setUniformBool(const std::string& name, bool value);
+        void setUniformInt(const std::string& name, int value);
+        void setUniformUint(const std::string& name, unsigned int value);
+        void setUniformFloat(const std::string& name, float value);
 
-        virtual void setUniformVec2(const std::string& name, const glm::vec2& value) override final;
-        virtual void setUniformVec2(const std::string& name, float x, float y) override final;
+        void setUniformFloat2(const std::string& name, const glm::vec2& value);
+        void setUniformFloat2(const std::string& name, float x, float y);
 
-        virtual void setUniformVec3(const std::string& name, const glm::vec3& value) override final;
-        virtual void setUniformVec3(const std::string& name, float x, float y, float z) override final;
+        void setUniformFloat3(const std::string& name, const glm::vec3& value);
+        void setUniformFloat3(const std::string& name, float x, float y, float z);
 
-        virtual void setUniformVec4(const std::string& name, const glm::vec4& value) override final;
-        virtual void setUniformVec4(const std::string& name, float x, float y, float z, float w) override final;
+        void setUniformFloat4(const std::string& name, const glm::vec4& value);
+        void setUniformFloat4(const std::string& name, float x, float y, float z, float w);
 
-        virtual void setUniformMat2(const std::string& name, const glm::mat2& mat) override final;
-        virtual void setUniformMat3(const std::string& name, const glm::mat3& mat) override final;
-        virtual void setUniformMat4(const std::string& name, const glm::mat4& mat) override final;
+        void setUniformMat2(const std::string& name, const glm::mat2& mat);
+        void setUniformMat3(const std::string& name, const glm::mat3& mat);
+        void setUniformMat4(const std::string& name, const glm::mat4& mat);
 
       private:
         // Get the location of a uniform (and possibly add the location to the uniform location cache)
