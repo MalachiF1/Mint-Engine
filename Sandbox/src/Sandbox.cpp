@@ -1,3 +1,5 @@
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <mint.h>
 
 class ExampleLayer : public mint::Layer
@@ -41,6 +43,7 @@ class ExampleLayer : public mint::Layer
             layout(location = 1) in vec4 a_Color;
 
             uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
 
             out vec3 v_Pos;
             out vec4 v_Color;
@@ -49,7 +52,7 @@ class ExampleLayer : public mint::Layer
             {
                 v_Pos = a_Pos;
                 v_Color = a_Color;
-                gl_Position = u_ViewProjection * vec4(a_Pos, 1);
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Pos, 1);
             }
         )";
 
@@ -79,7 +82,16 @@ class ExampleLayer : public mint::Layer
         m_camera.setRotation(m_cameraRotation);
 
         mint::Renderer::beginScene(m_camera);
-        mint::Renderer::submit(m_shader, m_vertexArray);
+        for (int i = 0; i < 20; ++i)
+        {
+            for (int j = 0; j < 20; ++j)
+            {
+                glm::vec3 pos(i * 0.11f, j * 0.11f, 0.0f);
+                glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
+                transform           = glm::scale(transform, glm::vec3(0.1f));
+                mint::Renderer::submit(m_shader, m_vertexArray, transform);
+            }
+        }
         mint::Renderer::endScene();
 
         // Camera Movement
