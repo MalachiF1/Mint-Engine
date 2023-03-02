@@ -11,7 +11,7 @@ namespace mint
         virtual void setClearColor(glm::vec4& color) override final;
         virtual void clear() override final;
 
-        virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override final;
+        virtual void drawIndexed(const Ref<VertexArray>& vertexArray) override final;
     };
 
 } // namespace mint

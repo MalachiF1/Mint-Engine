@@ -21,8 +21,8 @@ class ExampleLayer : public mint::Layer
             -0.5f, 0.5f,  0.0f, // vertex 4
         };
 
-        std::shared_ptr<mint::VertexBuffer> vertexBuffer =
-            std::shared_ptr<mint::VertexBuffer>(mint::VertexBuffer::create(vertices, sizeof(vertices)));
+        mint::Ref<mint::VertexBuffer> vertexBuffer =
+            mint::Ref<mint::VertexBuffer>(mint::VertexBuffer::create(vertices, sizeof(vertices)));
 
         mint::BufferLayout layout = {
             { mint::ShaderDataType::Float3, "a_Pos" },
@@ -35,8 +35,8 @@ class ExampleLayer : public mint::Layer
             2, 3, 0  // triangle 2
         };
 
-        std::shared_ptr<mint::IndexBuffer> indexBuffer =
-            std::shared_ptr<mint::IndexBuffer>(mint::IndexBuffer::create(indices, std::size(indices)));
+        mint::Ref<mint::IndexBuffer> indexBuffer =
+            mint::Ref<mint::IndexBuffer>(mint::IndexBuffer::create(indices, std::size(indices)));
 
         m_vertexArray->setIndexBuffer(indexBuffer);
 
@@ -131,8 +131,8 @@ class ExampleLayer : public mint::Layer
     }
 
   private:
-    std::shared_ptr<mint::Shader> m_shader;
-    std::shared_ptr<mint::VertexArray> m_vertexArray;
+    mint::Ref<mint::Shader> m_shader;
+    mint::Ref<mint::VertexArray> m_vertexArray;
     mint::OrthographicCamera m_camera;
     glm::vec3 m_cameraPosition  = glm::vec3(0.0f);
     float m_cameraRotation      = 0.0f;

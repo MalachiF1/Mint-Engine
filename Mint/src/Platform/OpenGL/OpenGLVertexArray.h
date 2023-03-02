@@ -14,7 +14,7 @@ namespace mint
         virtual void bind() const override final;
         virtual void unbind() const override final;
 
-        inline virtual const std::vector<std::shared_ptr<VertexBuffer>> getVertexBuffers() const override final
+        inline virtual const std::vector<Ref<VertexBuffer>> getVertexBuffers() const override final
         {
             return m_vertexBuffers;
         }
@@ -23,12 +23,12 @@ namespace mint
             return m_indexBuffer;
         }
 
-        virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) override final;
-        virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) override final;
+        virtual void addVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) override final;
+        virtual void setIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override final;
 
       private:
-        std::vector<std::shared_ptr<VertexBuffer>> m_vertexBuffers;
-        std::shared_ptr<IndexBuffer> m_indexBuffer;
+        std::vector<Ref<VertexBuffer>> m_vertexBuffers;
+        Ref<IndexBuffer> m_indexBuffer;
         uint32_t m_rendererID;
     };
 

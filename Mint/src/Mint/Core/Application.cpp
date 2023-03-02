@@ -16,7 +16,7 @@ namespace mint
         MINT_CORE_ASSERT(!s_instance, "There can only be one Application instance!");
         s_instance = this;
 
-        m_window = std::unique_ptr<Window>(Window::create());
+        m_window = Scope<Window>(Window::create());
         m_window->setEventCallback(MINT_BIND_EVENT_FN(Application::onEvent));
 
         m_ImGuiLayer = new ImGuiLayer();

@@ -35,7 +35,7 @@ namespace mint
         bool m_running = true;
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_layerStack;
-        std::unique_ptr<Window> m_window;
+        Scope<Window> m_window;
         float m_lastFrameTime = 0.0f;
 
       private:

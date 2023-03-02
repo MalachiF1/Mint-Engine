@@ -11,7 +11,7 @@ namespace mint
         inline static void setClearColor(glm::vec4& color) { s_renderAPI->setClearColor(color); }
         inline static void clear() { s_renderAPI->clear(); }
 
-        inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
+        inline static void drawIndexed(const Ref<VertexArray>& vertexArray)
         {
             s_renderAPI->drawIndexed(vertexArray);
         }
