@@ -18,6 +18,8 @@ namespace mint
         };
 
       public:
+        virtual void init()                          = 0;
+
         virtual void setClearColor(glm::vec4& color) = 0;
         virtual void clear()                         = 0;
 

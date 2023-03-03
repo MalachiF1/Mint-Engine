@@ -78,7 +78,7 @@ class ExampleLayer : public mint::Layer
             #version 330 core
 
             layout(location = 0) in vec3 a_Pos;
-            layout(location = 0) in vec2 a_TexCoords;
+            layout(location = 1) in vec2 a_TexCoords;
 
             uniform mat4 u_ViewProjection;
             uniform mat4 u_Transform;
@@ -109,9 +109,9 @@ class ExampleLayer : public mint::Layer
 
         m_textureShader = mint::Shader::create(textureVertexSrc, textureFragmentSrc);
 
-        m_texture = mint::Texture2D::create("assets/textures/Checkerboard.png");
+        m_checkerboardTexture = mint::Texture2D::create("assets/textures/Checkerboard.png");
+        m_awesomefaceTexture  = mint::Texture2D::create("assets/textures/awesomeface.png");
 
-        m_texture->bind();
         std::dynamic_pointer_cast<mint::OpenGLShader>(m_textureShader)->bind();
         std::dynamic_pointer_cast<mint::OpenGLShader>(m_textureShader)->setUniformInt("u_Texture", 0);
     }
@@ -140,6 +140,10 @@ class ExampleLayer : public mint::Layer
             }
         }
 
+        m_checkerboardTexture->bind(0);
+        mint::Renderer::submit(m_textureShader, m_vertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+        m_awesomefaceTexture->bind(0);
         mint::Renderer::submit(m_textureShader, m_vertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
         mint::Renderer::endScene();
@@ -174,7 +178,7 @@ class ExampleLayer : public mint::Layer
   private:
     mint::Ref<mint::Shader> m_flatColorShader;
     mint::Ref<mint::Shader> m_textureShader;
-    mint::Ref<mint::Texture2D> m_texture;
+    mint::Ref<mint::Texture2D> m_checkerboardTexture, m_awesomefaceTexture;
     mint::Ref<mint::VertexArray> m_vertexArray;
     mint::OrthographicCamera m_camera;
     glm::vec3 m_cameraPosition  = glm::vec3(0.0f);

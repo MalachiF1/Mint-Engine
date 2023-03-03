@@ -9,6 +9,10 @@ namespace mint
 
     Renderer::SceneData* Renderer::m_sceneData = new Renderer::SceneData;
 
+    void Renderer::init() {
+        RenderCommand::init();
+    }
+
     void Renderer::beginScene(OrthographicCamera& camera)
     {
         m_sceneData->viewProjectionMatrix = camera.getViewProjectionMatrix();

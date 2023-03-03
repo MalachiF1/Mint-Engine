@@ -7,6 +7,7 @@ namespace mint
 
     class OpenGLRenderAPI : public RenderAPI
     {
+        virtual void init() override final;
 
         virtual void setClearColor(glm::vec4& color) override final;
         virtual void clear() override final;

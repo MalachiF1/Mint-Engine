@@ -3,6 +3,7 @@
 #include "Application.h"
 
 #include "Mint/Core/Timestep.h"
+#include "Mint/Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>
 
@@ -18,6 +19,8 @@ namespace mint
 
         m_window = Scope<Window>(Window::create());
         m_window->setEventCallback(MINT_BIND_EVENT_FN(Application::onEvent));
+
+        Renderer::init();
 
         m_ImGuiLayer = new ImGuiLayer();
         pushOverlay(m_ImGuiLayer);
