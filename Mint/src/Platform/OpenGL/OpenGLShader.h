@@ -16,8 +16,10 @@ namespace mint
     {
       public:
         OpenGLShader(const std::string& path);
-        OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+        OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
         virtual ~OpenGLShader() final;
+
+        inline virtual const std::string& getName() const override final { return m_name; }
 
         virtual void bind() const override final;
         virtual void unbind() const override final;
@@ -50,6 +52,7 @@ namespace mint
 
       private:
         uint32_t m_rendererID;
+        std::string m_name;
         std::unordered_map<std::string, int> m_uniformLocationCache;
     };
 

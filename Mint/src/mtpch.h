@@ -3,6 +3,7 @@
 #include "Mint/Core/Log.h"
 
 #include <algorithm>
+#include <array>
 #include <functional>
 #include <iostream>
 #include <memory>

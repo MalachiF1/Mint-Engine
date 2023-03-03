@@ -70,7 +70,9 @@ namespace mint
     {
         // Get a program object.
         GLuint program = glCreateProgram();
-        std::vector<GLuint> glShaderIDs(shaderSources.size());
+        MINT_CORE_ASSERT(shaderSources.size() <= 2, "Currently only supporting 2 shaders");
+        std::array<GLuint, 2> glShaderIDs;
+        int glShaderIDIndex = 0;
 
         for (auto&& [type, src] : shaderSources)
         {
@@ -107,7 +109,7 @@ namespace mint
             // Shader was successfully compiled.
             // Now attach our shader to our program
             glAttachShader(program, shader);
-            glShaderIDs.push_back(shader);
+            glShaderIDs[glShaderIDIndex++] = shader;
         }
 
         // Link our program
@@ -147,9 +149,18 @@ namespace mint
         std::string shaderSrc                                 = readFile(path);
         std::unordered_map<GLenum, std::string> shaderSources = preProcess(shaderSrc);
         compile(shaderSources);
+
+        // Extract file name
+        size_t lastSlash = path.find_last_of("/\\");
+        lastSlash        = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+        size_t lastDot   = path.rfind('.');
+        size_t count     = lastDot == std::string::npos ? path.size() - lastSlash : lastDot - lastSlash;
+
+        m_name = path.substr(lastSlash, count);
     }
 
-    OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+    OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc) :
+        m_name(name)
     {
         std::unordered_map<GLenum, std::string> sources;
         sources[GL_VERTEX_SHADER]   = vertexSrc;
