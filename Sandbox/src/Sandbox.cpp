@@ -74,6 +74,46 @@ class ExampleLayer : public mint::Layer
 
         m_flatColorShader = mint::Shader::create(flatColorVertexSrc, flatColorFragmentSrc);
 
+        std::string textureVertexSrc = R"(
+            #version 330 core
+
+            layout(location = 0) in vec3 a_Pos;
+            layout(location = 0) in vec2 a_TexCoords;
+
+            uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
+
+            out vec2 v_TexCoords;
+            
+            void main()
+            {
+                v_TexCoords = a_TexCoords;
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Pos, 1);
+            }
+        )";
+
+        std::string textureFragmentSrc = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec2 v_TexCoords;
+
+            uniform sampler2D u_Texture;
+            
+            void main()
+            {
+                color = texture(u_Texture, v_TexCoords);
+            }
+        )";
+
+        m_textureShader = mint::Shader::create(textureVertexSrc, textureFragmentSrc);
+
+        m_texture = mint::Texture2D::create("assets/textures/Checkerboard.png");
+
+        m_texture->bind();
+        std::dynamic_pointer_cast<mint::OpenGLShader>(m_textureShader)->bind();
+        std::dynamic_pointer_cast<mint::OpenGLShader>(m_textureShader)->setUniformInt("u_Texture", 0);
     }
 
     virtual void onUpdate(mint::Timestep ts) override final
@@ -99,6 +139,8 @@ class ExampleLayer : public mint::Layer
                 mint::Renderer::submit(m_flatColorShader, m_vertexArray, transform);
             }
         }
+
+        mint::Renderer::submit(m_textureShader, m_vertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
         mint::Renderer::endScene();
 
@@ -131,6 +173,8 @@ class ExampleLayer : public mint::Layer
 
   private:
     mint::Ref<mint::Shader> m_flatColorShader;
+    mint::Ref<mint::Shader> m_textureShader;
+    mint::Ref<mint::Texture2D> m_texture;
     mint::Ref<mint::VertexArray> m_vertexArray;
     mint::OrthographicCamera m_camera;
     glm::vec3 m_cameraPosition  = glm::vec3(0.0f);

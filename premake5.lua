@@ -17,6 +17,7 @@ IncludeDir["GLFW"] = "Mint/vendor/GLFW/include"
 IncludeDir["Glad"] = "Mint/vendor/Glad/include"
 IncludeDir["ImGui"] = "Mint/vendor/ImGui"
 IncludeDir["glm"] = "Mint/vendor/glm"
+IncludeDir["stb_image"] = "Mint/vendor/stb_image"
 
 group "Dependencies"
 	include "Mint/vendor/GLFW"
@@ -41,6 +42,8 @@ project "Mint"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 	}
 
 	defines
@@ -55,7 +58,8 @@ project "Mint"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links
