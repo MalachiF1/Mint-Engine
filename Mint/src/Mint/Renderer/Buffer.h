@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Mint/Core/Base.h"
+
 namespace mint
 {
 
@@ -129,7 +131,7 @@ namespace mint
         virtual const BufferLayout& getLayout() const      = 0;
         virtual void setLayout(const BufferLayout& layout) = 0;
 
-        static VertexBuffer* create(float* vertices, size_t size);
+        static Ref<VertexBuffer> create(float* vertices, size_t size);
     };
 
 
@@ -146,7 +148,7 @@ namespace mint
 
         virtual size_t getCount() const = 0;
 
-        static IndexBuffer* create(uint32_t* vertices, size_t count);
+        static Ref<IndexBuffer> create(uint32_t* vertices, size_t count);
     };
 
 } // namespace mint

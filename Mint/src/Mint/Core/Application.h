@@ -2,7 +2,6 @@
 
 #include "Mint/Core/Base.h"
 #include "Mint/Core/LayerStack.h"
-#include "Mint/Core/Timestep.h"
 #include "Mint/Core/Window.h"
 #include "Mint/Event/ApplicationEvent.h"
 #include "Mint/Event/Event.h"

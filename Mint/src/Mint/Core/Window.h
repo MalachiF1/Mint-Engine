@@ -42,7 +42,7 @@ namespace mint
         virtual void* getNativeWindow() const = 0;
 
         // To be implemented per platform
-        static Window* create(const WindowProps& props = WindowProps());
+        static Scope<Window> create(const WindowProps& props = WindowProps());
     };
 
 } // namespace mint

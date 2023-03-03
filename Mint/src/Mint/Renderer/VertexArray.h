@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Mint/Core/Base.h"
 #include "Mint/Renderer/Buffer.h"
 
 #include <memory>
@@ -21,7 +22,7 @@ namespace mint
         virtual void addVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) = 0;
         virtual void setIndexBuffer(const Ref<IndexBuffer>& indexBuffer)    = 0;
 
-        static VertexArray* create();
+        static Ref<VertexArray> create();
     };
 
 } // namespace mint

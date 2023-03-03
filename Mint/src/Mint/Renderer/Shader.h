@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Mint/Core/Base.h"
+
 #include <string>
 
 namespace mint
@@ -13,7 +15,7 @@ namespace mint
         virtual void bind() const   = 0;
         virtual void unbind() const = 0;
 
-        static Shader* create(const std::string& vertexSrc, const std::string& fragmentSrc);
+        static Ref<Shader> create(const std::string& vertexSrc, const std::string& fragmentSrc);
     };
 
 } // namespace mint

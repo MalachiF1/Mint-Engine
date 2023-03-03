@@ -7,7 +7,7 @@
 
 namespace mint
 {
-    VertexArray* VertexArray::create()
+    Ref<VertexArray> VertexArray::create()
     {
         switch (Renderer::getAPI())
         {
@@ -15,7 +15,7 @@ namespace mint
                 MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
                 return nullptr;
 
-            case RenderAPI::API::OpenGL: return new OpenGLVertexArray();
+            case RenderAPI::API::OpenGL: return CreateRef<OpenGLVertexArray>();
         }
 
         MINT_CORE_ASSERT(false, "Unknown RendererAPI!");

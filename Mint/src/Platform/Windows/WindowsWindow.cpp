@@ -18,9 +18,9 @@ namespace mint
         MINT_CORE_ERROR("GLFW ERROR ({0}): {1}", error, discription);
     }
 
-    Window* Window::create(const WindowProps& props)
+    Scope<Window> Window::create(const WindowProps& props)
     {
-        return new WindowsWindow(props);
+        return CreateScope<WindowsWindow>(props);
     }
 
     WindowsWindow::WindowsWindow(const WindowProps& props)

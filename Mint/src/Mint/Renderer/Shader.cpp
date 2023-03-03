@@ -8,7 +8,7 @@
 namespace mint
 {
 
-    Shader* Shader::create(const std::string& vertexSrc, const std::string& fragmentSrc)
+    Ref<Shader> Shader::create(const std::string& vertexSrc, const std::string& fragmentSrc)
     {
         switch (Renderer::getAPI())
         {
@@ -16,7 +16,7 @@ namespace mint
                 MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
                 return nullptr;
 
-            case RenderAPI::API::OpenGL: return new OpenGLShader(vertexSrc, fragmentSrc);
+            case RenderAPI::API::OpenGL: return CreateRef<OpenGLShader>(vertexSrc, fragmentSrc);
         }
 
         MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
