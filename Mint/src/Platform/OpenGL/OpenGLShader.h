@@ -6,12 +6,16 @@
 #include <string>
 #include <unordered_map>
 
+// Temporary (will add glad.h include instead, after i remove it from sandbox.cpp)
+typedef unsigned int GLenum;
+
 namespace mint
 {
 
     class OpenGLShader : public Shader
     {
       public:
+        OpenGLShader(const std::string& path);
         OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
         virtual ~OpenGLShader() final;
 
@@ -39,6 +43,9 @@ namespace mint
 
       private:
         // Get the location of a uniform (and possibly add the location to the uniform location cache)
+        std::string readFile(const std::string& path);
+        std::unordered_map<GLenum, std::string> preProcess(const std::string& src);
+        void compile(const std::unordered_map<GLenum, std::string>& shaderSources);
         int getUniformLocation(const std::string& name);
 
       private:
