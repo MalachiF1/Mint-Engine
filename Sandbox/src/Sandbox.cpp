@@ -9,7 +9,7 @@ class ExampleLayer : public mint::Layer
 {
   public:
     ExampleLayer() :
-        Layer("Example"), m_camera(-1.6f, 1.6f, -0.9f, 0.9f), m_squareColor(glm::vec4(0.5f, 0.5f, 0.8f, 1.0f))
+        Layer("Example"), m_cameraController(1200.0f / 720.0f, true), m_squareColor(glm::vec4(0.5f, 0.5f, 0.8f, 1.0f))
     {
         m_vertexArray = mint::VertexArray::create();
 
@@ -85,13 +85,12 @@ class ExampleLayer : public mint::Layer
 
     virtual void onUpdate(mint::Timestep ts) override final
     {
-        mint::RenderCommand::setClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
+        m_cameraController.onUpdate(ts);
+
+        mint::RenderCommand::setClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
         mint::RenderCommand::clear();
 
-        m_camera.setPosition(m_cameraPosition);
-        m_camera.setRotation(m_cameraRotation);
-
-        mint::Renderer::beginScene(m_camera);
+        mint::Renderer::beginScene(m_cameraController.getCamera());
 
         auto flatColorShader = m_shaderLibrary.get("flatColor");
         std::dynamic_pointer_cast<mint::OpenGLShader>(flatColorShader)->bind();
@@ -116,26 +115,9 @@ class ExampleLayer : public mint::Layer
         mint::Renderer::submit(textureShader, m_vertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
         mint::Renderer::endScene();
-
-        // Camera Movement
-        if (mint::Input::isKeyPressed(MINT_KEY_W))
-            m_cameraPosition.y += m_cameraMoveSpeed * ts;
-
-        if (mint::Input::isKeyPressed(MINT_KEY_S))
-            m_cameraPosition.y -= m_cameraMoveSpeed * ts;
-
-        if (mint::Input::isKeyPressed(MINT_KEY_D))
-            m_cameraPosition.x += m_cameraMoveSpeed * ts;
-
-        if (mint::Input::isKeyPressed(MINT_KEY_A))
-            m_cameraPosition.x -= m_cameraMoveSpeed * ts;
-
-        if (mint::Input::isKeyPressed(MINT_KEY_E))
-            m_cameraRotation -= m_cameraRotationSpeed * ts;
-
-        if (mint::Input::isKeyPressed(MINT_KEY_Q))
-            m_cameraRotation += m_cameraRotationSpeed * ts;
     }
+
+    virtual void onEvent(mint::Event& e) override { m_cameraController.onEvent(e); }
 
     virtual void onImGuiRender() override
     {
@@ -148,11 +130,7 @@ class ExampleLayer : public mint::Layer
     mint::ShaderLibrary m_shaderLibrary; // will be moved to renderer
     mint::Ref<mint::Texture2D> m_checkerboardTexture, m_awesomefaceTexture;
     mint::Ref<mint::VertexArray> m_vertexArray;
-    mint::OrthographicCamera m_camera;
-    glm::vec3 m_cameraPosition  = glm::vec3(0.0f);
-    float m_cameraRotation      = 0.0f;
-    float m_cameraMoveSpeed     = 1.5f;
-    float m_cameraRotationSpeed = 50.0f;
+    mint::OrthographicCameraController m_cameraController;
 
     glm::vec4 m_squareColor;
 };

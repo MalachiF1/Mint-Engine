@@ -19,6 +19,10 @@ namespace mint
             glm::vec3 pos  = glm::vec3(0.0f, 0.0f, 0.0f)
         );
 
+        void setProjection(
+            float left, float right, float bottom, float top, float camNear = -1.0f, float camFar = 1.0f
+        );
+
         inline const glm::vec3& getPosition() const { return m_position; }
         inline float getRotation() const { return m_rotation; }
 
