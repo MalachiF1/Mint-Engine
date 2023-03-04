@@ -11,6 +11,8 @@ namespace mint
 
     static GLenum shaderTypeFromString(const std::string& type)
     {
+        MINT_PROFILE_FUNCTION();
+
         if (type == "vertex")
             return GL_VERTEX_SHADER;
         if (type == "fragment" || type == "pixel")
@@ -22,6 +24,8 @@ namespace mint
 
     std::string OpenGLShader::readFile(const std::string& path)
     {
+        MINT_PROFILE_FUNCTION();
+
         std::string result;
         std::ifstream in(path, std::ios::in | std::ios::binary);
         if (in)
@@ -42,6 +46,8 @@ namespace mint
 
     std::unordered_map<GLenum, std::string> OpenGLShader::preProcess(const std::string& src)
     {
+        MINT_PROFILE_FUNCTION();
+
         std::unordered_map<GLenum, std::string> shaderSources;
 
         const char* typeToken  = "#type";
@@ -68,6 +74,8 @@ namespace mint
 
     void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shaderSources)
     {
+        MINT_PROFILE_FUNCTION();
+
         // Get a program object.
         GLuint program = glCreateProgram();
         MINT_CORE_ASSERT(shaderSources.size() <= 2, "Currently only supporting 2 shaders");
@@ -146,6 +154,8 @@ namespace mint
 
     OpenGLShader::OpenGLShader(const std::string& path)
     {
+        MINT_PROFILE_FUNCTION();
+
         std::string shaderSrc                                 = readFile(path);
         std::unordered_map<GLenum, std::string> shaderSources = preProcess(shaderSrc);
         compile(shaderSources);
@@ -162,6 +172,8 @@ namespace mint
     OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc) :
         m_name(name)
     {
+        MINT_PROFILE_FUNCTION();
+
         std::unordered_map<GLenum, std::string> sources;
         sources[GL_VERTEX_SHADER]   = vertexSrc;
         sources[GL_FRAGMENT_SHADER] = fragmentSrc;
@@ -170,69 +182,101 @@ namespace mint
 
     OpenGLShader::~OpenGLShader()
     {
+        MINT_PROFILE_FUNCTION();
+
         glDeleteProgram(m_rendererID);
     }
 
     void OpenGLShader::bind() const
     {
+        MINT_PROFILE_FUNCTION();
+
         glUseProgram(m_rendererID);
     }
 
     void OpenGLShader::unbind() const
     {
+        MINT_PROFILE_FUNCTION();
+
         glUseProgram(0);
     }
 
     void OpenGLShader::setBool(const std::string& name, bool value)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformBool(name, value);
     }
     void OpenGLShader::setInt(const std::string& name, int value)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformInt(name, value);
     }
     void OpenGLShader::setUint(const std::string& name, unsigned int value)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformUint(name, value);
     }
     void OpenGLShader::setFloat(const std::string& name, float value)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformFloat(name, value);
     }
     void OpenGLShader::setFloat2(const std::string& name, const glm::vec2& value)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformFloat2(name, value);
     }
     void OpenGLShader::setFloat2(const std::string& name, float x, float y)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformFloat2(name, x, y);
     }
     void OpenGLShader::setFloat3(const std::string& name, const glm::vec3& value)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformFloat3(name, value);
     }
     void OpenGLShader::setFloat3(const std::string& name, float x, float y, float z)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformFloat3(name, x, y, z);
     }
     void OpenGLShader::setFloat4(const std::string& name, const glm::vec4& value)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformFloat4(name, value);
     }
     void OpenGLShader::setFloat4(const std::string& name, float x, float y, float z, float w)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformFloat4(name, x, y, z, w);
     }
     void OpenGLShader::setMat2(const std::string& name, const glm::mat2& mat)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformMat2(name, mat);
     }
     void OpenGLShader::setMat3(const std::string& name, const glm::mat3& mat)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformMat3(name, mat);
     }
     void OpenGLShader::setMat4(const std::string& name, const glm::mat4& mat)
     {
+        MINT_PROFILE_FUNCTION();
+
         uploadUniformMat4(name, mat);
     }
 

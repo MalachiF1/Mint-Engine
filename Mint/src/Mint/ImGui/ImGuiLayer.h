@@ -14,11 +14,10 @@ namespace mint
 
       public:
         ImGuiLayer();
-        virtual ~ImGuiLayer() final;
+        virtual ~ImGuiLayer() override final;
 
-        virtual void onAttach() final;
-        virtual void onDetach() final;
-        virtual void onImGuiRender() final;
+        virtual void onAttach() override final;
+        virtual void onDetach() override final;
 
         void begin();
         void end();

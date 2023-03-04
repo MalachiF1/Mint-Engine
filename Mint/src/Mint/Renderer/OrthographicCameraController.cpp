@@ -17,6 +17,8 @@ namespace mint
 
     void OrthographicCameraController::onUpdate(Timestep ts)
     {
+        MINT_PROFILE_FUNCTION();
+
         if (Input::isKeyPressed(MINT_KEY_W))
             m_cameraPosition.y += m_cameraTranslationSpeed * ts;
 
@@ -46,6 +48,8 @@ namespace mint
 
     void OrthographicCameraController::onEvent(Event& e)
     {
+        MINT_PROFILE_FUNCTION();
+
         EventDispatcher dispatcher(e);
         dispatcher.dispatch<MouseScrolledEvent>(MINT_BIND_EVENT_FN(OrthographicCameraController::onMouseScrolled));
         dispatcher.dispatch<WindowResizeEvent>(MINT_BIND_EVENT_FN(OrthographicCameraController::onWindowResized));
@@ -53,6 +57,8 @@ namespace mint
 
     bool OrthographicCameraController::onMouseScrolled(MouseScrolledEvent& e)
     {
+        MINT_PROFILE_FUNCTION();
+
         m_zoomLevel -= e.getYOffset() * 0.25f;
         m_zoomLevel = std::max(m_zoomLevel, 0.25f);
         m_camera.setProjection(-m_aspectRatio * m_zoomLevel, m_aspectRatio * m_zoomLevel, -m_zoomLevel, m_zoomLevel);
@@ -62,6 +68,8 @@ namespace mint
 
     bool OrthographicCameraController::onWindowResized(WindowResizeEvent& e)
     {
+        MINT_PROFILE_FUNCTION();
+
         m_aspectRatio = (float)e.getWidth() / (float)e.getHeight();
         m_camera.setProjection(-m_aspectRatio * m_zoomLevel, m_aspectRatio * m_zoomLevel, -m_zoomLevel, m_zoomLevel);
 

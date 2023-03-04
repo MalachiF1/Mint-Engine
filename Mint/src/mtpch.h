@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mint/Core/Log.h"
+#include "Mint/Utility/Debug/Instrumentor.h"
 
 #include <algorithm>
 #include <array>

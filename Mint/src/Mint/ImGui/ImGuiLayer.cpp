@@ -21,6 +21,8 @@ namespace mint
 
     void ImGuiLayer::onAttach()
     {
+        MINT_PROFILE_FUNCTION();
+
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -55,19 +57,17 @@ namespace mint
 
     void ImGuiLayer::onDetach()
     {
+        MINT_PROFILE_FUNCTION();
+
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::onImGuiRender()
-    {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
-    }
-
     void ImGuiLayer::begin()
     {
+        MINT_PROFILE_FUNCTION();
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -75,20 +75,30 @@ namespace mint
 
     void ImGuiLayer::end()
     {
+        MINT_PROFILE_FUNCTION();
+
         ImGuiIO& io      = ImGui::GetIO();
         Application& app = Application::get();
         io.DisplaySize   = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());
 
         // Rendering
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
+            MINT_PROFILE_SCOPE("ImGuiLayer render");
+
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        }
+
+        {
+            MINT_PROFILE_SCOPE("ImGuiLayer update context");
+
+            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+            {
+                GLFWwindow* backup_current_context = glfwGetCurrentContext();
+                ImGui::UpdatePlatformWindows();
+                ImGui::RenderPlatformWindowsDefault();
+                glfwMakeContextCurrent(backup_current_context);
+            }
         }
     }
 

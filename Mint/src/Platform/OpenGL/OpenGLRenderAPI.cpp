@@ -8,6 +8,8 @@ namespace mint
 {
     void OpenGLRenderAPI::init()
     {
+        MINT_PROFILE_FUNCTION();
+
         glEnable(GL_DEPTH_TEST);
 
         glEnable(GL_BLEND);

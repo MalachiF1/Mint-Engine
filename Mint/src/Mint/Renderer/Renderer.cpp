@@ -11,8 +11,17 @@ namespace mint
 
     void Renderer::init()
     {
+        MINT_PROFILE_FUNCTION();
+
         RenderCommand::init();
         Renderer2D::init();
+    }
+
+    void Renderer::shutdown()
+    {
+        MINT_PROFILE_FUNCTION();
+
+        Renderer2D::shutdown();
     }
 
     void Renderer::onWindowResize(uint32_t width, uint32_t height)

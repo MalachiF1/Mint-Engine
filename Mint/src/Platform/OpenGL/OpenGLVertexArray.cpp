@@ -30,26 +30,36 @@ namespace mint
 
     OpenGLVertexArray::OpenGLVertexArray()
     {
+        MINT_PROFILE_FUNCTION();
+
         glCreateVertexArrays(1, &m_rendererID);
     }
 
     OpenGLVertexArray::~OpenGLVertexArray()
     {
+        MINT_PROFILE_FUNCTION();
+
         glDeleteVertexArrays(1, &m_rendererID);
     }
 
     void OpenGLVertexArray::bind() const
     {
+        MINT_PROFILE_FUNCTION();
+
         glBindVertexArray(m_rendererID);
     }
 
     void OpenGLVertexArray::unbind() const
     {
+        MINT_PROFILE_FUNCTION();
+
         glBindVertexArray(0);
     }
 
     void OpenGLVertexArray::addVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
     {
+        MINT_PROFILE_FUNCTION();
+
         MINT_CORE_ASSERT(vertexBuffer->getLayout().getElements().size(), "vertexBuffer must have a layout!");
 
         glBindVertexArray(m_rendererID);
@@ -76,6 +86,8 @@ namespace mint
 
     void OpenGLVertexArray::setIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
     {
+        MINT_PROFILE_FUNCTION();
+
         glBindVertexArray(m_rendererID);
         indexBuffer->bind();
 

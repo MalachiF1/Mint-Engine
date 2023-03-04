@@ -15,6 +15,8 @@ namespace mint
 
     void OpenGLContext::init()
     {
+        MINT_PROFILE_FUNCTION();
+
         glfwMakeContextCurrent(m_windowHandle);
         int status = gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress));
         MINT_CORE_ASSERT(status, "Failed to initialize glad");
@@ -27,6 +29,8 @@ namespace mint
 
     void OpenGLContext::swapBuffers()
     {
+        MINT_PROFILE_FUNCTION();
+
         glfwSwapBuffers(m_windowHandle);
     }
 

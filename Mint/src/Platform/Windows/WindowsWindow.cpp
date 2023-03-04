@@ -11,7 +11,7 @@
 namespace mint
 {
 
-    static bool s_GLFWInitialized = false;
+    static uint8_t s_GLFWWindowsCount = 0;
 
     void GLFWErrorCallback(int error, const char* discription)
     {
@@ -25,34 +25,44 @@ namespace mint
 
     WindowsWindow::WindowsWindow(const WindowProps& props)
     {
+        MINT_PROFILE_FUNCTION();
+
         init(props);
     }
 
 
     WindowsWindow::~WindowsWindow()
     {
+        MINT_PROFILE_FUNCTION();
+
         shutdown();
     }
 
     void WindowsWindow::init(const WindowProps& props)
     {
+        MINT_PROFILE_FUNCTION();
+
         m_data.title  = props.title;
         m_data.width  = props.width;
         m_data.height = props.height;
 
         MINT_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
 
-        if (!s_GLFWInitialized)
+        if (s_GLFWWindowsCount == 0)
         {
-            // TODO: glfwTerminate on system shutdown
+            MINT_PROFILE_SCOPE("glfwInit");
+
             int success = glfwInit();
             MINT_CORE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback(GLFWErrorCallback);
-
-            s_GLFWInitialized = true;
         }
 
-        m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
+        {
+            MINT_PROFILE_SCOPE("glfwCreateWindow");
+
+            m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
+            ++s_GLFWWindowsCount;
+        }
 
         m_context = new OpenGLContext(m_window);
         m_context->init();
@@ -142,17 +152,37 @@ namespace mint
 
     void WindowsWindow::shutdown()
     {
-        glfwDestroyWindow(m_window);
+        MINT_PROFILE_FUNCTION();
+
+        {
+            MINT_PROFILE_SCOPE("glfwDestroyWindow");
+            glfwDestroyWindow(m_window);
+        }
+        --s_GLFWWindowsCount;
+
+        if (s_GLFWWindowsCount == 0)
+        {
+            // We're still using glfw in places we shouldn't, so for now this is commented.
+            // glfwTerminate();
+        }
     }
 
     void WindowsWindow::onUpdate()
     {
-        glfwPollEvents();
+        MINT_PROFILE_FUNCTION();
+
+        {
+            MINT_PROFILE_SCOPE("glfwPollEvents");
+            glfwPollEvents();
+        }
+
         m_context->swapBuffers();
     }
 
     void WindowsWindow::setVSync(bool enabled)
     {
+        MINT_PROFILE_FUNCTION();
+
         if (enabled)
             glfwSwapInterval(1);
         else

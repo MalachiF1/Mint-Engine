@@ -11,11 +11,18 @@ int main(int argc, char** argv)
 {
     // Initialize logging
     mint::Log::init();
-    MINT_CORE_WARN("Initialized Log!");
 
+    MINT_PROFILE_BEGIN_SESSION("Startup", "MintProfile-Startup.json");
     auto app = mint::createApplication();
+    MINT_PROFILE_END_SESSION();
+
+    MINT_PROFILE_BEGIN_SESSION("Runtime", "MintProfile-Runtime.json");
     app->run();
+    MINT_PROFILE_END_SESSION();
+
+    MINT_PROFILE_BEGIN_SESSION("Shutdown", "MintProfile-Shutdown.json");
     delete app;
+    MINT_PROFILE_END_SESSION();
 }
 
 #else

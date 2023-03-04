@@ -13,6 +13,8 @@ namespace mint
 
     void Renderer2D::init()
     {
+        MINT_PROFILE_FUNCTION();
+
         float squareVertices[] = {
             // Positions        // TexCoords
             -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // vertex 1
@@ -47,17 +49,24 @@ namespace mint
 
     void Renderer2D::shutdown()
     {
+        MINT_PROFILE_FUNCTION();
+
         delete s_data;
     }
 
     void Renderer2D::beginScene(const OrthographicCamera& camera)
     {
+        MINT_PROFILE_FUNCTION();
+
         s_data->textureShader->bind();
         s_data->textureShader->setMat4("u_ViewProjection", camera.getViewProjectionMatrix());
         s_data->textureShader->setInt("u_Texture", 0);
     }
 
-    void Renderer2D::endScene() {}
+    void Renderer2D::endScene()
+    {
+        MINT_PROFILE_FUNCTION();
+    }
 
     void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, float rotation)
     {
@@ -66,6 +75,8 @@ namespace mint
 
     void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float rotation)
     {
+        MINT_PROFILE_FUNCTION();
+
         s_data->whiteTexture->bind();
 
         s_data->textureShader->setFloat4("u_Color", color);
@@ -90,6 +101,8 @@ namespace mint
         const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float rotation, glm::vec4 tint
     )
     {
+        MINT_PROFILE_FUNCTION();
+
         texture->bind();
 
         s_data->textureShader->setFloat4("u_Color", tint);
