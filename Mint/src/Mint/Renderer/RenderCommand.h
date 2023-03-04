@@ -10,13 +10,15 @@ namespace mint
       public:
         inline static void init() { s_renderAPI->init(); };
 
+        inline static void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+        {
+            s_renderAPI->setViewport(x, y, width, height);
+        }
+
         inline static void setClearColor(glm::vec4& color) { s_renderAPI->setClearColor(color); }
         inline static void clear() { s_renderAPI->clear(); }
 
-        inline static void drawIndexed(const Ref<VertexArray>& vertexArray)
-        {
-            s_renderAPI->drawIndexed(vertexArray);
-        }
+        inline static void drawIndexed(const Ref<VertexArray>& vertexArray) { s_renderAPI->drawIndexed(vertexArray); }
 
       private:
         static RenderAPI* s_renderAPI;

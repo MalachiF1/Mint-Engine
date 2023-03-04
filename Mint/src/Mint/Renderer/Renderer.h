@@ -14,6 +14,8 @@ namespace mint
       public:
         static void init();
 
+        static void onWindowResize(uint32_t width, uint32_t height);
+
         static void beginScene(OrthographicCamera& camera);
         static void endScene();
 

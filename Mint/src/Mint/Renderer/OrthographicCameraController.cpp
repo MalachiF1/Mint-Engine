@@ -62,7 +62,7 @@ namespace mint
 
     bool OrthographicCameraController::onWindowResized(WindowResizeEvent& e)
     {
-        m_aspectRatio -= (float)e.getWidth() / (float)e.getHeight();
+        m_aspectRatio = (float)e.getWidth() / (float)e.getHeight();
         m_camera.setProjection(-m_aspectRatio * m_zoomLevel, m_aspectRatio * m_zoomLevel, -m_zoomLevel, m_zoomLevel);
 
         return false;

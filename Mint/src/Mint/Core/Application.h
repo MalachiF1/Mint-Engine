@@ -29,9 +29,11 @@ namespace mint
       private:
         void onEvent(Event& e);
         bool onWindowClose(WindowCloseEvent& e);
+        bool onWindowResize(WindowResizeEvent& e);
 
       private:
         bool m_running = true;
+        bool m_minimized = false;
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_layerStack;
         Scope<Window> m_window;

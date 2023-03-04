@@ -9,8 +9,14 @@ namespace mint
 
     Renderer::SceneData* Renderer::m_sceneData = new Renderer::SceneData;
 
-    void Renderer::init() {
+    void Renderer::init()
+    {
         RenderCommand::init();
+    }
+
+    void Renderer::onWindowResize(uint32_t width, uint32_t height)
+    {
+        RenderCommand::setViewport(0, 0, width, height);
     }
 
     void Renderer::beginScene(OrthographicCamera& camera)

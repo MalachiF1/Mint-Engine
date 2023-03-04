@@ -9,6 +9,8 @@ namespace mint
     {
         virtual void init() override final;
 
+        virtual void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override final;
+
         virtual void setClearColor(glm::vec4& color) override final;
         virtual void clear() override final;
 

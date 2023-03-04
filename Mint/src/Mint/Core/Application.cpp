@@ -53,6 +53,7 @@ namespace mint
     {
         EventDispatcher dispatcher(e);
         dispatcher.dispatch<WindowCloseEvent>(MINT_BIND_EVENT_FN(Application::onWindowClose));
+        dispatcher.dispatch<WindowResizeEvent>(MINT_BIND_EVENT_FN(Application::onWindowResize));
 
         // MINT_CORE_TRACE("{0}", e);
 
@@ -73,7 +74,8 @@ namespace mint
             Timestep timestep = currentTime - m_lastFrameTime;
             m_lastFrameTime   = currentTime;
 
-            for (auto layer : m_layerStack.getLayers()) { layer->onUpdate(timestep); }
+            if (!m_minimized)
+                for (auto layer : m_layerStack.getLayers()) { layer->onUpdate(timestep); }
 
             m_ImGuiLayer->begin();
             for (auto layer : m_layerStack.getLayers()) { layer->onImGuiRender(); }
@@ -88,6 +90,19 @@ namespace mint
         m_running = false;
 
         return true;
+    }
+
+    bool Application::onWindowResize(WindowResizeEvent& e)
+    {
+        if (e.getWidth() == 0 || e.getHeight() == 0)
+        {
+            m_minimized = true;
+            return false;
+        }
+
+        m_minimized = false;
+        Renderer::onWindowResize(e.getWidth(), e.getHeight());
+        return false;
     }
 
 } // namespace mint
