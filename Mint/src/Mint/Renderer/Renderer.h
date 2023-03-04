@@ -30,7 +30,7 @@ namespace mint
         {
             glm::mat4 viewProjectionMatrix;
         };
-        static SceneData* m_sceneData;
+        static SceneData* s_sceneData;
     };
 
 } // namespace mint

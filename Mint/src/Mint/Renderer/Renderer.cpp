@@ -2,16 +2,18 @@
 
 #include "Renderer.h"
 
+#include "Mint/Renderer/Renderer2D.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace mint
 {
 
-    Renderer::SceneData* Renderer::m_sceneData = new Renderer::SceneData;
+     Renderer::SceneData* Renderer::s_sceneData = new Renderer::SceneData;
 
     void Renderer::init()
     {
         RenderCommand::init();
+        Renderer2D::init();
     }
 
     void Renderer::onWindowResize(uint32_t width, uint32_t height)
@@ -21,7 +23,7 @@ namespace mint
 
     void Renderer::beginScene(OrthographicCamera& camera)
     {
-        m_sceneData->viewProjectionMatrix = camera.getViewProjectionMatrix();
+        s_sceneData->viewProjectionMatrix = camera.getViewProjectionMatrix();
     }
 
     void Renderer::endScene() {}
@@ -31,7 +33,7 @@ namespace mint
     {
         shader->bind();
         std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4(
-            "u_ViewProjection", m_sceneData->viewProjectionMatrix
+            "u_ViewProjection", s_sceneData->viewProjectionMatrix
         );
         std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4("u_Transform", transform);
 

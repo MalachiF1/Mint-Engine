@@ -1,9 +1,12 @@
+#include "Sandbox2D.h"
+
+#include <Mint.h>
+#include <Mint/Core/EntryPoint.h>
 #include <Platform/OpenGL/OpenGLShader.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui.h>
-#include <mint.h>
 
 class ExampleLayer : public mint::Layer
 {
@@ -138,7 +141,11 @@ class ExampleLayer : public mint::Layer
 class Sandbox : public mint::Application
 {
   public:
-    Sandbox() { pushLayer(new ExampleLayer); }
+    Sandbox()
+    {
+        // pushLayer(new ExampleLayer());
+        pushLayer(new Sandbox2D());
+    }
 
     virtual ~Sandbox() final {}
 };

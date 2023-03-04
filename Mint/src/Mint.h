@@ -21,6 +21,7 @@
 #include "Mint/Renderer/OrthographicCameraController.h"
 #include "Mint/Renderer/RenderCommand.h"
 #include "Mint/Renderer/Renderer.h"
+#include "Mint/Renderer/Renderer2D.h"
 #include "Mint/Renderer/Shader.h"
 #include "Mint/Renderer/Texture.h"
 #include "Mint/Renderer/VertexArray.h"
@@ -30,8 +31,4 @@
 #include "Mint/Core/Input.h"
 #include "Mint/Core/KeyCodes.h"
 #include "Mint/Core/MouseButtonCodes.h"
-// ----------------------------------------------------------------------------
-
-// ---- Entry Point -----------------------------------------------------------
-#include "Mint/Core/EntryPoint.h"
 // ----------------------------------------------------------------------------
