@@ -2,7 +2,6 @@
 
 #include <Mint.h>
 #include <Mint/Core/EntryPoint.h>
-#include <Platform/OpenGL/OpenGLShader.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -82,8 +81,8 @@ class ExampleLayer : public mint::Layer
         m_checkerboardTexture = mint::Texture2D::create("assets/textures/Checkerboard.png");
         m_awesomefaceTexture  = mint::Texture2D::create("assets/textures/awesomeface.png");
 
-        std::dynamic_pointer_cast<mint::OpenGLShader>(textureShader)->bind();
-        std::dynamic_pointer_cast<mint::OpenGLShader>(textureShader)->setUniformInt("u_Texture", 0);
+        textureShader->bind();
+        textureShader->setInt("u_Texture", 0);
     }
 
     virtual void onUpdate(mint::Timestep ts) override final
@@ -96,8 +95,8 @@ class ExampleLayer : public mint::Layer
         mint::Renderer::beginScene(m_cameraController.getCamera());
 
         auto flatColorShader = m_shaderLibrary.get("flatColor");
-        std::dynamic_pointer_cast<mint::OpenGLShader>(flatColorShader)->bind();
-        std::dynamic_pointer_cast<mint::OpenGLShader>(flatColorShader)->setUniformFloat4("u_Color", m_squareColor);
+        flatColorShader->bind();
+        flatColorShader->setFloat4("u_Color", m_squareColor);
 
         for (int i = 0; i < 20; ++i)
         {

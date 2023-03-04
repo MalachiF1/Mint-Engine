@@ -3,7 +3,8 @@
 #include "Renderer2D.h"
 
 #include "Mint/Renderer/RenderCommand.h"
-#include "Platform/OpenGL/OpenGLShader.h"
+
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace mint
 {
@@ -48,23 +49,25 @@ namespace mint
     void Renderer2D::beginScene(const OrthographicCamera& camera)
     {
         s_data->flatColorShader->bind();
-        std::dynamic_pointer_cast<OpenGLShader>(s_data->flatColorShader)
-            ->setUniformMat4("u_ViewProjection", camera.getViewProjectionMatrix());
-        std::dynamic_pointer_cast<OpenGLShader>(s_data->flatColorShader)
-            ->setUniformMat4("u_Transform", glm::mat4(1.0f));
+        s_data->flatColorShader->setMat4("u_ViewProjection", camera.getViewProjectionMatrix());
     }
 
     void Renderer2D::endScene() {}
 
-    void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+    void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, float rotation)
     {
-        drawQuad({ position.x, position.y, 0.0f }, size, color);
+        drawQuad({ position.x, position.y, 0.0f }, size, color, rotation);
     }
 
-    void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+    void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float rotation)
     {
         s_data->flatColorShader->bind();
-        std::dynamic_pointer_cast<OpenGLShader>(s_data->flatColorShader)->setUniformFloat4("u_Color", color);
+        s_data->flatColorShader->setFloat4("u_Color", color);
+
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+        transform           = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+        transform           = glm::scale(transform, glm::vec3(size.x, size.y, 1.0f));
+        s_data->flatColorShader->setMat4("u_Transform", transform);
 
         s_data->quadVertexArray->bind();
         RenderCommand::drawIndexed(s_data->quadVertexArray);

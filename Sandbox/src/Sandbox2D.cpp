@@ -1,6 +1,5 @@
 #include "Sandbox2D.h"
 
-#include <Platform/OpenGL/OpenGLShader.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui.h>
 #include <memory>
@@ -17,7 +16,8 @@ void Sandbox2D::onUpdate(mint::Timestep ts)
     mint::RenderCommand::clear();
 
     mint::Renderer2D::beginScene(m_cameraController.getCamera());
-    mint::Renderer2D::drawQuad({ 0.0f, 0.0f }, { 1.0f, 1.0f }, m_color);
+    mint::Renderer2D::drawQuad({ 0.3f, 0.3f }, { 1.0f, 1.0f }, m_color, 20.0f);
+    mint::Renderer2D::drawQuad({ 0.0f, 0.0f }, { 0.5f, 0.8f }, { 1.0f, 1.0f, 1.0f, 1.0f });
     mint::Renderer2D::endScene();
 }
 

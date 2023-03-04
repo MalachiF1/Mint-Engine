@@ -183,6 +183,59 @@ namespace mint
         glUseProgram(0);
     }
 
+    void OpenGLShader::setBool(const std::string& name, bool value)
+    {
+        uploadUniformBool(name, value);
+    }
+    void OpenGLShader::setInt(const std::string& name, int value)
+    {
+        uploadUniformInt(name, value);
+    }
+    void OpenGLShader::setUint(const std::string& name, unsigned int value)
+    {
+        uploadUniformUint(name, value);
+    }
+    void OpenGLShader::setFloat(const std::string& name, float value)
+    {
+        uploadUniformFloat(name, value);
+    }
+    void OpenGLShader::setFloat2(const std::string& name, const glm::vec2& value)
+    {
+        uploadUniformFloat2(name, value);
+    }
+    void OpenGLShader::setFloat2(const std::string& name, float x, float y)
+    {
+        uploadUniformFloat2(name, x, y);
+    }
+    void OpenGLShader::setFloat3(const std::string& name, const glm::vec3& value)
+    {
+        uploadUniformFloat3(name, value);
+    }
+    void OpenGLShader::setFloat3(const std::string& name, float x, float y, float z)
+    {
+        uploadUniformFloat3(name, x, y, z);
+    }
+    void OpenGLShader::setFloat4(const std::string& name, const glm::vec4& value)
+    {
+        uploadUniformFloat4(name, value);
+    }
+    void OpenGLShader::setFloat4(const std::string& name, float x, float y, float z, float w)
+    {
+        uploadUniformFloat4(name, x, y, z, w);
+    }
+    void OpenGLShader::setMat2(const std::string& name, const glm::mat2& mat)
+    {
+        uploadUniformMat2(name, mat);
+    }
+    void OpenGLShader::setMat3(const std::string& name, const glm::mat3& mat)
+    {
+        uploadUniformMat3(name, mat);
+    }
+    void OpenGLShader::setMat4(const std::string& name, const glm::mat4& mat)
+    {
+        uploadUniformMat4(name, mat);
+    }
+
     int OpenGLShader::getUniformLocation(const std::string& name)
     {
         if (m_uniformLocationCache.find(name) != m_uniformLocationCache.end())
@@ -199,59 +252,59 @@ namespace mint
     }
 
 
-    void OpenGLShader::setUniformBool(const std::string& name, bool value)
+    void OpenGLShader::uploadUniformBool(const std::string& name, bool value)
     {
         glUniform1i(getUniformLocation(name), (int)value);
     }
-    void OpenGLShader::setUniformInt(const std::string& name, int value)
+    void OpenGLShader::uploadUniformInt(const std::string& name, int value)
     {
         glUniform1i(getUniformLocation(name), value);
     }
-    void OpenGLShader::setUniformUint(const std::string& name, unsigned int value)
+    void OpenGLShader::uploadUniformUint(const std::string& name, unsigned int value)
     {
         glUniform1ui(getUniformLocation(name), value);
     }
-    void OpenGLShader::setUniformFloat(const std::string& name, float value)
+    void OpenGLShader::uploadUniformFloat(const std::string& name, float value)
     {
         glUniform1f(getUniformLocation(name), value);
     }
 
-    void OpenGLShader::setUniformFloat2(const std::string& name, const glm::vec2& value)
+    void OpenGLShader::uploadUniformFloat2(const std::string& name, const glm::vec2& value)
     {
         glUniform2fv(getUniformLocation(name), 1, glm::value_ptr(value));
     }
-    void OpenGLShader::setUniformFloat2(const std::string& name, float x, float y)
+    void OpenGLShader::uploadUniformFloat2(const std::string& name, float x, float y)
     {
         glUniform2f(getUniformLocation(name), x, y);
     }
 
-    void OpenGLShader::setUniformFloat3(const std::string& name, const glm::vec3& value)
+    void OpenGLShader::uploadUniformFloat3(const std::string& name, const glm::vec3& value)
     {
         glUniform3fv(getUniformLocation(name), 1, glm::value_ptr(value));
     }
-    void OpenGLShader::setUniformFloat3(const std::string& name, float x, float y, float z)
+    void OpenGLShader::uploadUniformFloat3(const std::string& name, float x, float y, float z)
     {
         glUniform3f(getUniformLocation(name), x, y, z);
     }
 
-    void OpenGLShader::setUniformFloat4(const std::string& name, const glm::vec4& value)
+    void OpenGLShader::uploadUniformFloat4(const std::string& name, const glm::vec4& value)
     {
         glUniform4fv(getUniformLocation(name), 1, glm::value_ptr(value));
     }
-    void OpenGLShader::setUniformFloat4(const std::string& name, float x, float y, float z, float w)
+    void OpenGLShader::uploadUniformFloat4(const std::string& name, float x, float y, float z, float w)
     {
         glUniform4f(getUniformLocation(name), x, y, z, w);
     }
 
-    void OpenGLShader::setUniformMat2(const std::string& name, const glm::mat2& mat)
+    void OpenGLShader::uploadUniformMat2(const std::string& name, const glm::mat2& mat)
     {
         glUniformMatrix2fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
     }
-    void OpenGLShader::setUniformMat3(const std::string& name, const glm::mat3& mat)
+    void OpenGLShader::uploadUniformMat3(const std::string& name, const glm::mat3& mat)
     {
         glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
     }
-    void OpenGLShader::setUniformMat4(const std::string& name, const glm::mat4& mat)
+    void OpenGLShader::uploadUniformMat4(const std::string& name, const glm::mat4& mat)
     {
         glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
     }

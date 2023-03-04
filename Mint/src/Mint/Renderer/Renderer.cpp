@@ -3,12 +3,11 @@
 #include "Renderer.h"
 
 #include "Mint/Renderer/Renderer2D.h"
-#include "Platform/OpenGL/OpenGLShader.h"
 
 namespace mint
 {
 
-     Renderer::SceneData* Renderer::s_sceneData = new Renderer::SceneData;
+    Renderer::SceneData* Renderer::s_sceneData = new Renderer::SceneData;
 
     void Renderer::init()
     {
@@ -32,10 +31,8 @@ namespace mint
     void Renderer::submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
     {
         shader->bind();
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4(
-            "u_ViewProjection", s_sceneData->viewProjectionMatrix
-        );
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4("u_Transform", transform);
+        shader->setMat4("u_ViewProjection", s_sceneData->viewProjectionMatrix);
+        shader->setMat4("u_Transform", transform);
 
         vertexArray->bind();
         RenderCommand::drawIndexed(vertexArray);

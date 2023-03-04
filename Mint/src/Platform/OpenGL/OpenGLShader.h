@@ -25,25 +25,43 @@ namespace mint
         virtual void unbind() const override final;
 
         // Uniform setter functions
-        void setUniformBool(const std::string& name, bool value);
-        void setUniformInt(const std::string& name, int value);
-        void setUniformUint(const std::string& name, unsigned int value);
-        void setUniformFloat(const std::string& name, float value);
+        virtual void setBool(const std::string& name, bool value) override final;
+        virtual void setInt(const std::string& name, int value) override final;
+        virtual void setUint(const std::string& name, unsigned int value) override final;
+        virtual void setFloat(const std::string& name, float value) override final;
 
-        void setUniformFloat2(const std::string& name, const glm::vec2& value);
-        void setUniformFloat2(const std::string& name, float x, float y);
+        virtual void setFloat2(const std::string& name, const glm::vec2& value) override final;
+        virtual void setFloat2(const std::string& name, float x, float y) override final;
 
-        void setUniformFloat3(const std::string& name, const glm::vec3& value);
-        void setUniformFloat3(const std::string& name, float x, float y, float z);
+        virtual void setFloat3(const std::string& name, const glm::vec3& value) override final;
+        virtual void setFloat3(const std::string& name, float x, float y, float z) override final;
 
-        void setUniformFloat4(const std::string& name, const glm::vec4& value);
-        void setUniformFloat4(const std::string& name, float x, float y, float z, float w);
+        virtual void setFloat4(const std::string& name, const glm::vec4& value) override final;
+        virtual void setFloat4(const std::string& name, float x, float y, float z, float w) override final;
 
-        void setUniformMat2(const std::string& name, const glm::mat2& mat);
-        void setUniformMat3(const std::string& name, const glm::mat3& mat);
-        void setUniformMat4(const std::string& name, const glm::mat4& mat);
+        virtual void setMat2(const std::string& name, const glm::mat2& mat) override final;
+        virtual void setMat3(const std::string& name, const glm::mat3& mat) override final;
+        virtual void setMat4(const std::string& name, const glm::mat4& mat) override final;
 
       private:
+        void uploadUniformBool(const std::string& name, bool value);
+        void uploadUniformInt(const std::string& name, int value);
+        void uploadUniformUint(const std::string& name, unsigned int value);
+        void uploadUniformFloat(const std::string& name, float value);
+
+        void uploadUniformFloat2(const std::string& name, const glm::vec2& value);
+        void uploadUniformFloat2(const std::string& name, float x, float y);
+
+        void uploadUniformFloat3(const std::string& name, const glm::vec3& value);
+        void uploadUniformFloat3(const std::string& name, float x, float y, float z);
+
+        void uploadUniformFloat4(const std::string& name, const glm::vec4& value);
+        void uploadUniformFloat4(const std::string& name, float x, float y, float z, float w);
+
+        void uploadUniformMat2(const std::string& name, const glm::mat2& mat);
+        void uploadUniformMat3(const std::string& name, const glm::mat3& mat);
+        void uploadUniformMat4(const std::string& name, const glm::mat4& mat);
+
         // Get the location of a uniform (and possibly add the location to the uniform location cache)
         std::string readFile(const std::string& path);
         std::unordered_map<GLenum, std::string> preProcess(const std::string& src);
