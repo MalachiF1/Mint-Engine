@@ -31,17 +31,17 @@ namespace mint
     class OpenGLIndexBuffer : public IndexBuffer
     {
       public:
-        OpenGLIndexBuffer(uint32_t* indices, size_t count);
+        OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
         virtual ~OpenGLIndexBuffer() final;
 
         virtual void bind() const override final;
         virtual void unbind() const override final;
 
-        inline virtual size_t getCount() const override final { return m_count; }
+        inline virtual uint32_t getCount() const override final { return m_count; }
 
       private:
         uint32_t m_rendererID;
-        size_t m_count;
+        uint32_t m_count;
     };
 
 } // namespace mint

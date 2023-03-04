@@ -35,7 +35,7 @@ class ExampleLayer : public mint::Layer
             2, 3, 0  // triangle 2
         };
 
-        mint::Ref<mint::IndexBuffer> indexBuffer = mint::IndexBuffer::create(indices, std::size(indices));
+        mint::Ref<mint::IndexBuffer> indexBuffer = mint::IndexBuffer::create(indices, (uint32_t)std::size(indices));
 
         m_vertexArray->setIndexBuffer(indexBuffer);
 

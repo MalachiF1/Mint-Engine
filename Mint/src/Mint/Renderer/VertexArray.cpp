@@ -19,5 +19,6 @@ namespace mint
         }
 
         MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
+        return nullptr;
     }
 } // namespace mint

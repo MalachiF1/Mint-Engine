@@ -55,8 +55,6 @@ namespace mint
         dispatcher.dispatch<WindowCloseEvent>(MINT_BIND_EVENT_FN(Application::onWindowClose));
         dispatcher.dispatch<WindowResizeEvent>(MINT_BIND_EVENT_FN(Application::onWindowResize));
 
-        // MINT_CORE_TRACE("{0}", e);
-
         // Top layer gets the event first. If the event wasn't handled, give the event to the next layer.
         for (auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); ++it)
         {
@@ -70,7 +68,7 @@ namespace mint
     {
         while (m_running)
         {
-            float currentTime = (float)glfwGetTime(); // impelentation will move to Platform
+            float currentTime = (float)glfwGetTime(); // implementation will move to Platform
             Timestep timestep = currentTime - m_lastFrameTime;
             m_lastFrameTime   = currentTime;
 

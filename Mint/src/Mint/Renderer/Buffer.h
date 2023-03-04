@@ -50,7 +50,7 @@ namespace mint
         std::string name;
         ShaderDataType type;
         bool normalized;
-        uint32_t offset;
+        size_t offset;
         uint32_t size;
 
         BufferElement() = default;
@@ -146,9 +146,9 @@ namespace mint
         virtual void bind() const   = 0;
         virtual void unbind() const = 0;
 
-        virtual size_t getCount() const = 0;
+        virtual uint32_t getCount() const = 0;
 
-        static Ref<IndexBuffer> create(uint32_t* vertices, size_t count);
+        static Ref<IndexBuffer> create(uint32_t* vertices, uint32_t count);
     };
 
 } // namespace mint

@@ -18,8 +18,6 @@ namespace mint
         }
     };
 
-    // This window class is an interface for the desktop platform-dependant window class (e.g WindowsWindow).
-    // We will call this window class in the window api, but the implementation will be per platform.
     class Window
     {
       public:
@@ -33,7 +31,6 @@ namespace mint
         virtual unsigned int getHeight() const                        = 0;
         virtual std::pair<unsigned int, unsigned int> getSize() const = 0;
 
-        // Window attributes
         virtual void setEventCallback(const EventCallbackFn& callback) = 0;
         virtual void setVSync(bool enabled)                            = 0;
         virtual bool isVSync() const                                   = 0;

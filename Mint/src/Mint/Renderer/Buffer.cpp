@@ -22,12 +22,13 @@ namespace mint
         }
 
         MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
+        return nullptr;
     }
 
     // Index Buffer
     // ----------------------------------------------------------------------------
 
-    Ref<IndexBuffer> IndexBuffer::create(uint32_t* indices, size_t count)
+    Ref<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t count)
     {
         switch (Renderer::getAPI())
         {
@@ -39,6 +40,7 @@ namespace mint
         }
 
         MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
+        return nullptr;
     }
 
 } // namespace mint

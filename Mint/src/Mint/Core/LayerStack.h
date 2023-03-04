@@ -35,7 +35,6 @@ namespace mint
 
       private:
         Layers m_layers;
-        // Index of 1 after where we will place the next non overlay layer
         int m_layerInsertIndex = 0;
     };
 

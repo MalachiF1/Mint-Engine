@@ -36,7 +36,7 @@ namespace mint
     // Index Buffer
     // ----------------------------------------------------------------------------
 
-    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, size_t count) : m_count(count)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count) : m_count(count)
     {
         glCreateBuffers(1, &m_rendererID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
