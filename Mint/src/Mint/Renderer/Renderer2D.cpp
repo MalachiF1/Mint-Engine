@@ -14,11 +14,11 @@ namespace mint
     void Renderer2D::init()
     {
         float squareVertices[] = {
-            // Positions
-            -0.5f, -0.5f, 0.0f, // vertex 1
-            0.5,   -0.5f, 0.0f, // vertex 2
-            0.5f,  0.5f,  0.0f, // vertex 3
-            -0.5f, 0.5f,  0.0f, // vertex 4
+            // Positions        // TexCoords
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // vertex 1
+            0.5,   -0.5f, 0.0f, 1.0f, 0.0f, // vertex 2
+            0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // vertex 3
+            -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // vertex 4
         };
 
         uint32_t squareIndices[] = {
@@ -29,7 +29,7 @@ namespace mint
         s_data->quadVertexArray = VertexArray::create();
 
         Ref<VertexBuffer> vertexBuffer = VertexBuffer::create(squareVertices, sizeof(squareVertices));
-        BufferLayout layout            = { { ShaderDataType::Float3, "a_Pos" } };
+        BufferLayout layout = { { ShaderDataType::Float3, "a_Pos" }, { ShaderDataType::Float2, "a_TexCoords" } };
         vertexBuffer->setLayout(layout);
 
         s_data->quadVertexArray->addVertexBuffer(vertexBuffer);
@@ -39,6 +39,7 @@ namespace mint
         s_data->quadVertexArray->setIndexBuffer(indexBuffer);
 
         s_data->flatColorShader = Shader::create("assets/shaders/flatColor.glsl");
+        s_data->textureShader   = Shader::create("assets/shaders/texture.glsl");
     }
 
     void Renderer2D::shutdown()
@@ -50,6 +51,9 @@ namespace mint
     {
         s_data->flatColorShader->bind();
         s_data->flatColorShader->setMat4("u_ViewProjection", camera.getViewProjectionMatrix());
+        s_data->textureShader->bind();
+        s_data->textureShader->setMat4("u_ViewProjection", camera.getViewProjectionMatrix());
+        s_data->textureShader->setInt("u_Texture", 0);
     }
 
     void Renderer2D::endScene() {}
@@ -68,6 +72,29 @@ namespace mint
         transform           = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
         transform           = glm::scale(transform, glm::vec3(size.x, size.y, 1.0f));
         s_data->flatColorShader->setMat4("u_Transform", transform);
+
+        s_data->quadVertexArray->bind();
+        RenderCommand::drawIndexed(s_data->quadVertexArray);
+    }
+
+    void Renderer2D::drawQuad(
+        const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float rotation
+    )
+    {
+        drawQuad({ position.x, position.y, 0.0f }, size, texture, rotation);
+    }
+
+    void Renderer2D::drawQuad(
+        const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float rotation
+    )
+    {
+        s_data->textureShader->bind();
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+        transform           = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+        transform           = glm::scale(transform, glm::vec3(size.x, size.y, 1.0f));
+        s_data->textureShader->setMat4("u_Transform", transform);
+
+        texture->bind();
 
         s_data->quadVertexArray->bind();
         RenderCommand::drawIndexed(s_data->quadVertexArray);

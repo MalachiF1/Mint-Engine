@@ -6,7 +6,7 @@
 class Sandbox2D : public mint::Layer
 {
   public:
-    Sandbox2D() : Layer("Sandbox2D"), m_cameraController(1200.0f / 720.0f, true) {}
+    Sandbox2D();
     virtual ~Sandbox2D() override final = default;
 
     virtual void onAttach() override final;
@@ -22,5 +22,6 @@ class Sandbox2D : public mint::Layer
     // Temp
     mint::Ref<mint::VertexArray> m_vertexArray;
     mint::Ref<mint::Shader> m_shader;
+    mint::Ref<mint::Texture2D> m_checkerboardTexture;
     glm::vec4 m_color = { 0.5f, 0.5f, 0.8f, 1.0f };
 };
