@@ -25,6 +25,11 @@ namespace mint
 
         virtual void bind(uint32_t slot = 0) const override final;
 
+        inline virtual bool operator==(const Texture& other) const override final
+        {
+            return m_rendererID == ((OpenGLTexture2D&)other).m_rendererID;
+        }
+
       private:
         std::string m_path;
         uint32_t m_width, m_height;

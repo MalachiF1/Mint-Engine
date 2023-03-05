@@ -27,6 +27,7 @@ namespace mint
         // Uniform setter functions
         virtual void setBool(const std::string& name, bool value) override final;
         virtual void setInt(const std::string& name, int value) override final;
+        virtual void setIntArray(const std::string& name, int* values, uint32_t count) override final;
         virtual void setUint(const std::string& name, unsigned int value) override final;
         virtual void setFloat(const std::string& name, float value) override final;
 
@@ -46,6 +47,7 @@ namespace mint
       private:
         void uploadUniformBool(const std::string& name, bool value);
         void uploadUniformInt(const std::string& name, int value);
+        void uploadUniformIntArray(const std::string& name, int* values, uint32_t count);
         void uploadUniformUint(const std::string& name, unsigned int value);
         void uploadUniformFloat(const std::string& name, float value);
 

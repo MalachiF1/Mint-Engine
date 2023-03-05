@@ -213,6 +213,12 @@ namespace mint
 
         uploadUniformInt(name, value);
     }
+    void OpenGLShader::setIntArray(const std::string& name, int* values, uint32_t count)
+    {
+        MINT_PROFILE_FUNCTION();
+
+        uploadUniformIntArray(name, values, count);
+    }
     void OpenGLShader::setUint(const std::string& name, unsigned int value)
     {
         MINT_PROFILE_FUNCTION();
@@ -303,6 +309,10 @@ namespace mint
     void OpenGLShader::uploadUniformInt(const std::string& name, int value)
     {
         glUniform1i(getUniformLocation(name), value);
+    }
+    void OpenGLShader::uploadUniformIntArray(const std::string& name, int* values, uint32_t count)
+    {
+        glUniform1iv(getUniformLocation(name), count, values);
     }
     void OpenGLShader::uploadUniformUint(const std::string& name, unsigned int value)
     {
