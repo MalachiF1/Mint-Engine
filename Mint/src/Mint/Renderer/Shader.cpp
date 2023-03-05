@@ -61,7 +61,7 @@ namespace mint
         return shader;
     }
 
-    Ref<Shader> ShaderLibrary::get(const std::string& name) 
+    Ref<Shader> ShaderLibrary::get(const std::string& name)
     {
         MINT_CORE_ASSERT(m_shaders.find(name) != m_shaders.end(), "Shader not found!");
         return m_shaders[name];

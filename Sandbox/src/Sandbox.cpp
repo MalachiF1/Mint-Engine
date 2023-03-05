@@ -26,16 +26,13 @@ class ExampleLayer : public mint::Layer
         mint::Ref<mint::VertexBuffer> vertexBuffer = mint::VertexBuffer::create(vertices, sizeof(vertices));
 
         mint::BufferLayout layout = {
-            { mint::ShaderDataType::Float3, "a_Pos" },
-            { mint::ShaderDataType::Float2, "a_TexCoords" },
+            {mint::ShaderDataType::Float3, "a_Pos"},
+            {mint::ShaderDataType::Float2, "a_TexCoords"},
         };
         vertexBuffer->setLayout(layout);
         m_vertexArray->addVertexBuffer(vertexBuffer);
 
-        uint32_t indices[] = {
-            0, 1, 2, // triangle 1
-            2, 3, 0  // triangle 2
-        };
+        uint32_t indices[] = {0, 1, 2, 2, 3, 0};
 
         mint::Ref<mint::IndexBuffer> indexBuffer = mint::IndexBuffer::create(indices, (uint32_t)std::size(indices));
 

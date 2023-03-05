@@ -32,7 +32,7 @@ namespace mint
         bool onWindowResize(WindowResizeEvent& e);
 
       private:
-        bool m_running = true;
+        bool m_running   = true;
         bool m_minimized = false;
         Scope<Window> m_window;
         LayerStack m_layerStack;

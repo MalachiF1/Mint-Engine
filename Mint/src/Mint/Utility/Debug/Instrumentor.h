@@ -58,7 +58,7 @@ namespace mint
 
             if (m_outputStream.is_open())
             {
-                m_currentSession = new InstrumentationSession({ name });
+                m_currentSession = new InstrumentationSession({name});
                 writeHeader();
             }
             else
@@ -157,12 +157,12 @@ namespace mint
         void stop()
         {
             auto endTimepoint = std::chrono::steady_clock::now();
-            auto highResStart = FloatingPointMicroseconds{ m_startTimepoint.time_since_epoch() };
+            auto highResStart = FloatingPointMicroseconds{m_startTimepoint.time_since_epoch()};
             auto elapsedTime =
                 std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch() -
                 std::chrono::time_point_cast<std::chrono::microseconds>(m_startTimepoint).time_since_epoch();
 
-            Instrumentor::get().writeProfile({ m_name, highResStart, elapsedTime, std::this_thread::get_id() });
+            Instrumentor::get().writeProfile({m_name, highResStart, elapsedTime, std::this_thread::get_id()});
 
             m_stopped = true;
         }

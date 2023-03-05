@@ -23,5 +23,5 @@ class Sandbox2D : public mint::Layer
     mint::Ref<mint::VertexArray> m_vertexArray;
     mint::Ref<mint::Shader> m_shader;
     mint::Ref<mint::Texture2D> m_checkerboardTexture;
-    glm::vec4 m_color = { 0.5f, 0.5f, 0.8f, 1.0f };
+    glm::vec4 m_color = {0.5f, 0.5f, 0.8f, 1.0f};
 };
