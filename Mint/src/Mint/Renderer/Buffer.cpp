@@ -10,7 +10,22 @@ namespace mint
     // Vertex Buffer
     // ----------------------------------------------------------------------------
 
-    Ref<VertexBuffer> VertexBuffer::create(float* vertices, size_t size)
+    Ref<VertexBuffer> VertexBuffer::create(size_t size)
+    {
+        switch (Renderer::getAPI())
+        {
+            case RenderAPI::API::None:
+                MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+                return nullptr;
+
+            case RenderAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(size);
+        }
+
+        MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
+        return nullptr;
+    }
+
+    Ref<VertexBuffer> VertexBuffer::create(const void* vertices, size_t size)
     {
         switch (Renderer::getAPI())
         {

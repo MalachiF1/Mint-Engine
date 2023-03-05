@@ -131,7 +131,10 @@ namespace mint
         virtual const BufferLayout& getLayout() const      = 0;
         virtual void setLayout(const BufferLayout& layout) = 0;
 
-        static Ref<VertexBuffer> create(float* vertices, size_t size);
+        virtual void setData(const void* data, size_t size) = 0;
+
+        static Ref<VertexBuffer> create(size_t size);
+        static Ref<VertexBuffer> create(const void* vertices, size_t size);
     };
 
 

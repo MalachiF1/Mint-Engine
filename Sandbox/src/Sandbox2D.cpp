@@ -37,11 +37,12 @@ void Sandbox2D::onUpdate(mint::Timestep ts)
     {
         MINT_PROFILE_SCOPE("Renderer Draw");
         mint::Renderer2D::beginScene(m_cameraController.getCamera());
-        mint::Renderer2D::drawQuad({ 0.3f, 0.3f, 0.1f }, { 0.5f, 1.5f }, m_color, 45.0f);
-        mint::Renderer2D::drawQuad({ 0.0f, 0.5f }, { 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
-        mint::Renderer2D::drawQuad(
-            { 0.0f, 0.0f, -0.1f }, { 8.0f, 8.0f }, m_checkerboardTexture, 0.0f,  10.0f, { 1.0f, 1.0f, 0.8f, 1.0f }
-        );
+        // mint::Renderer2D::drawQuad({ 0.3f, 0.3f, 0.1f }, { 0.5f, 1.5f }, m_color, 45.0f);
+        // mint::Renderer2D::drawQuad({ 0.0f, 0.5f }, { 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
+        // mint::Renderer2D::drawQuad(
+        //    { 0.0f, 0.0f, -0.1f }, { 8.0f, 8.0f }, m_checkerboardTexture, 0.0f,  10.0f, { 1.0f, 1.0f, 0.8f, 1.0f }
+        // );
+        mint::Renderer2D::drawQuad({ 0.3f, 0.3f, 0.1f }, { 0.5f, 1.5f }, m_color);
         mint::Renderer2D::endScene();
     }
 }

@@ -14,14 +14,13 @@ namespace mint
         virtual void bind() const override final;
         virtual void unbind() const override final;
 
-        inline virtual const std::vector<Ref<VertexBuffer>> getVertexBuffers() const override final
+        inline virtual const std::vector<Ref<VertexBuffer>>& getVertexBuffers() const override final
         {
             return m_vertexBuffers;
         }
-        inline virtual const std::shared_ptr<IndexBuffer> getIndexBuffer() const override final
-        {
-            return m_indexBuffer;
-        }
+        inline virtual std::vector<Ref<VertexBuffer>>& getVertexBuffers() override final { return m_vertexBuffers; }
+        inline virtual const Ref<IndexBuffer>& getIndexBuffer() const override final { return m_indexBuffer; }
+        inline virtual Ref<IndexBuffer>& getIndexBuffer() override final { return m_indexBuffer; }
 
         virtual void addVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) override final;
         virtual void setIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override final;

@@ -11,7 +11,8 @@ namespace mint
     class OpenGLVertexBuffer : public VertexBuffer
     {
       public:
-        OpenGLVertexBuffer(float* vertices, size_t size);
+        OpenGLVertexBuffer(size_t size);
+        OpenGLVertexBuffer(const void* vertices, size_t size);
         virtual ~OpenGLVertexBuffer() final;
 
         virtual void bind() const override final;
@@ -19,6 +20,8 @@ namespace mint
 
         inline virtual const BufferLayout& getLayout() const override final { return m_layout; }
         inline virtual void setLayout(const BufferLayout& layout) override final { m_layout = layout; };
+
+        virtual void setData(const void* data, size_t size) override final;
 
       private:
         uint32_t m_rendererID;

@@ -17,6 +17,8 @@ namespace mint
         static void beginScene(const OrthographicCamera& camera);
         static void endScene();
 
+        static void flush();
+
         // Primitives
         static void drawQuad(
             const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, float rotation = 0
@@ -42,11 +44,26 @@ namespace mint
         );
 
       private:
+        struct QuadVertex
+        {
+            glm::vec3 position;
+            glm::vec4 color;
+            glm::vec2 texCoords;
+        };
+
         struct SceneData
         {
+            const uint32_t maxQuads    = 10000;
+            const uint32_t maxVertices = maxQuads * 4;
+            const uint32_t maxIndices  = maxQuads * 6;
+
             Ref<VertexArray> quadVertexArray;
             Ref<Shader> textureShader;
             Ref<Texture2D> whiteTexture;
+
+            uint32_t quadIndexCount = 0;
+            QuadVertex* quadvertexBufferBase = nullptr;
+            QuadVertex* quadvertexBufferPtr = nullptr;
         };
 
         static SceneData* s_data;
