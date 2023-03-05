@@ -34,9 +34,9 @@ namespace mint
       private:
         bool m_running = true;
         bool m_minimized = false;
-        ImGuiLayer* m_ImGuiLayer;
-        LayerStack m_layerStack;
         Scope<Window> m_window;
+        LayerStack m_layerStack;
+        ImGuiLayer* m_ImGuiLayer;
         float m_lastFrameTime = 0.0f;
 
       private:

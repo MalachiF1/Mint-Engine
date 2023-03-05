@@ -162,8 +162,7 @@ namespace mint
 
         if (s_GLFWWindowsCount == 0)
         {
-            // We're still using glfw in places we shouldn't, so for now this is commented.
-            // glfwTerminate();
+            glfwTerminate();
         }
     }
 

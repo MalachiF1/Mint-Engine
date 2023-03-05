@@ -80,6 +80,7 @@ namespace mint
         s_data->whiteTexture->bind();
 
         s_data->textureShader->setFloat4("u_Color", color);
+        s_data->textureShader->setFloat("u_TilingFactor", 1.0f);
 
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
         transform           = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -91,14 +92,24 @@ namespace mint
     }
 
     void Renderer2D::drawQuad(
-        const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float rotation, glm::vec4 tint
+        const glm::vec2& position,
+        const glm::vec2& size,
+        const Ref<Texture2D>& texture,
+        float rotation,
+        float tilingFactor,
+        glm::vec4 tint
     )
     {
-        drawQuad({ position.x, position.y, 0.0f }, size, texture, rotation, tint);
+        drawQuad({ position.x, position.y, 0.0f }, size, texture, rotation, tilingFactor, tint);
     }
 
     void Renderer2D::drawQuad(
-        const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float rotation, glm::vec4 tint
+        const glm::vec3& position,
+        const glm::vec2& size,
+        const Ref<Texture2D>& texture,
+        float rotation,
+        float tilingFactor,
+        glm::vec4 tint
     )
     {
         MINT_PROFILE_FUNCTION();
@@ -106,6 +117,7 @@ namespace mint
         texture->bind();
 
         s_data->textureShader->setFloat4("u_Color", tint);
+        s_data->textureShader->setFloat("u_TilingFactor", tilingFactor);
 
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
         transform           = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
