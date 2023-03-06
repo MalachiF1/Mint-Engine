@@ -79,6 +79,10 @@ namespace mint
         );
 
       private:
+        static void startBatch();
+        static void nextBatch();
+
+      private:
         // Renderer data
         // -------------
 
@@ -95,9 +99,9 @@ namespace mint
         struct SceneData
         {
             // Max data buffer can hold (we will flush the buffer if this is reached).
-            const uint32_t maxQuads               = 10000;
-            const uint32_t maxVertices            = maxQuads * 4;
-            const uint32_t maxIndices             = maxQuads * 6;
+            static const uint32_t maxQuads        = 10000;
+            static const uint32_t maxVertices     = maxQuads * 4;
+            static const uint32_t maxIndices      = maxQuads * 6;
             static const uint32_t maxTextureSlots = 32; // TODO:: check driver capablities per device
 
             Ref<VertexArray> quadVertexArray;

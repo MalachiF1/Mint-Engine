@@ -8,7 +8,6 @@ layout(location = 3) in float a_TexIndex;
 layout(location = 4) in float a_TilingFactor;
 
 uniform mat4 u_ViewProjection;
-// uniform mat4 u_Transform;
 
 out vec4 v_Color;
 out vec2 v_TexCoords;
@@ -40,7 +39,6 @@ uniform sampler2D u_Textures[32];
             
 void main()
 {
-    // TODO: tiling factor
 	vec4 texColor = v_Color;
 	switch(int(v_TexIndex))
 	{

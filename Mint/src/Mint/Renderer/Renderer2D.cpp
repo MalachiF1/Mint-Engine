@@ -102,10 +102,7 @@ namespace mint
         s_data->textureShader->bind();
         s_data->textureShader->setMat4("u_ViewProjection", camera.getViewProjectionMatrix());
 
-        s_data->quadIndexCount      = 0;
-        s_data->quadvertexBufferPtr = s_data->quadvertexBufferBase;
-
-        s_data->textureSlotsIndex = 1;
+        startBatch();
     }
 
     // End the scene and draw the data in the buffer
@@ -127,6 +124,20 @@ namespace mint
 
         for (uint32_t i = 0; i < s_data->textureSlotsIndex; ++i) s_data->textureSlots[i]->bind(i);
         RenderCommand::drawIndexed(s_data->quadVertexArray, s_data->quadIndexCount);
+    }
+
+    void Renderer2D::startBatch()
+    {
+        s_data->quadIndexCount      = 0;
+        s_data->quadvertexBufferPtr = s_data->quadvertexBufferBase;
+
+        s_data->textureSlotsIndex = 1;
+    }
+
+    void Renderer2D::nextBatch()
+    {
+        flush();
+        startBatch();
     }
 
 
@@ -248,13 +259,17 @@ namespace mint
 
         MINT_PROFILE_FUNCTION();
 
-        const float texIndex     = 0.0f; // white texture
-        const float tilingFactor = 1.0f;
+        if (s_data->quadIndexCount + 6 >= s_data->maxIndices)
+            nextBatch();
+
+        const float texIndex        = 0.0f; // white texture
+        const float tilingFactor    = 1.0f;
+        const glm::vec2 texCoords[] = {{0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
 
         // Bottom left
         s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[0];
         s_data->quadvertexBufferPtr->color        = color;
-        s_data->quadvertexBufferPtr->texCoords    = {0.0f, 0.0f};
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[0];
         s_data->quadvertexBufferPtr->texIndex     = texIndex;
         s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
         s_data->quadvertexBufferPtr++;
@@ -262,7 +277,7 @@ namespace mint
         // Bottom Right
         s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[1];
         s_data->quadvertexBufferPtr->color        = color;
-        s_data->quadvertexBufferPtr->texCoords    = {1.0f, 0.0f};
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[1];
         s_data->quadvertexBufferPtr->texIndex     = texIndex;
         s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
         s_data->quadvertexBufferPtr++;
@@ -270,7 +285,7 @@ namespace mint
         // Top Right
         s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[2];
         s_data->quadvertexBufferPtr->color        = color;
-        s_data->quadvertexBufferPtr->texCoords    = {1.0f, 1.0f};
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[2];
         s_data->quadvertexBufferPtr->texIndex     = texIndex;
         s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
         s_data->quadvertexBufferPtr++;
@@ -279,7 +294,7 @@ namespace mint
         s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[3];
         s_data->quadvertexBufferPtr->color        = color;
         s_data->quadvertexBufferPtr->color        = color;
-        s_data->quadvertexBufferPtr->texCoords    = {0.0f, 1.0f};
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[3];
         s_data->quadvertexBufferPtr->texIndex     = texIndex;
         s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
         s_data->quadvertexBufferPtr++;
@@ -292,6 +307,11 @@ namespace mint
     )
     {
         MINT_PROFILE_FUNCTION();
+
+        if (s_data->quadIndexCount + 6 >= s_data->maxIndices || s_data->textureSlotsIndex >= s_data->maxTextureSlots)
+            nextBatch();
+
+        const glm::vec2 texCoords[] = {{0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
 
         float texIndex = 0;
         for (uint32_t i = 0; i < s_data->textureSlotsIndex; ++i)
@@ -312,7 +332,7 @@ namespace mint
         // Bottom left
         s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[0];
         s_data->quadvertexBufferPtr->color        = tint;
-        s_data->quadvertexBufferPtr->texCoords    = {0.0f, 0.0f};
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[0];
         s_data->quadvertexBufferPtr->texIndex     = texIndex;
         s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
         s_data->quadvertexBufferPtr++;
@@ -320,7 +340,7 @@ namespace mint
         // Bottom Right
         s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[1];
         s_data->quadvertexBufferPtr->color        = tint;
-        s_data->quadvertexBufferPtr->texCoords    = {1.0f, 0.0f};
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[1];
         s_data->quadvertexBufferPtr->texIndex     = texIndex;
         s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
         s_data->quadvertexBufferPtr++;
@@ -328,7 +348,7 @@ namespace mint
         // Top Right
         s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[2];
         s_data->quadvertexBufferPtr->color        = tint;
-        s_data->quadvertexBufferPtr->texCoords    = {1.0f, 1.0f};
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[2];
         s_data->quadvertexBufferPtr->texIndex     = texIndex;
         s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
         s_data->quadvertexBufferPtr++;
@@ -336,7 +356,7 @@ namespace mint
         // Top Left
         s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[3];
         s_data->quadvertexBufferPtr->color        = tint;
-        s_data->quadvertexBufferPtr->texCoords    = {0.0f, 1.0f};
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[3];
         s_data->quadvertexBufferPtr->texIndex     = texIndex;
         s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
         s_data->quadvertexBufferPtr++;
