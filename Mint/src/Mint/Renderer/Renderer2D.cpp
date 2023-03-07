@@ -192,6 +192,34 @@ namespace mint
         drawQuad(transform, texture, tilingFactor, tint);
     }
 
+    // SubTexture Quads
+    // ------------------------------------------------------------------------------------------------------
+
+    void Renderer2D::drawQuad(
+        const glm::vec2& position,
+        const glm::vec2& size,
+        const Ref<SubTexture2D>& subTexture,
+        float tilingFactor,
+        const glm::vec4& tint
+    )
+    {
+        drawQuad({position.x, position.y, 0.0f}, size, subTexture, tilingFactor, tint);
+    }
+
+    void Renderer2D::drawQuad(
+        const glm::vec3& position,
+        const glm::vec2& size,
+        const Ref<SubTexture2D>& subTexture,
+        float tilingFactor,
+        const glm::vec4& tint
+    )
+    {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+        transform           = glm::scale(transform, {size.x, size.y, 1.0f});
+
+        drawQuad(transform, subTexture, tilingFactor, tint);
+    }
+
 
     // Rotated Color Quads
     // ------------------------------------------------------------------------------------------------------
@@ -248,6 +276,40 @@ namespace mint
         transform           = glm::scale(transform, {size.x, size.y, 1.0f});
 
         drawQuad(transform, texture, tilingFactor, tint);
+    }
+
+
+    // Rotated SubTexture Quads
+    // ------------------------------------------------------------------------------------------------------
+
+    void Renderer2D::drawRotatedQuad(
+        const glm::vec2& position,
+        const glm::vec2& size,
+        float rotation,
+        const Ref<SubTexture2D>& subTexture,
+        float tilingFactor,
+        const glm::vec4& tint
+    )
+    {
+        drawRotatedQuad({position.x, position.y, 0.0f}, size, rotation, subTexture, tilingFactor, tint);
+    }
+
+    void Renderer2D::drawRotatedQuad(
+        const glm::vec3& position,
+        const glm::vec2& size,
+        float rotation,
+        const Ref<SubTexture2D>& subTexture,
+        float tilingFactor,
+        const glm::vec4& tint
+    )
+    {
+        MINT_PROFILE_FUNCTION();
+
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+        transform           = glm::rotate(transform, glm::radians(rotation), {0.0f, 0.0f, 1.0f});
+        transform           = glm::scale(transform, {size.x, size.y, 1.0f});
+
+        drawQuad(transform, subTexture, tilingFactor, tint);
     }
 
 
@@ -326,6 +388,68 @@ namespace mint
         {
             texIndex                       = (float)s_data->textureSlotsIndex;
             s_data->textureSlots[texIndex] = texture;
+            s_data->textureSlotsIndex++;
+        }
+
+        // Bottom left
+        s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[0];
+        s_data->quadvertexBufferPtr->color        = tint;
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[0];
+        s_data->quadvertexBufferPtr->texIndex     = texIndex;
+        s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
+        s_data->quadvertexBufferPtr++;
+
+        // Bottom Right
+        s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[1];
+        s_data->quadvertexBufferPtr->color        = tint;
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[1];
+        s_data->quadvertexBufferPtr->texIndex     = texIndex;
+        s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
+        s_data->quadvertexBufferPtr++;
+
+        // Top Right
+        s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[2];
+        s_data->quadvertexBufferPtr->color        = tint;
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[2];
+        s_data->quadvertexBufferPtr->texIndex     = texIndex;
+        s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
+        s_data->quadvertexBufferPtr++;
+
+        // Top Left
+        s_data->quadvertexBufferPtr->position     = transform * s_data->quadVertexPositions[3];
+        s_data->quadvertexBufferPtr->color        = tint;
+        s_data->quadvertexBufferPtr->texCoords    = texCoords[3];
+        s_data->quadvertexBufferPtr->texIndex     = texIndex;
+        s_data->quadvertexBufferPtr->tilingFactor = tilingFactor;
+        s_data->quadvertexBufferPtr++;
+
+        s_data->quadIndexCount += 6;
+    }
+
+    void Renderer2D::drawQuad(
+        const glm::mat4& transform, const Ref<SubTexture2D>& subTexture, float tilingFactor, const glm::vec4& tint
+    )
+    {
+        MINT_PROFILE_FUNCTION();
+
+        if (s_data->quadIndexCount + 6 >= s_data->maxIndices || s_data->textureSlotsIndex >= s_data->maxTextureSlots)
+            nextBatch();
+
+        const glm::vec2* texCoords = subTexture->getTexCoords();
+
+        float texIndex = 0;
+        for (uint32_t i = 0; i < s_data->textureSlotsIndex; ++i)
+        {
+            if (*s_data->textureSlots[i].get() == *subTexture->getTexture().get())
+            {
+                texIndex = (float)i;
+                break;
+            }
+        }
+        if (texIndex == 0.0f)
+        {
+            texIndex                       = (float)s_data->textureSlotsIndex;
+            s_data->textureSlots[texIndex] = subTexture->getTexture();
             s_data->textureSlotsIndex++;
         }
 

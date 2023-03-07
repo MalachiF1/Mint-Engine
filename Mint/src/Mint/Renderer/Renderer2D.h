@@ -2,6 +2,7 @@
 
 #include "Mint/Renderer/OrthographicCamera.h"
 #include "Mint/Renderer/Shader.h"
+#include "Mint/Renderer/SubTexture2D.h"
 #include "Mint/Renderer/Texture.h"
 #include "Mint/Renderer/VertexArray.h"
 
@@ -40,6 +41,21 @@ namespace mint
             float tilingFactor    = 1.0f,
             const glm::vec4& tint = glm::vec4(1.0f)
         );
+        // SubTexture quads (subTextures)
+        static void drawQuad(
+            const glm::vec2& position,
+            const glm::vec2& size,
+            const Ref<SubTexture2D>& subTexture,
+            float tilingFactor    = 1.0f,
+            const glm::vec4& tint = glm::vec4(1.0f)
+        );
+        static void drawQuad(
+            const glm::vec3& position,
+            const glm::vec2& size,
+            const Ref<SubTexture2D>& subTexture,
+            float tilingFactor    = 1.0f,
+            const glm::vec4& tint = glm::vec4(1.0f)
+        );
 
         // Rotation incurs extra runtime cost, and we usually don't need rotation, so it's separated into a different
         // method.
@@ -68,12 +84,35 @@ namespace mint
             float tilingFactor    = 1.0f,
             const glm::vec4& tint = glm::vec4(1.0f)
         );
+        // Rotated SubTexture quads (subTextures)
+        static void drawRotatedQuad(
+            const glm::vec2& position,
+            const glm::vec2& size,
+            float rotation,
+            const Ref<SubTexture2D>& subTexture,
+            float tilingFactor    = 1.0f,
+            const glm::vec4& tint = glm::vec4(1.0f)
+        );
+        static void drawRotatedQuad(
+            const glm::vec3& position,
+            const glm::vec2& size,
+            float rotation,
+            const Ref<SubTexture2D>& subTexture,
+            float tilingFactor    = 1.0f,
+            const glm::vec4& tint = glm::vec4(1.0f)
+        );
 
         // Draw quads from transforms (the previous overloads call these methods)
         static void drawQuad(const glm::mat4& transform, const glm::vec4& color);
         static void drawQuad(
             const glm::mat4& transform,
             const Ref<Texture2D>& texture,
+            float tilingFactor    = 1.0f,
+            const glm::vec4& tint = glm::vec4(1.0f)
+        );
+        static void drawQuad(
+            const glm::mat4& transform,
+            const Ref<SubTexture2D>& subTexture,
             float tilingFactor    = 1.0f,
             const glm::vec4& tint = glm::vec4(1.0f)
         );

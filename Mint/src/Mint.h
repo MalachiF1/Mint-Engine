@@ -23,6 +23,7 @@
 #include "Mint/Renderer/Renderer.h"
 #include "Mint/Renderer/Renderer2D.h"
 #include "Mint/Renderer/Shader.h"
+#include "Mint/Renderer/SubTexture2D.h"
 #include "Mint/Renderer/Texture.h"
 #include "Mint/Renderer/VertexArray.h"
 // ----------------------------------------------------------------------------
