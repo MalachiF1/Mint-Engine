@@ -2,6 +2,8 @@
 
 #include "OpenGLShader.h"
 
+#include "GLCheck.h"
+
 #include <fstream>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -78,7 +80,8 @@ void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shader
     MINT_PROFILE_FUNCTION();
 
     // Get a program object.
-    GLuint program = glCreateProgram();
+    GLuint program;
+    glCheck(program = glCreateProgram());
     MINT_CORE_ASSERT(shaderSources.size() <= 2, "Currently only supporting 2 shaders");
     std::array<GLuint, 2> glShaderIDs;
     int                   glShaderIDIndex = 0;
@@ -86,29 +89,30 @@ void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shader
     for (auto&& [type, src] : shaderSources)
     {
         // Create an empty vertex shader handle
-        GLuint shader = glCreateShader(type);
+        GLuint shader;
+        glCheck(shader = glCreateShader(type));
 
         // Send the shader source code to GL
         // Note that std::string's .c_str is NULL character terminated.
         const GLchar* sourceCStr = (const GLchar*)src.c_str();
-        glShaderSource(shader, 1, &sourceCStr, 0);
+        glCheck(glShaderSource(shader, 1, &sourceCStr, 0));
 
         // Compile the shader
-        glCompileShader(shader);
+        glCheck(glCompileShader(shader));
 
         GLint isCompiled = 0;
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+        glCheck(glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled));
         if (isCompiled == GL_FALSE)
         {
             GLint maxLength = 0;
-            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+            glCheck(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength));
 
             // The maxLength includes the NULL character
             std::vector<GLchar> infoLog(maxLength);
-            glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
+            glCheck(glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]));
 
             // We don't need the shader anymore.
-            glDeleteShader(shader);
+            glCheck(glDeleteShader(shader));
 
             MINT_CORE_ERROR("{0}", infoLog.data());
             MINT_CORE_ASSERT(false, "Shader compilation failure!");
@@ -117,27 +121,27 @@ void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shader
 
         // Shader was successfully compiled.
         // Now attach our shader to our program
-        glAttachShader(program, shader);
+        glCheck(glAttachShader(program, shader));
         glShaderIDs[glShaderIDIndex++] = shader;
     }
 
     // Link our program
-    glLinkProgram(program);
+    glCheck(glLinkProgram(program));
 
     // Note the different functions here: glGetProgram* instead of glGetShader*.
     GLint isLinked = 0;
-    glGetProgramiv(program, GL_LINK_STATUS, (int*)&isLinked);
+    glCheck(glGetProgramiv(program, GL_LINK_STATUS, (int*)&isLinked));
     if (isLinked == GL_FALSE)
     {
         GLint maxLength = 0;
-        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+        glCheck(glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength));
 
         // The maxLength includes the NULL character
         std::vector<GLchar> infoLog(maxLength);
-        glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
+        glCheck(glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]));
 
         // We don't need the program anymore.
-        glDeleteProgram(program);
+        glCheck(glDeleteProgram(program));
         // Don't leak shaders either.
         for (GLuint id : glShaderIDs) glDeleteShader(id);
 
@@ -149,7 +153,7 @@ void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shader
     m_rendererID = program;
 
     // Always detach shaders after a successful link.
-    for (GLuint id : glShaderIDs) glDetachShader(program, id);
+    glCheck(for (GLuint id : glShaderIDs) glDetachShader(program, id));
 }
 
 
@@ -185,21 +189,21 @@ OpenGLShader::~OpenGLShader()
 {
     MINT_PROFILE_FUNCTION();
 
-    glDeleteProgram(m_rendererID);
+    glCheck(glDeleteProgram(m_rendererID));
 }
 
 void OpenGLShader::bind() const
 {
     MINT_PROFILE_FUNCTION();
 
-    glUseProgram(m_rendererID);
+    glCheck(glUseProgram(m_rendererID));
 }
 
 void OpenGLShader::unbind() const
 {
     MINT_PROFILE_FUNCTION();
 
-    glUseProgram(0);
+    glCheck(glUseProgram(0));
 }
 
 void OpenGLShader::setBool(const std::string& name, bool value)
@@ -293,7 +297,7 @@ int OpenGLShader::getUniformLocation(const std::string& name)
         return m_uniformLocationCache[name];
 
     int location;
-    location = glGetUniformLocation(m_rendererID, name.c_str());
+    glCheck(location = glGetUniformLocation(m_rendererID, name.c_str()));
     if (location == -1)
     {
         MINT_CORE_WARN("Warning: uniform {0} doesn't exist!", name);
@@ -305,63 +309,63 @@ int OpenGLShader::getUniformLocation(const std::string& name)
 
 void OpenGLShader::uploadUniformBool(const std::string& name, bool value)
 {
-    glUniform1i(getUniformLocation(name), (int)value);
+    glCheck(glUniform1i(getUniformLocation(name), (int)value));
 }
 void OpenGLShader::uploadUniformInt(const std::string& name, int value)
 {
-    glUniform1i(getUniformLocation(name), value);
+    glCheck(glUniform1i(getUniformLocation(name), value));
 }
 void OpenGLShader::uploadUniformIntArray(const std::string& name, int* values, uint32_t count)
 {
-    glUniform1iv(getUniformLocation(name), count, values);
+    glCheck(glUniform1iv(getUniformLocation(name), count, values));
 }
 void OpenGLShader::uploadUniformUint(const std::string& name, unsigned int value)
 {
-    glUniform1ui(getUniformLocation(name), value);
+    glCheck(glUniform1ui(getUniformLocation(name), value));
 }
 void OpenGLShader::uploadUniformFloat(const std::string& name, float value)
 {
-    glUniform1f(getUniformLocation(name), value);
+    glCheck(glUniform1f(getUniformLocation(name), value));
 }
 
 void OpenGLShader::uploadUniformFloat2(const std::string& name, const glm::vec2& value)
 {
-    glUniform2fv(getUniformLocation(name), 1, glm::value_ptr(value));
+    glCheck(glUniform2fv(getUniformLocation(name), 1, glm::value_ptr(value)));
 }
 void OpenGLShader::uploadUniformFloat2(const std::string& name, float x, float y)
 {
-    glUniform2f(getUniformLocation(name), x, y);
+    glCheck(glUniform2f(getUniformLocation(name), x, y));
 }
 
 void OpenGLShader::uploadUniformFloat3(const std::string& name, const glm::vec3& value)
 {
-    glUniform3fv(getUniformLocation(name), 1, glm::value_ptr(value));
+    glCheck(glUniform3fv(getUniformLocation(name), 1, glm::value_ptr(value)));
 }
 void OpenGLShader::uploadUniformFloat3(const std::string& name, float x, float y, float z)
 {
-    glUniform3f(getUniformLocation(name), x, y, z);
+    glCheck(glUniform3f(getUniformLocation(name), x, y, z));
 }
 
 void OpenGLShader::uploadUniformFloat4(const std::string& name, const glm::vec4& value)
 {
-    glUniform4fv(getUniformLocation(name), 1, glm::value_ptr(value));
+    glCheck(glUniform4fv(getUniformLocation(name), 1, glm::value_ptr(value)));
 }
 void OpenGLShader::uploadUniformFloat4(const std::string& name, float x, float y, float z, float w)
 {
-    glUniform4f(getUniformLocation(name), x, y, z, w);
+    glCheck(glUniform4f(getUniformLocation(name), x, y, z, w));
 }
 
 void OpenGLShader::uploadUniformMat2(const std::string& name, const glm::mat2& mat)
 {
-    glUniformMatrix2fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
+    glCheck(glUniformMatrix2fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat)));
 }
 void OpenGLShader::uploadUniformMat3(const std::string& name, const glm::mat3& mat)
 {
-    glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
+    glCheck(glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat)));
 }
 void OpenGLShader::uploadUniformMat4(const std::string& name, const glm::mat4& mat)
 {
-    glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
+    glCheck(glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat)));
 }
 
 } // namespace mint
