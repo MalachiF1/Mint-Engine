@@ -111,7 +111,7 @@ namespace mint
     {
         MINT_PROFILE_FUNCTION();
 
-        size_t dataSize = (uint8_t*)s_data->quadvertexBufferPtr - (uint8_t*)s_data->quadvertexBufferBase;
+        size_t dataSize = size_t((uint8_t*)s_data->quadvertexBufferPtr - (uint8_t*)s_data->quadvertexBufferBase);
         s_data->quadVertexArray->getVertexBuffers()[0]->setData(s_data->quadvertexBufferBase, dataSize);
 
         flush();
@@ -121,6 +121,8 @@ namespace mint
     void Renderer2D::flush()
     {
         MINT_PROFILE_FUNCTION();
+        if (s_data->quadIndexCount == 0)
+            return; // nothing to draw
 
         for (uint32_t i = 0; i < s_data->textureSlotsIndex; ++i) s_data->textureSlots[i]->bind(i);
         RenderCommand::drawIndexed(s_data->quadVertexArray, s_data->quadIndexCount);
@@ -370,7 +372,7 @@ namespace mint
     {
         MINT_PROFILE_FUNCTION();
 
-        if (s_data->quadIndexCount + 6 >= s_data->maxIndices || s_data->textureSlotsIndex >= s_data->maxTextureSlots)
+        if (s_data->quadIndexCount + 6 >= s_data->maxIndices)
             nextBatch();
 
         const glm::vec2 texCoords[] = {{0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
@@ -386,6 +388,9 @@ namespace mint
         }
         if (texIndex == 0.0f)
         {
+            if (s_data->textureSlotsIndex >= s_data->maxTextureSlots)
+                nextBatch();
+
             texIndex                       = (float)s_data->textureSlotsIndex;
             s_data->textureSlots[texIndex] = texture;
             s_data->textureSlotsIndex++;
@@ -432,7 +437,7 @@ namespace mint
     {
         MINT_PROFILE_FUNCTION();
 
-        if (s_data->quadIndexCount + 6 >= s_data->maxIndices || s_data->textureSlotsIndex >= s_data->maxTextureSlots)
+        if (s_data->quadIndexCount + 6 >= s_data->maxIndices)
             nextBatch();
 
         const glm::vec2* texCoords = subTexture->getTexCoords();
@@ -448,6 +453,9 @@ namespace mint
         }
         if (texIndex == 0.0f)
         {
+            if (s_data->textureSlotsIndex >= s_data->maxTextureSlots)
+                nextBatch();
+
             texIndex                       = (float)s_data->textureSlotsIndex;
             s_data->textureSlots[texIndex] = subTexture->getTexture();
             s_data->textureSlotsIndex++;
