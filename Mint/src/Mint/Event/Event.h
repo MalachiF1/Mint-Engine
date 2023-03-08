@@ -3,44 +3,45 @@
 
 namespace mint
 {
-    // Events are currently blocking.
-    // TODO: create an event queue and proccess events during the "event" part of the update loop.
 
-    enum class EventType
-    {
-        None = 0,
+// Events are currently blocking.
+// TODO: create an event queue and proccess events during the "event" part of the update loop.
 
-        // Application events
-        WindowClose,
-        WindowResize,
-        WindowFocus,
-        WindowLostFocus,
-        WindowMoved,
-        AppTick,
-        AppUpdate,
-        AppRender,
+enum class EventType
+{
+    None = 0,
 
-        // Keyboard events
-        KeyTyped,
-        KeyPressed,
-        KeyReleased,
+    // Application events
+    WindowClose,
+    WindowResize,
+    WindowFocus,
+    WindowLostFocus,
+    WindowMoved,
+    AppTick,
+    AppUpdate,
+    AppRender,
 
-        // Mouse events
-        MouseButtonPressed,
-        MouseButtonReleased,
-        MouseMoved,
-        MouseScrolled
-    };
+    // Keyboard events
+    KeyTyped,
+    KeyPressed,
+    KeyReleased,
 
-    enum EventCategory
-    {
-        None                     = 0,
-        EventCategoryApplication = BIT(0),
-        EventCategoryInput       = BIT(1),
-        EventCategoryKeyboard    = BIT(2),
-        EventCategoryMouse       = BIT(3),
-        EventCategoryMouseButton = BIT(4),
-    };
+    // Mouse events
+    MouseButtonPressed,
+    MouseButtonReleased,
+    MouseMoved,
+    MouseScrolled
+};
+
+enum EventCategory
+{
+    None                     = 0,
+    EventCategoryApplication = BIT(0),
+    EventCategoryInput       = BIT(1),
+    EventCategoryKeyboard    = BIT(2),
+    EventCategoryMouse       = BIT(3),
+    EventCategoryMouseButton = BIT(4),
+};
 
 #define EVENT_CLASS_TYPE(type)                                                                                         \
     static EventType getStaticType()                                                                                   \
@@ -63,52 +64,52 @@ namespace mint
     }
 
 
-    class Event
+class Event
+{
+    friend class EventDispatcher;
+    friend class EventBus;
+
+  public:
+    virtual EventType   getEventType() const     = 0;
+    virtual const char* getName() const          = 0;
+    virtual int         getCategoryFlags() const = 0;
+    virtual std::string toString() const { return getName(); }
+
+    inline bool isInCategory(EventCategory category) const { return getCategoryFlags() & category; }
+    inline bool handled() const { return m_handled; }
+
+  protected:
+    bool m_handled = false;
+};
+
+class EventDispatcher
+{
+    // The event callback function
+    template<typename T>
+    using EventFn = std::function<bool(T&)>;
+
+  public:
+    EventDispatcher(Event& event) : m_event(event) {}
+
+    template<typename T>
+    bool dispatch(EventFn<T> func)
     {
-        friend class EventDispatcher;
-        friend class EventBus;
-
-      public:
-        virtual EventType getEventType() const = 0;
-        virtual const char* getName() const    = 0;
-        virtual int getCategoryFlags() const   = 0;
-        virtual std::string toString() const { return getName(); }
-
-        inline bool isInCategory(EventCategory category) const { return getCategoryFlags() & category; }
-        inline bool handled() const { return m_handled; }
-
-      protected:
-        bool m_handled = false;
-    };
-
-    class EventDispatcher
-    {
-        // The event callback function
-        template <typename T>
-        using EventFn = std::function<bool(T&)>;
-
-      public:
-        EventDispatcher(Event& event) : m_event(event) {}
-
-        template <typename T>
-        bool dispatch(EventFn<T> func)
+        if (m_event.getEventType() == T::getStaticType())
         {
-            if (m_event.getEventType() == T::getStaticType())
-            {
-                m_event.m_handled = func(*(T*)&m_event);
-                return true;
-            }
-            return false;
+            m_event.m_handled = func(*(T*)&m_event);
+            return true;
         }
-
-      private:
-        Event& m_event;
-    };
-
-
-    inline std::ostream& operator<<(std::ostream& os, const Event& e)
-    {
-        return os << e.toString();
+        return false;
     }
+
+  private:
+    Event& m_event;
+};
+
+
+inline std::ostream& operator<<(std::ostream& os, const Event& e)
+{
+    return os << e.toString();
+}
 
 } // namespace mint

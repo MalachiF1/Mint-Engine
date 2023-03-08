@@ -7,6 +7,6 @@
 namespace mint
 {
 
-    RenderAPI* RenderCommand::s_renderAPI = new OpenGLRenderAPI;
+RenderAPI* RenderCommand::s_renderAPI = new OpenGLRenderAPI;
 
 }

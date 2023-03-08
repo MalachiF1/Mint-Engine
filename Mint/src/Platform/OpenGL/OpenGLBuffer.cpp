@@ -7,86 +7,86 @@
 namespace mint
 {
 
-    // Vertex Buffer
-    // ----------------------------------------------------------------------------
+// Vertex Buffer
+// ----------------------------------------------------------------------------
 
-    OpenGLVertexBuffer::OpenGLVertexBuffer(size_t size)
-    {
-        MINT_PROFILE_FUNCTION();
+OpenGLVertexBuffer::OpenGLVertexBuffer(size_t size)
+{
+    MINT_PROFILE_FUNCTION();
 
-        glCreateBuffers(1, &m_rendererID);
-        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-        glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
-    }
+    glCreateBuffers(1, &m_rendererID);
+    glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
+    glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+}
 
-    OpenGLVertexBuffer::OpenGLVertexBuffer(const void* vertices, size_t size)
-    {
-        MINT_PROFILE_FUNCTION();
+OpenGLVertexBuffer::OpenGLVertexBuffer(const void* vertices, size_t size)
+{
+    MINT_PROFILE_FUNCTION();
 
-        glCreateBuffers(1, &m_rendererID);
-        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-    }
+    glCreateBuffers(1, &m_rendererID);
+    glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
+    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+}
 
-    OpenGLVertexBuffer::~OpenGLVertexBuffer()
-    {
-        MINT_PROFILE_FUNCTION();
+OpenGLVertexBuffer::~OpenGLVertexBuffer()
+{
+    MINT_PROFILE_FUNCTION();
 
-        glDeleteBuffers(1, &m_rendererID);
-    }
+    glDeleteBuffers(1, &m_rendererID);
+}
 
-    void OpenGLVertexBuffer::bind() const
-    {
-        MINT_PROFILE_FUNCTION();
+void OpenGLVertexBuffer::bind() const
+{
+    MINT_PROFILE_FUNCTION();
 
-        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-    }
+    glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
+}
 
-    void OpenGLVertexBuffer::unbind() const
-    {
-        MINT_PROFILE_FUNCTION();
+void OpenGLVertexBuffer::unbind() const
+{
+    MINT_PROFILE_FUNCTION();
 
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-    }
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 
-    void OpenGLVertexBuffer::setData(const void* data, size_t size)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
-    }
+void OpenGLVertexBuffer::setData(const void* data, size_t size)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+}
 
 
-    // Index Buffer
-    // ----------------------------------------------------------------------------
+// Index Buffer
+// ----------------------------------------------------------------------------
 
-    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count) : m_count(count)
-    {
-        MINT_PROFILE_FUNCTION();
+OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count) : m_count(count)
+{
+    MINT_PROFILE_FUNCTION();
 
-        glCreateBuffers(1, &m_rendererID);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
-    }
+    glCreateBuffers(1, &m_rendererID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+}
 
-    OpenGLIndexBuffer::~OpenGLIndexBuffer()
-    {
-        MINT_PROFILE_FUNCTION();
+OpenGLIndexBuffer::~OpenGLIndexBuffer()
+{
+    MINT_PROFILE_FUNCTION();
 
-        glDeleteBuffers(1, &m_rendererID);
-    }
+    glDeleteBuffers(1, &m_rendererID);
+}
 
-    void OpenGLIndexBuffer::bind() const
-    {
-        MINT_PROFILE_FUNCTION();
+void OpenGLIndexBuffer::bind() const
+{
+    MINT_PROFILE_FUNCTION();
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
-    }
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
+}
 
-    void OpenGLIndexBuffer::unbind() const
-    {
-        MINT_PROFILE_FUNCTION();
+void OpenGLIndexBuffer::unbind() const
+{
+    MINT_PROFILE_FUNCTION();
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
 
 } // namespace mint

@@ -7,55 +7,56 @@
 
 namespace mint
 {
-    // Vertex Buffer
-    // ----------------------------------------------------------------------------
 
-    Ref<VertexBuffer> VertexBuffer::create(size_t size)
+// Vertex Buffer
+// ----------------------------------------------------------------------------
+
+Ref<VertexBuffer> VertexBuffer::create(size_t size)
+{
+    switch (Renderer::getAPI())
     {
-        switch (Renderer::getAPI())
-        {
-            case RenderAPI::API::None:
-                MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-                return nullptr;
+        case RenderAPI::API::None:
+            MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+            return nullptr;
 
-            case RenderAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(size);
-        }
-
-        MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
-        return nullptr;
+        case RenderAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(size);
     }
 
-    Ref<VertexBuffer> VertexBuffer::create(const void* vertices, size_t size)
+    MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
+    return nullptr;
+}
+
+Ref<VertexBuffer> VertexBuffer::create(const void* vertices, size_t size)
+{
+    switch (Renderer::getAPI())
     {
-        switch (Renderer::getAPI())
-        {
-            case RenderAPI::API::None:
-                MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-                return nullptr;
+        case RenderAPI::API::None:
+            MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+            return nullptr;
 
-            case RenderAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(vertices, size);
-        }
-
-        MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
-        return nullptr;
+        case RenderAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(vertices, size);
     }
 
-    // Index Buffer
-    // ----------------------------------------------------------------------------
+    MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
+    return nullptr;
+}
 
-    Ref<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t count)
+// Index Buffer
+// ----------------------------------------------------------------------------
+
+Ref<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t count)
+{
+    switch (Renderer::getAPI())
     {
-        switch (Renderer::getAPI())
-        {
-            case RenderAPI::API::None:
-                MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-                return nullptr;
+        case RenderAPI::API::None:
+            MINT_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+            return nullptr;
 
-            case RenderAPI::API::OpenGL: return CreateRef<OpenGLIndexBuffer>(indices, count);
-        }
-
-        MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
-        return nullptr;
+        case RenderAPI::API::OpenGL: return CreateRef<OpenGLIndexBuffer>(indices, count);
     }
+
+    MINT_CORE_ASSERT(false, "Unknown RendererAPI!");
+    return nullptr;
+}
 
 } // namespace mint

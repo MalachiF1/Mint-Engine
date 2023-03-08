@@ -16,52 +16,52 @@
         #include <builtins.h>
         #define debug_trap() __trap(42)
     #elif defined(__DMC__) && defined(_M_IX86)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm int 3h;
 }
     #elif defined(__i386__) || defined(__x86_64__)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__("int3");
 }
     #elif defined(__thumb__)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__(".inst 0xde01");
 }
     #elif defined(__aarch64__)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__(".inst 0xd4200000");
 }
     #elif defined(__arm__)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__(".inst 0xe7f001f0");
 }
     #elif defined(__alpha__) && !defined(__osf__)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__("bpt");
 }
     #elif defined(_54_)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__("ESTOP");
 }
     #elif defined(_55_)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__(";\n .if (.MNEMONIC)\n ESTOP_1\n .else\n ESTOP_1()\n .endif\n NOP");
 }
     #elif defined(_64P_)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__("SWBP 0");
 }
     #elif defined(_6x_)
-                                                                     static inline void debug_trap(void)
+static inline void debug_trap(void)
 {
     __asm__ __volatile__("NOP\n .word 0x10000000");
 }

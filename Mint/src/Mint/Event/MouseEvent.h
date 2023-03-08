@@ -6,93 +6,93 @@
 namespace mint
 {
 
-    // Parent of key-press and key-release events.
-    // The keycode is the same for both. KeyReleaseEvent doesn't need a repeat count.
-    class MouseMovedEvent : public Event
+// Parent of key-press and key-release events.
+// The keycode is the same for both. KeyReleaseEvent doesn't need a repeat count.
+class MouseMovedEvent final : public Event
+{
+  public:
+    MouseMovedEvent(float x, float y) : m_mouseX(x), m_mouseY(y) {}
+
+    inline float getX() const { return m_mouseX; }
+    inline float getY() const { return m_mouseY; }
+
+    std::string toString() const override
     {
-      public:
-        MouseMovedEvent(float x, float y) : m_mouseX(x), m_mouseY(y) {}
+        std::stringstream ss;
+        ss << "MouseMovedEvent: " << m_mouseX << ", " << m_mouseY;
+        return ss.str();
+    }
 
-        inline float getX() const { return m_mouseX; }
-        inline float getY() const { return m_mouseY; }
+    EVENT_CLASS_TYPE(MouseMoved)
+    EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
-        std::string toString() const override final
-        {
-            std::stringstream ss;
-            ss << "MouseMovedEvent: " << m_mouseX << ", " << m_mouseY;
-            return ss.str();
-        }
+  private:
+    float m_mouseX, m_mouseY;
+};
 
-        EVENT_CLASS_TYPE(MouseMoved)
-        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+class MouseScrolledEvent final : public Event
+{
+  public:
+    MouseScrolledEvent(float xOffset, float yOffset) : m_xOffset(xOffset), m_yOffset(yOffset) {}
 
-      private:
-        float m_mouseX, m_mouseY;
-    };
+    inline float getXOffset() const { return m_xOffset; }
+    inline float getYOffset() const { return m_yOffset; }
 
-    class MouseScrolledEvent : public Event
+    std::string toString() const override
     {
-      public:
-        MouseScrolledEvent(float xOffset, float yOffset) : m_xOffset(xOffset), m_yOffset(yOffset) {}
+        std::stringstream ss;
+        ss << "MouseScrolledEvent: " << m_xOffset << ", " << m_yOffset;
+        return ss.str();
+    }
 
-        inline float getXOffset() const { return m_xOffset; }
-        inline float getYOffset() const { return m_yOffset; }
+    EVENT_CLASS_TYPE(MouseScrolled)
+    EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
-        std::string toString() const override final
-        {
-            std::stringstream ss;
-            ss << "MouseScrolledEvent: " << m_xOffset << ", " << m_yOffset;
-            return ss.str();
-        }
+  private:
+    float m_xOffset, m_yOffset;
+};
 
-        EVENT_CLASS_TYPE(MouseScrolled)
-        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+// Parent of MouseButtonPressed and MouseButtonReleased
+class MouseButtonEvent : public Event
+{
+  public:
+    inline int getMouseButton() const { return m_button; }
 
-      private:
-        float m_xOffset, m_yOffset;
-    };
+    EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
-    // Parent of MouseButtonPressed and MouseButtonReleased
-    class MouseButtonEvent : public Event
+  protected:
+    MouseButtonEvent(int button) : m_button(button) {}
+    int m_button;
+};
+
+class MouseButtonPressedEvent final : public MouseButtonEvent
+{
+  public:
+    MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
+
+    std::string toString() const override
     {
-      public:
-        inline int getMouseButton() const { return m_button; }
+        std::stringstream ss;
+        ss << "MouseButtonPressedEvent: " << getMouseButton();
+        return ss.str();
+    }
 
-        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+    EVENT_CLASS_TYPE(MouseButtonPressed)
+};
 
-      protected:
-        MouseButtonEvent(int button) : m_button(button) {}
-        int m_button;
-    };
+class MouseButtonReleasedEvent final : public MouseButtonEvent
+{
+  public:
+    MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
 
-    class MouseButtonPressedEvent : public MouseButtonEvent
+    std::string toString() const override
     {
-      public:
-        MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
+        std::stringstream ss;
+        ss << "MouseButtonReleasedEvent: " << getMouseButton();
+        return ss.str();
+    }
 
-        std::string toString() const override final
-        {
-            std::stringstream ss;
-            ss << "MouseButtonPressedEvent: " << getMouseButton();
-            return ss.str();
-        }
-
-        EVENT_CLASS_TYPE(MouseButtonPressed)
-    };
-
-    class MouseButtonReleasedEvent : public MouseButtonEvent
-    {
-      public:
-        MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
-
-        std::string toString() const override final
-        {
-            std::stringstream ss;
-            ss << "MouseButtonReleasedEvent: " << getMouseButton();
-            return ss.str();
-        }
-
-        EVENT_CLASS_TYPE(MouseButtonReleased)
-    };
+    EVENT_CLASS_TYPE(MouseButtonReleased)
+};
 
 } // namespace mint

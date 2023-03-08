@@ -8,50 +8,48 @@
 namespace mint
 {
 
-    class WindowsWindow : public Window
+class WindowsWindow final : public Window
+{
+  public:
+    WindowsWindow(const WindowProps& props);
+    virtual ~WindowsWindow();
+
+    void onUpdate() override;
+
+    inline virtual unsigned int getWidth() const override { return m_data.width; }
+    inline virtual unsigned int getHeight() const override { return m_data.width; }
+
+    inline virtual std::pair<unsigned int, unsigned int> getSize() const override
     {
-      public:
-        WindowsWindow(const WindowProps& props);
-        virtual ~WindowsWindow() final;
+        return std::pair<unsigned int, unsigned int>(m_data.width, m_data.height);
+    }
 
-        void onUpdate() override;
+    // Window attributes
+    inline virtual void setEventCallback(const EventCallbackFn& callback) override { m_data.eventCallback = callback; }
+    virtual void        setVSync(bool enabled) override;
+    inline virtual bool isVSync() const override { return m_data.VSync; };
 
-        inline virtual unsigned int getWidth() const override final { return m_data.width; }
-        inline virtual unsigned int getHeight() const override final { return m_data.width; }
-        inline virtual std::pair<unsigned int, unsigned int> getSize() const override final
-        {
-            return std::pair<unsigned int, unsigned int>(m_data.width, m_data.height);
-        }
+    inline virtual void* getNativeWindow() const override { return m_window; }
 
-        // Window attributes
-        inline virtual void setEventCallback(const EventCallbackFn& callback) override final
-        {
-            m_data.eventCallback = callback;
-        }
-        virtual void setVSync(bool enabled) override final;
-        inline virtual bool isVSync() const override final { return m_data.VSync; };
+  private:
+    virtual void init(const WindowProps& props);
+    virtual void shutdown();
 
-        inline virtual void* getNativeWindow() const override final { return m_window; }
+  private:
+    GLFWwindow* m_window;
 
-      private:
-        virtual void init(const WindowProps& props);
-        virtual void shutdown();
+    RenderingContext* m_context;
 
-      private:
-        GLFWwindow* m_window;
+    struct WindowData
+    {
+        std::string  title;
+        unsigned int width, height;
+        bool         VSync;
 
-        RenderingContext* m_context;
-
-        struct WindowData
-        {
-            std::string title;
-            unsigned int width, height;
-            bool VSync;
-
-            EventCallbackFn eventCallback;
-        };
-
-        WindowData m_data;
+        EventCallbackFn eventCallback;
     };
+
+    WindowData m_data;
+};
 
 } // namespace mint

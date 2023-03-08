@@ -9,21 +9,21 @@
 namespace mint
 {
 
-    class ImGuiLayer : public Layer
-    {
+class ImGuiLayer final : public Layer
+{
 
-      public:
-        ImGuiLayer();
-        virtual ~ImGuiLayer() override final;
+  public:
+    ImGuiLayer();
+    virtual ~ImGuiLayer() override;
 
-        virtual void onAttach() override final;
-        virtual void onDetach() override final;
+    virtual void onAttach() override;
+    virtual void onDetach() override;
 
-        void begin();
-        void end();
+    void begin();
+    void end();
 
-      private:
-        float m_time = 0.0f;
-    };
+  private:
+    float m_time = 0.0f;
+};
 
 } // namespace mint

@@ -7,22 +7,22 @@
 namespace mint
 {
 
-    class Layer
-    {
-      public:
-        Layer(const std::string& name = "Layer") : m_debugName(name){};
-        virtual ~Layer() = default;
+class Layer
+{
+  public:
+    Layer(const std::string& name = "Layer") : m_debugName(name) {};
+    virtual ~Layer() = default;
 
-        virtual void onAttach() {}
-        virtual void onDetach() {}
-        virtual void onUpdate(Timestep timestep) {}
-        virtual void onEvent(Event& e) {}
-        virtual void onImGuiRender() {}
+    virtual void onAttach() {}
+    virtual void onDetach() {}
+    virtual void onUpdate(Timestep timestep) {}
+    virtual void onEvent(Event& e) {}
+    virtual void onImGuiRender() {}
 
-        inline const std::string& getName() const { return m_debugName; }
+    inline const std::string& getName() const { return m_debugName; }
 
-      private:
-        std::string m_debugName;
-    };
+  private:
+    std::string m_debugName;
+};
 
 } // namespace mint

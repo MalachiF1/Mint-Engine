@@ -5,14 +5,14 @@
 namespace mint
 {
 
-    class WindowsInput : public Input
-    {
-      protected:
-        virtual bool isKeyPressedImpl(int keycode) override final;
-        virtual bool isMouseButtonPressedImpl(int button) override final;
-        virtual float getMouseXImpl() override final;
-        virtual float getMouseYImpl() override final;
-        virtual std::pair<float, float> getMousePosImpl() override final;
-    };
+class WindowsInput final : public Input
+{
+  protected:
+    virtual bool                    isKeyPressedImpl(int keycode) override;
+    virtual bool                    isMouseButtonPressedImpl(int button) override;
+    virtual float                   getMouseXImpl() override;
+    virtual float                   getMouseYImpl() override;
+    virtual std::pair<float, float> getMousePosImpl() override;
+};
 
 } // namespace mint

@@ -16,8 +16,8 @@
 // ----------------------------------------------------------------------------
 
 // ---- Rendering -------------------------------------------------------------
-#include "Mint/Renderer/Framebuffer.h"
 #include "Mint/Renderer/Buffer.h"
+#include "Mint/Renderer/Framebuffer.h"
 #include "Mint/Renderer/OrthographicCamera.h"
 #include "Mint/Renderer/OrthographicCameraController.h"
 #include "Mint/Renderer/RenderCommand.h"

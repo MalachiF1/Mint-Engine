@@ -7,16 +7,16 @@ struct GLFWwindow;
 namespace mint
 {
 
-    class OpenGLContext : public RenderingContext
-    {
-      public:
-        OpenGLContext(GLFWwindow* windowHandle);
+class OpenGLContext final : public RenderingContext
+{
+  public:
+    OpenGLContext(GLFWwindow* windowHandle);
 
-        virtual void init() override final;
-        virtual void swapBuffers() override final;
+    virtual void init() override;
+    virtual void swapBuffers() override;
 
-      private:
-        GLFWwindow* m_windowHandle;
-    };
+  private:
+    GLFWwindow* m_windowHandle;
+};
 
 } // namespace mint

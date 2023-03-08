@@ -5,109 +5,110 @@
 
 namespace mint
 {
-    class WindowResizeEvent : public Event
+
+class WindowResizeEvent final : public Event
+{
+  public:
+    WindowResizeEvent(unsigned int width, unsigned int height) : m_width(width), m_height(height) {}
+
+    inline unsigned int getWidth() const { return m_width; }
+    inline unsigned int getHeight() const { return m_height; }
+
+    std::string toString() const override
     {
-      public:
-        WindowResizeEvent(unsigned int width, unsigned int height) : m_width(width), m_height(height) {}
+        std::stringstream ss;
+        ss << "WindowResizeEvent: " << m_width << ", " << m_height;
+        return ss.str();
+    }
 
-        inline unsigned int getWidth() const { return m_width; }
-        inline unsigned int getHeight() const { return m_height; }
+    EVENT_CLASS_TYPE(WindowResize)
+    EVENT_CLASS_CATEGORY(EventCategoryApplication)
 
-        std::string toString() const override final
-        {
-            std::stringstream ss;
-            ss << "WindowResizeEvent: " << m_width << ", " << m_height;
-            return ss.str();
-        }
+  private:
+    unsigned int m_width, m_height;
+};
 
-        EVENT_CLASS_TYPE(WindowResize)
-        EVENT_CLASS_CATEGORY(EventCategoryApplication)
+class WindowCloseEvent final : public Event
+{
+  public:
+    WindowCloseEvent() {}
 
-      private:
-        unsigned int m_width, m_height;
-    };
-
-    class WindowCloseEvent : public Event
+    std::string toString() const override
     {
-      public:
-        WindowCloseEvent() {}
+        std::stringstream ss;
+        ss << "WindowCloseEvent";
+        return ss.str();
+    }
 
-        std::string toString() const override final
-        {
-            std::stringstream ss;
-            ss << "WindowCloseEvent";
-            return ss.str();
-        }
+    EVENT_CLASS_TYPE(WindowClose)
+    EVENT_CLASS_CATEGORY(EventCategoryApplication)
+};
 
-        EVENT_CLASS_TYPE(WindowClose)
-        EVENT_CLASS_CATEGORY(EventCategoryApplication)
-    };
+class WindowMovedEvent final : public Event
+{
+  public:
+    WindowMovedEvent(int x, int y) : m_windowX(x), m_windowY(y) {}
 
-    class WindowMovedEvent : public Event
+    inline unsigned int getX() const { return m_windowX; }
+    inline unsigned int getY() const { return m_windowY; }
+
+    std::string toString() const override
     {
-      public:
-        WindowMovedEvent(int x, int y) : m_windowX(x), m_windowY(y) {}
+        std::stringstream ss;
+        ss << "WindowMovedEvent: " << m_windowX << ", " << m_windowY;
+        return ss.str();
+    }
 
-        inline unsigned int getX() const { return m_windowX; }
-        inline unsigned int getY() const { return m_windowY; }
+    EVENT_CLASS_TYPE(WindowMoved)
+    EVENT_CLASS_CATEGORY(EventCategoryApplication)
 
-        std::string toString() const override final
-        {
-            std::stringstream ss;
-            ss << "WindowMovedEvent: " << m_windowX << ", " << m_windowY;
-            return ss.str();
-        }
+  private:
+    int m_windowX, m_windowY;
+};
 
-        EVENT_CLASS_TYPE(WindowMoved)
-        EVENT_CLASS_CATEGORY(EventCategoryApplication)
+class WindowFocusEvent final : public Event
+{
+  public:
+    WindowFocusEvent() {}
 
-      private:
-        int m_windowX, m_windowY;
-    };
+    EVENT_CLASS_TYPE(WindowFocus)
+    EVENT_CLASS_CATEGORY(EventCategoryApplication)
+};
 
-    class WindowFocusEvent : public Event
-    {
-      public:
-        WindowFocusEvent() {}
+class WindowLostFocusEvent final : public Event
+{
+  public:
+    WindowLostFocusEvent() {}
 
-        EVENT_CLASS_TYPE(WindowFocus)
-        EVENT_CLASS_CATEGORY(EventCategoryApplication)
-    };
+    EVENT_CLASS_TYPE(WindowLostFocus)
+    EVENT_CLASS_CATEGORY(EventCategoryApplication)
+};
 
-    class WindowLostFocusEvent : public Event
-    {
-      public:
-        WindowLostFocusEvent() {}
+class AppTickEvent final : public Event
+{
+  public:
+    AppTickEvent() {}
 
-        EVENT_CLASS_TYPE(WindowLostFocus)
-        EVENT_CLASS_CATEGORY(EventCategoryApplication)
-    };
+    EVENT_CLASS_TYPE(AppTick)
+    EVENT_CLASS_CATEGORY(EventCategoryApplication)
+};
 
-    class AppTickEvent : public Event
-    {
-      public:
-        AppTickEvent() {}
+class AppUpdateEvent final : public Event
+{
+  public:
+    AppUpdateEvent() {}
 
-        EVENT_CLASS_TYPE(AppTick)
-        EVENT_CLASS_CATEGORY(EventCategoryApplication)
-    };
+    EVENT_CLASS_TYPE(AppUpdate)
+    EVENT_CLASS_CATEGORY(EventCategoryApplication)
+};
 
-    class AppUpdateEvent : public Event
-    {
-      public:
-        AppUpdateEvent() {}
+class AppRenderEvent final : public Event
+{
+  public:
+    AppRenderEvent() {}
 
-        EVENT_CLASS_TYPE(AppUpdate)
-        EVENT_CLASS_CATEGORY(EventCategoryApplication)
-    };
-
-    class AppRenderEvent : public Event
-    {
-      public:
-        AppRenderEvent() {}
-
-        EVENT_CLASS_TYPE(AppRender)
-        EVENT_CLASS_CATEGORY(EventCategoryApplication)
-    };
+    EVENT_CLASS_TYPE(AppRender)
+    EVENT_CLASS_CATEGORY(EventCategoryApplication)
+};
 
 } // namespace mint

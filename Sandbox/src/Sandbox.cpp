@@ -7,7 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui.h>
 
-class ExampleLayer : public mint::Layer
+class ExampleLayer final : public mint::Layer
 {
   public:
     ExampleLayer() :
@@ -82,7 +82,7 @@ class ExampleLayer : public mint::Layer
         textureShader->setInt("u_Texture", 0);
     }
 
-    virtual void onUpdate(mint::Timestep ts) override final
+    virtual void onUpdate(mint::Timestep ts) override
     {
         m_cameraController.onUpdate(ts);
 
@@ -126,15 +126,15 @@ class ExampleLayer : public mint::Layer
     }
 
   private:
-    mint::ShaderLibrary m_shaderLibrary; // will be moved to renderer
-    mint::Ref<mint::Texture2D> m_checkerboardTexture, m_awesomefaceTexture;
-    mint::Ref<mint::VertexArray> m_vertexArray;
+    mint::ShaderLibrary                m_shaderLibrary; // will be moved to renderer
+    mint::Ref<mint::Texture2D>         m_checkerboardTexture, m_awesomefaceTexture;
+    mint::Ref<mint::VertexArray>       m_vertexArray;
     mint::OrthographicCameraController m_cameraController;
 
     glm::vec4 m_squareColor;
 };
 
-class Sandbox : public mint::Application
+class Sandbox final : public mint::Application
 {
   public:
     Sandbox()
@@ -143,7 +143,7 @@ class Sandbox : public mint::Application
         pushLayer(new Sandbox2D());
     }
 
-    virtual ~Sandbox() final {}
+    virtual ~Sandbox() {}
 };
 
 

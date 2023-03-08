@@ -40,10 +40,12 @@ void Sandbox2D::onUpdate(mint::Timestep ts)
     {
         MINT_PROFILE_SCOPE("Renderer Draw");
 
-        mint::Ref<mint::SubTexture2D> darkWizard =
-            mint::SubTexture2D::createFromCoords(m_spriteSheet, {3.0f, 1.0f}, {16.0f, 16.0f});
-        mint::Ref<mint::SubTexture2D> mimic =
-            mint::SubTexture2D::createFromCoords(m_spriteSheet, {7.0f, 3.0f}, {16.0f, 16.0f}, {2.0f, 1.0f});
+        mint::Ref<mint::SubTexture2D> darkWizard = mint::SubTexture2D::createFromCoords(
+            m_spriteSheet, {3.0f, 1.0f}, {16.0f, 16.0f}
+        );
+        mint::Ref<mint::SubTexture2D> mimic = mint::SubTexture2D::createFromCoords(
+            m_spriteSheet, {7.0f, 3.0f}, {16.0f, 16.0f}, {2.0f, 1.0f}
+        );
 
         mint::Renderer2D::beginScene(m_cameraController.getCamera());
         mint::Renderer2D::drawQuad({0.0f, 0.0f}, {1.0f, 1.0f}, darkWizard);

@@ -8,34 +8,34 @@
 namespace mint
 {
 
-    class LayerStack
-    {
-        using Layers = std::vector<Layer*>;
+class LayerStack
+{
+    using Layers = std::vector<Layer*>;
 
-      public:
-        LayerStack() = default;
+  public:
+    LayerStack() = default;
 
-        // TODO: find a better implementation that either doesn't take ownership of the layers, or keeps a unique_ptr to
-        // each layer. As it stands, if you pop a layer and don't push it back, it won't get deleted in the constructor
-        // as the LayerStack loses refrence to it.
-        ~LayerStack();
+    // TODO: find a better implementation that either doesn't take ownership of the layers, or keeps a unique_ptr to
+    // each layer. As it stands, if you pop a layer and don't push it back, it won't get deleted in the constructor
+    // as the LayerStack loses refrence to it.
+    ~LayerStack();
 
-        void pushLayer(Layer* layer);
-        void pushOverlay(Layer* overlay);
-        void popLayer(Layer* layer);
-        void popOverlay(Layer* overlay);
+    void pushLayer(Layer* layer);
+    void pushOverlay(Layer* overlay);
+    void popLayer(Layer* layer);
+    void popOverlay(Layer* overlay);
 
-        inline Layers::const_iterator begin() { return m_layers.begin(); }
-        inline Layers::const_iterator end() { return m_layers.begin(); }
-        inline Layers::const_reverse_iterator rbegin() { return m_layers.rbegin(); }
-        inline Layers::const_reverse_iterator rend() { return m_layers.rend(); }
+    inline Layers::const_iterator         begin() { return m_layers.begin(); }
+    inline Layers::const_iterator         end() { return m_layers.begin(); }
+    inline Layers::const_reverse_iterator rbegin() { return m_layers.rbegin(); }
+    inline Layers::const_reverse_iterator rend() { return m_layers.rend(); }
 
-        inline const Layers& getLayers() const { return m_layers; }
+    inline const Layers& getLayers() const { return m_layers; }
 
 
-      private:
-        Layers m_layers;
-        int m_layerInsertIndex = 0;
-    };
+  private:
+    Layers m_layers;
+    int    m_layerInsertIndex = 0;
+};
 
 } // namespace mint

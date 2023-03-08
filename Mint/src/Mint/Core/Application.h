@@ -10,40 +10,41 @@
 namespace mint
 {
 
-    class Application
-    {
-      public:
-        Application();
-        virtual ~Application();
+class Application
+{
+  public:
+    Application();
+    virtual ~Application();
 
-        void run();
+    void run();
 
-        void pushLayer(Layer* layer);
-        void popLayer(Layer* layer);
-        void pushOverlay(Layer* overlay);
-        void popOverlay(Layer* overlay);
+    void pushLayer(Layer* layer);
+    void popLayer(Layer* layer);
+    void pushOverlay(Layer* overlay);
+    void popOverlay(Layer* overlay);
 
-        inline static Application& get() { return *s_instance; }
-        inline Window& getWindow() const { return *m_window; }
+    inline static Application& get() { return *s_instance; }
 
-      private:
-        void onEvent(Event& e);
-        bool onWindowClose(WindowCloseEvent& e);
-        bool onWindowResize(WindowResizeEvent& e);
+    inline Window& getWindow() const { return *m_window; }
 
-      private:
-        bool m_running   = true;
-        bool m_minimized = false;
-        Scope<Window> m_window;
-        LayerStack m_layerStack;
-        ImGuiLayer* m_ImGuiLayer;
-        float m_lastFrameTime = 0.0f;
+  private:
+    void onEvent(Event& e);
+    bool onWindowClose(WindowCloseEvent& e);
+    bool onWindowResize(WindowResizeEvent& e);
 
-      private:
-        static Application* s_instance;
-    };
+  private:
+    bool          m_running   = true;
+    bool          m_minimized = false;
+    Scope<Window> m_window;
+    LayerStack    m_layerStack;
+    ImGuiLayer*   m_ImGuiLayer;
+    float         m_lastFrameTime = 0.0f;
 
-    // To be defined in client
-    Application* createApplication();
+  private:
+    static Application* s_instance;
+};
+
+// To be defined in client
+Application* createApplication();
 
 } // namespace mint
