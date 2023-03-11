@@ -1,0 +1,151 @@
+# Project
+Language: Cpp
+Standard: c++17
+BasedOnStyle: Microsoft
+ColumnLimit: 120
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ContinuationIndentWidth: 4
+AccessModifierOffset: -2
+IndentPPDirectives: BeforeHash
+IndentCaseLabels: true
+IndentCaseBlocks: false
+BitFieldColonSpacing: Both
+IndentExternBlock: Indent
+IndentWrappedFunctionNames: true
+
+# Alignment
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveBitFields: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlines: Right
+AlignOperands: AlignAfterOperator
+AlignAfterOpenBracket: AlwaysBreak
+AlignAfterOpenBracket: BlockIndent
+AlignTrailingComments: true
+
+# Allow
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllArgumentsOnNextLine: true # can override BinPackArguments=false
+AllowAllParametersOfDeclarationOnNextLine: true # can override BinPackParameters=false
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+AllowShortLambdasOnASingleLine: All
+
+# Break
+AlwaysBreakTemplateDeclarations: Yes
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: true
+BreakBeforeConceptDeclarations: Never
+BreakBeforeTernaryOperators: true
+BreakBeforeBinaryOperators: NonAssignment
+BreakInheritanceList: BeforeColon
+BreakStringLiterals: true
+BreakConstructorInitializers: AfterColon
+
+# Initializers & Arguments
+Cpp11BracedListStyle: true
+BinPackArguments: false
+BinPackParameters: false
+PackConstructorInitializers: NextLine
+ConstructorInitializerIndentWidth: 4
+
+# Braces
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: true
+  BeforeWhile: false
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+
+
+# Namespaces
+FixNamespaceComments: true
+CompactNamespaces: false
+NamespaceIndentation: None
+
+# Derive
+DerivePointerAlignment: false
+
+# Empty Lines
+MaxEmptyLinesToKeep: 2
+EmptyLineBeforeAccessModifier: Leave
+KeepEmptyLinesAtTheStartOfBlocks: true
+
+# Sorting
+SortIncludes: true
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Pre-compiled headers (Ending with pch.h)
+  - Regex: '"([A-Za-z0-9\Q/-_\E])*(pch\.h)+"'
+    Priority: -1
+  # Headers in "" with extension.
+  - Regex: '"([A-Za-z0-9.\Q/-_\E])+"'
+    Priority: 2
+  # Headers in <> with extension.
+  - Regex: '<([A-Za-z0-9.\Q/-_\E])+>'
+    Priority: 3
+  # Headers in <> without extension.
+  - Regex: '<([A-Za-z0-9\Q/-_\E])+>'
+    Priority: 4
+SortUsingDeclarations: true
+
+# Penalties
+PenaltyBreakAssignment: 1000
+PenaltyBreakBeforeFirstCallParameter: 100
+PenaltyBreakComment: 200
+PenaltyBreakFirstLessLess: 100
+PenaltyBreakString: 1
+PenaltyBreakTemplateDeclaration: 0
+PenaltyExcessCharacter: 5
+PenaltyIndentedWhitespace: 1
+PenaltyReturnTypeOnItsOwnLine: 500
+
+# Pointer Alignment
+PointerAlignment: Left
+
+# Spaces
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: false
+SpaceAroundPointerQualifiers: Default
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+SpaceBeforeCpp11BracedList: true
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: false
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 1
+SpacesInAngles: Never
+SpacesInCStyleCastParentheses: false
+SpacesInConditionalStatement: false
+SpacesInContainerLiterals: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
