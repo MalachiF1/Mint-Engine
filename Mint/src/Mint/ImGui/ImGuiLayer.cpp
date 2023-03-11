@@ -48,8 +48,8 @@ void ImGuiLayer::onAttach()
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
 
-    Application& app    = Application::get();
-    GLFWwindow*  window = static_cast<GLFWwindow*>(app.getWindow().getNativeWindow());
+    Application& app   = Application::get();
+    GLFWwindow* window = static_cast<GLFWwindow*>(app.getWindow().getNativeWindow());
 
     // Setup Platform/Renderer bindings
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -65,6 +65,17 @@ void ImGuiLayer::onDetach()
     ImGui::DestroyContext();
 }
 
+void ImGuiLayer::onEvent(Event& e)
+{
+    /*
+    ImGuiIO& io = ImGui::GetIO();
+    if (e.isInCategory(EventCategoryMouse) && io.WantCaptureMouse)
+        e.setHandled(true);
+    if (e.isInCategory(EventCategoryKeyboard) && io.WantCaptureKeyboard)
+        e.setHandled(true);
+    */
+}
+
 void ImGuiLayer::begin()
 {
     MINT_PROFILE_FUNCTION();
@@ -78,7 +89,7 @@ void ImGuiLayer::end()
 {
     MINT_PROFILE_FUNCTION();
 
-    ImGuiIO&     io  = ImGui::GetIO();
+    ImGuiIO& io      = ImGui::GetIO();
     Application& app = Application::get();
     io.DisplaySize   = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());
 

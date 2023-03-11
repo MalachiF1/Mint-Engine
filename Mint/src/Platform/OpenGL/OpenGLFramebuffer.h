@@ -12,16 +12,20 @@ class OpenGLFramebuffer final : public Framebuffer
     virtual ~OpenGLFramebuffer() override;
 
     inline virtual const FramebufferSpecification& getSpecification() const override { return m_specification; }
-    inline virtual uint32_t                        getColorAttachment() const override { return m_colorAttachment; }
-
-    void invalidate();
+    inline virtual uint32_t getColorAttachmentRendererID() const override { return m_colorAttachment; }
 
     virtual void bind() override;
     virtual void unbind() override;
 
+    virtual void resize(uint32_t width, uint32_t height) override;
+
   private:
-    uint32_t                 m_rendererID;
-    uint32_t                 m_colorAttachment, m_depthAttachment;
+    void invalidate();
+
+  private:
+    uint32_t m_rendererID      = 0;
+    uint32_t m_colorAttachment = 0;
+    uint32_t m_depthAttachment = 0;
     FramebufferSpecification m_specification;
 };
 

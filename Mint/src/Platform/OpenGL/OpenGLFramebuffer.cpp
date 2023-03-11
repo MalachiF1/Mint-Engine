@@ -17,12 +17,28 @@ OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec) : m_s
 OpenGLFramebuffer::~OpenGLFramebuffer()
 {
     glCheck(glDeleteFramebuffers(1, &m_rendererID));
+    glDeleteTextures(1, &m_colorAttachment);
+    glDeleteTextures(1, &m_depthAttachment);
+}
+
+void OpenGLFramebuffer::resize(uint32_t width, uint32_t height)
+{
+    m_specification.width  = width;
+    m_specification.height = height;
+    invalidate();
 }
 
 void OpenGLFramebuffer::invalidate()
 {
+    if (m_rendererID)
+    {
+        glCheck(glDeleteFramebuffers(1, &m_rendererID));
+        glDeleteTextures(1, &m_colorAttachment);
+        glDeleteTextures(1, &m_depthAttachment);
+    }
+
     glCheck(glCreateFramebuffers(1, &m_rendererID));
-    glCheck(glBindFramebuffer(GL_TEXTURE_2D, m_rendererID));
+    glCheck(glBindFramebuffer(GL_FRAMEBUFFER, m_rendererID));
 
     glCheck(glCreateTextures(GL_TEXTURE_2D, 1, &m_colorAttachment));
     glCheck(glBindTexture(GL_TEXTURE_2D, m_colorAttachment));
@@ -41,17 +57,19 @@ void OpenGLFramebuffer::invalidate()
 
     MINT_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
 
-    glCheck(glBindFramebuffer(GL_TEXTURE_2D, 0));
+    glCheck(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 }
 
 void OpenGLFramebuffer::bind()
 {
     glCheck(glBindFramebuffer(GL_FRAMEBUFFER, m_rendererID));
+    glViewport(0, 0, m_specification.width, m_specification.height);
 }
 
 void OpenGLFramebuffer::unbind()
 {
     glCheck(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 }
+
 
 } // namespace mint

@@ -1,6 +1,6 @@
 workspace "Mint"
 	architecture "x86_64"
-	startproject "Sandbox"
+	startproject "Spearmint"
 
 	configurations
 	{

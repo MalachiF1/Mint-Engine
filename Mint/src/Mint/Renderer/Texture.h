@@ -17,6 +17,8 @@ class Texture
 
     virtual std::pair<uint32_t, uint32_t> getSize() const = 0;
 
+    virtual uint32_t getRendererID() const = 0;
+
     virtual void setData(void* data, size_t size) = 0;
 
     virtual void bind(uint32_t slot = 0) const = 0;

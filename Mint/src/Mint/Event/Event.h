@@ -70,13 +70,14 @@ class Event
     friend class EventBus;
 
   public:
-    virtual EventType   getEventType() const     = 0;
-    virtual const char* getName() const          = 0;
-    virtual int         getCategoryFlags() const = 0;
+    virtual EventType getEventType() const = 0;
+    virtual const char* getName() const    = 0;
+    virtual int getCategoryFlags() const   = 0;
     virtual std::string toString() const { return getName(); }
 
     inline bool isInCategory(EventCategory category) const { return getCategoryFlags() & category; }
-    inline bool handled() const { return m_handled; }
+    inline bool isHandled() const { return m_handled; }
+    inline void setHandled(bool handled) { m_handled = handled; }
 
   protected:
     bool m_handled = false;

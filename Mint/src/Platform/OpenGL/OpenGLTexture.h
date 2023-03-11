@@ -22,6 +22,8 @@ class OpenGLTexture2D final : public Texture2D
         return std::pair<uint32_t, uint32_t>(m_width, m_height);
     }
 
+    inline virtual uint32_t getRendererID() const override { return m_rendererID; }
+
     virtual void setData(void* data, size_t size) override;
 
     virtual void bind(uint32_t slot = 0) const override;

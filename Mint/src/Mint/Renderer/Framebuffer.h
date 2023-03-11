@@ -2,6 +2,8 @@
 
 #include "Mint/Core/Base.h"
 
+#include <glm/glm.hpp>
+
 namespace mint
 {
 
@@ -21,7 +23,9 @@ class Framebuffer
     virtual void bind()   = 0;
     virtual void unbind() = 0;
 
-    virtual uint32_t getColorAttachment() const = 0;
+    virtual void resize(uint32_t width, uint32_t height) = 0;
+
+    virtual uint32_t getColorAttachmentRendererID() const = 0;
 
     virtual const FramebufferSpecification& getSpecification() const = 0;
 

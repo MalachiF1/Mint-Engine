@@ -422,7 +422,7 @@ void Renderer2D::drawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& s
     float texIndex = 0;
     for (uint32_t i = 0; i < s_data->textureSlotsIndex; ++i)
     {
-        if (*s_data->textureSlots[i].get() == *subTexture->getTexture().get())
+        if (*s_data->textureSlots[i].get() == *subTexture->getTexture())
         {
             texIndex = (float)i;
             break;

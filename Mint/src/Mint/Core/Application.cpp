@@ -75,7 +75,7 @@ void Application::onEvent(Event& e)
     // Top layer gets the event first. If the event wasn't handled, give the event to the next layer.
     for (auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); ++it)
     {
-        if (e.handled())
+        if (e.isHandled())
             break;
         (*it)->onEvent(e);
     }
@@ -89,9 +89,9 @@ void Application::run()
     {
         MINT_PROFILE_SCOPE("RunLoop");
 
-        float    currentTime = (float)glfwGetTime(); // implementation will move to Platform
-        Timestep timestep    = currentTime - m_lastFrameTime;
-        m_lastFrameTime      = currentTime;
+        float currentTime = (float)glfwGetTime(); // implementation will move to Platform
+        Timestep timestep = currentTime - m_lastFrameTime;
+        m_lastFrameTime   = currentTime;
 
         if (!m_minimized)
         {
