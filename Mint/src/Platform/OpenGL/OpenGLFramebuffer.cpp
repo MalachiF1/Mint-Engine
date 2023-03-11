@@ -23,6 +23,12 @@ OpenGLFramebuffer::~OpenGLFramebuffer()
 
 void OpenGLFramebuffer::resize(uint32_t width, uint32_t height)
 {
+    if (width == 0 || height == 0 /* || TODO: max size*/)
+    {
+        MINT_CORE_WARN("Attemped to resize framebuffer to {0}, {1}", width, height);
+        return;
+    }
+
     m_specification.width  = width;
     m_specification.height = height;
     invalidate();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Mint/Core/Base.h"
 #include "Mint/Core/Log.h"
 #include "Mint/Utility/Debug/Instrumentor.h"
 
