@@ -13,10 +13,11 @@ namespace mint
 class Application
 {
   public:
-    Application();
+    Application(const std::string& name = "Mint App");
     virtual ~Application();
 
     void run();
+    void shutdown();
 
     void pushLayer(Layer* layer);
     void popLayer(Layer* layer);

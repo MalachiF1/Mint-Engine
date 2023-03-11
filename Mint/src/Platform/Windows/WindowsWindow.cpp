@@ -18,11 +18,6 @@ void GLFWErrorCallback(int error, const char* discription)
     MINT_CORE_ERROR("GLFW ERROR ({0}): {1}", error, discription);
 }
 
-Scope<Window> Window::create(const WindowProps& props)
-{
-    return CreateScope<WindowsWindow>(props);
-}
-
 WindowsWindow::WindowsWindow(const WindowProps& props)
 {
     MINT_PROFILE_FUNCTION();
@@ -128,7 +123,7 @@ void WindowsWindow::init(const WindowProps& props)
 
     glfwSetCharCallback(
         m_window,
-        [](GLFWwindow* window, unsigned int key)
+        [](GLFWwindow* window, uint32_t key)
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 

@@ -14,8 +14,9 @@ class OpenGLTexture2D final : public Texture2D
     OpenGLTexture2D(const std::string& path);
     virtual ~OpenGLTexture2D() override;
 
-    inline virtual uint32_t                      getWidth() const override { return m_width; }
-    inline virtual uint32_t                      getHeight() const override { return m_height; }
+    inline virtual uint32_t getWidth() const override { return m_width; }
+    inline virtual uint32_t getHeight() const override { return m_height; }
+
     inline virtual std::pair<uint32_t, uint32_t> getSize() const override
     {
         return std::pair<uint32_t, uint32_t>(m_width, m_height);

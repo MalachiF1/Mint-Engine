@@ -12,9 +12,10 @@ class Texture
   public:
     virtual ~Texture() = default;
 
-    virtual uint32_t                      getWidth() const  = 0;
-    virtual uint32_t                      getHeight() const = 0;
-    virtual std::pair<uint32_t, uint32_t> getSize() const   = 0;
+    virtual uint32_t getWidth() const  = 0;
+    virtual uint32_t getHeight() const = 0;
+
+    virtual std::pair<uint32_t, uint32_t> getSize() const = 0;
 
     virtual void setData(void* data, size_t size) = 0;
 

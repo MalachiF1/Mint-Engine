@@ -37,6 +37,7 @@ void Sandbox2D::onUpdate(mint::Timestep ts)
     }
 
 
+    /*
     {
         MINT_PROFILE_SCOPE("Renderer Draw");
 
@@ -48,30 +49,36 @@ void Sandbox2D::onUpdate(mint::Timestep ts)
         );
 
         mint::Renderer2D::beginScene(m_cameraController.getCamera());
-        mint::Renderer2D::drawQuad({0.0f, 0.0f}, {1.0f, 1.0f}, darkWizard);
-        mint::Renderer2D::drawQuad({1.5f, 0.0f}, {0.7f * 2, 0.7f}, mimic);
+        mint::Renderer2D::drawQuad({0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}, darkWizard, 1, {1.0f, 1.0f, 1.0f, 0.5});
+        mint::Renderer2D::drawQuad({1.5f, 0.0f, 1.0f}, {0.7f * 2, 0.7f}, mimic, 1, {1.0f, 1.0f, 1.0f, 0.5});
         mint::Renderer2D::endScene();
     }
+    */
 
-    /*
     {
         MINT_PROFILE_SCOPE("Renderer Draw");
         static float rotation = 0.0f;
         rotation += ts * 40.0f;
 
+        mint::Ref<mint::SubTexture2D> darkWizard = mint::SubTexture2D::createFromCoords(
+            m_spriteSheet, {3.0f, 1.0f}, {16.0f, 16.0f}
+        );
+        mint::Ref<mint::SubTexture2D> mimic = mint::SubTexture2D::createFromCoords(
+            m_spriteSheet, {7.0f, 3.0f}, {16.0f, 16.0f}, {2.0f, 1.0f}
+        );
+
         mint::Renderer2D::beginScene(m_cameraController.getCamera());
         mint::Renderer2D::drawQuad({0.0f, 0.5f}, {1.0f, 1.0f}, {1.0f, 0.0f, 0.0f, 1.0f});
-        mint::Renderer2D::drawQuad(
-            {0.0f, 0.0f, -0.1f}, {8.0f, 8.0f}, m_checkerboardTexture, 10.0f, {1.0f, 1.0f, 0.8f, 1.0f}
-        );
+        mint::Renderer2D::drawQuad({0.0f, 0.0f, -0.1f}, {8.0f, 8.0f}, m_checkerboardTexture, 10.0f, {1.0f, 1.0f, 0.8f, 1.0f});
         mint::Renderer2D::drawRotatedQuad(
             {-0.5f, -0.5f, 0.2}, {1.0f, 1.0f}, rotation, m_checkerboardTexture, 20.0f, {8.0f, 1.0f, 1.0f, 1.0f}
         );
         mint::Renderer2D::drawQuad({0.3f, 0.3f, 0.1f}, {0.9f, 0.3f}, m_color);
         mint::Renderer2D::drawRotatedQuad({0.9f, 0.1f, 0.3f}, {3.0f, 0.5f}, 45.0f, m_color);
+        mint::Renderer2D::drawQuad({0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}, darkWizard, 1, {1.0f, 1.0f, 1.0f, 0.5});
+        mint::Renderer2D::drawQuad({1.5f, 0.0f, 1.0f}, {0.7f * 2, 0.7f}, mimic, 1, {1.0f, 1.0f, 1.0f, 0.5});
         mint::Renderer2D::endScene();
     }
-    */
 }
 
 void Sandbox2D::onEvent(mint::Event& e)

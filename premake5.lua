@@ -149,3 +149,56 @@ project "Sandbox"
 		defines "MINT_DIST"
 		runtime "Release"
 		optimize "on"
+
+
+project "Spearmint"
+	location "Spearmint"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp",
+	}
+
+	includedirs
+	{
+		"Mint/vendor/spdlog/include",
+		"Mint/src",
+		"Mint/vendor",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+	{
+		"Mint"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines
+		{
+			"MINT_PLATFORM_WINDOWS",
+		}
+
+	filter "configurations:Debug"
+		defines "MINT_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "MINT_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "MINT_DIST"
+		runtime "Release"
+		optimize "on"

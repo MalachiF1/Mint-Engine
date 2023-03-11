@@ -9,11 +9,11 @@ namespace mint
 
 struct WindowProps
 {
-    std::string  title;
-    unsigned int width;
-    unsigned int height;
+    std::string title;
+    uint32_t    width;
+    uint32_t    height;
 
-    WindowProps(const std::string& title = "Mint Engine", unsigned int width = 1280, unsigned int height = 720) :
+    WindowProps(const std::string& title = "Mint Engine", uint32_t width = 1280, uint32_t height = 720) :
         title(title), width(width), height(height)
     {
     }
@@ -28,10 +28,10 @@ class Window
 
     virtual void onUpdate() = 0;
 
-    virtual unsigned int getWidth() const  = 0;
-    virtual unsigned int getHeight() const = 0;
+    virtual uint32_t getWidth() const  = 0;
+    virtual uint32_t getHeight() const = 0;
 
-    virtual std::pair<unsigned int, unsigned int> getSize() const = 0;
+    virtual std::pair<uint32_t, uint32_t> getSize() const = 0;
 
     virtual void setEventCallback(const EventCallbackFn& callback) = 0;
     virtual void setVSync(bool enabled)                            = 0;

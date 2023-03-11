@@ -12,14 +12,14 @@ namespace mint
 
 Application* Application::s_instance = nullptr;
 
-Application::Application()
+Application::Application(const std::string& name)
 {
     MINT_PROFILE_FUNCTION();
 
     MINT_CORE_ASSERT(!s_instance, "There can only be one Application instance!");
     s_instance = this;
 
-    m_window = Scope<Window>(Window::create());
+    m_window = Scope<Window>(Window::create(WindowProps(name)));
     m_window->setEventCallback(MINT_BIND_EVENT_FN(Application::onEvent));
 
     Renderer::init();
@@ -110,6 +110,12 @@ void Application::run()
 
         m_window->onUpdate();
     }
+}
+
+void Application::shutdown()
+{
+    MINT_PROFILE_FUNCTION();
+    m_running = false;
 }
 
 bool Application::onWindowClose(WindowCloseEvent& e)

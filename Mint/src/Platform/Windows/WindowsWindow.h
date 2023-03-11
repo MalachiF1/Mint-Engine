@@ -16,12 +16,12 @@ class WindowsWindow final : public Window
 
     void onUpdate() override;
 
-    inline virtual unsigned int getWidth() const override { return m_data.width; }
-    inline virtual unsigned int getHeight() const override { return m_data.width; }
+    inline virtual uint32_t getWidth() const override { return m_data.width; }
+    inline virtual uint32_t getHeight() const override { return m_data.width; }
 
-    inline virtual std::pair<unsigned int, unsigned int> getSize() const override
+    inline virtual std::pair<uint32_t, uint32_t> getSize() const override
     {
-        return std::pair<unsigned int, unsigned int>(m_data.width, m_data.height);
+        return std::pair<uint32_t, uint32_t>(m_data.width, m_data.height);
     }
 
     // Window attributes
@@ -42,9 +42,9 @@ class WindowsWindow final : public Window
 
     struct WindowData
     {
-        std::string  title;
-        unsigned int width, height;
-        bool         VSync;
+        std::string title;
+        uint32_t    width, height;
+        bool        VSync;
 
         EventCallbackFn eventCallback;
     };
