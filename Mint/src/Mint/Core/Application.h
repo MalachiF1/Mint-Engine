@@ -28,18 +28,20 @@ class Application
 
     inline Window& getWindow() const { return *m_window; }
 
+    inline ImGuiLayer* getImGuiLayer() { return m_ImGuiLayer; }
+
   private:
     void onEvent(Event& e);
     bool onWindowClose(WindowCloseEvent& e);
     bool onWindowResize(WindowResizeEvent& e);
 
   private:
-    bool          m_running   = true;
-    bool          m_minimized = false;
+    bool m_running   = true;
+    bool m_minimized = false;
     Scope<Window> m_window;
-    LayerStack    m_layerStack;
-    ImGuiLayer*   m_ImGuiLayer;
-    float         m_lastFrameTime = 0.0f;
+    LayerStack m_layerStack;
+    ImGuiLayer* m_ImGuiLayer;
+    float m_lastFrameTime = 0.0f;
 
   private:
     static Application* s_instance;

@@ -25,8 +25,8 @@ class LayerStack
     void popLayer(Layer* layer);
     void popOverlay(Layer* overlay);
 
-    inline Layers::const_iterator         begin() { return m_layers.begin(); }
-    inline Layers::const_iterator         end() { return m_layers.begin(); }
+    inline Layers::const_iterator begin() { return m_layers.begin(); }
+    inline Layers::const_iterator end() { return m_layers.begin(); }
     inline Layers::const_reverse_iterator rbegin() { return m_layers.rbegin(); }
     inline Layers::const_reverse_iterator rend() { return m_layers.rend(); }
 
@@ -35,7 +35,7 @@ class LayerStack
 
   private:
     Layers m_layers;
-    int    m_layerInsertIndex = 0;
+    int m_layerInsertIndex = 0;
 };
 
 } // namespace mint
