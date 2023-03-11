@@ -23,8 +23,11 @@ class ImGuiLayer final : public Layer
     void begin();
     void end();
 
+    inline void setBlockEvents(bool block) { m_blockEvents = block; }
+
   private:
-    float m_time = 0.0f;
+    bool m_blockEvents = true;
+    float m_time       = 0.0f;
 };
 
 } // namespace mint
