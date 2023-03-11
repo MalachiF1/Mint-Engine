@@ -1,17 +1,14 @@
 #include "mtpch.h"
 
-#include "WindowsInput.h"
-
 #include "Mint/Core/Application.h"
+#include "Mint/Core/Input.h"
 
 #include <GLFW/glfw3.h>
 
 namespace mint
 {
 
-Input* Input::s_instance = new WindowsInput();
-
-bool WindowsInput::isKeyPressedImpl(int keycode)
+bool Input::isKeyPressed(int keycode)
 {
     GLFWwindow* window = static_cast<GLFWwindow*>(Application::get().getWindow().getNativeWindow());
 
@@ -20,7 +17,7 @@ bool WindowsInput::isKeyPressedImpl(int keycode)
     return state == GLFW_PRESS || state == GLFW_REPEAT;
 }
 
-bool WindowsInput::isMouseButtonPressedImpl(int button)
+bool Input::isMouseButtonPressed(int button)
 {
     GLFWwindow* window = static_cast<GLFWwindow*>(Application::get().getWindow().getNativeWindow());
 
@@ -29,28 +26,28 @@ bool WindowsInput::isMouseButtonPressedImpl(int button)
     return state == GLFW_PRESS;
 }
 
-float WindowsInput::getMouseXImpl()
+float Input::getMouseX()
 {
     GLFWwindow* window = static_cast<GLFWwindow*>(Application::get().getWindow().getNativeWindow());
-    double      xpos, ypos;
+    double xpos, ypos;
     glfwGetCursorPos(window, &xpos, &ypos);
 
     return (float)xpos;
 }
 
-float WindowsInput::getMouseYImpl()
+float Input::getMouseY()
 {
     GLFWwindow* window = static_cast<GLFWwindow*>(Application::get().getWindow().getNativeWindow());
-    double      xpos, ypos;
+    double xpos, ypos;
     glfwGetCursorPos(window, &xpos, &ypos);
 
     return (float)ypos;
 }
 
-std::pair<float, float> WindowsInput::getMousePosImpl()
+std::pair<float, float> Input::getMousePos()
 {
     GLFWwindow* window = static_cast<GLFWwindow*>(Application::get().getWindow().getNativeWindow());
-    double      xpos, ypos;
+    double xpos, ypos;
     glfwGetCursorPos(window, &xpos, &ypos);
 
     return std::pair<float, float>((float)xpos, (float)ypos);
